@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Slime.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Food.tscn" type="PackedScene" id=2]
 
 [node name="Environment" type="Node2D"]
 
@@ -26,3 +27,8 @@ init_face_dir = Vector2( 1, -1 )
 wander_force = 10.0
 displacement_offset = 10.0
 angle_change = 20.0
+
+[node name="Food" type="Node" parent="."]
+
+[node name="Food" parent="Food" instance=ExtResource( 2 )]
+position = Vector2( 230.487, 222.959 )

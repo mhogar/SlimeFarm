@@ -19,6 +19,11 @@ config/name="SlimeFarm"
 run/main_scene="res://Environment.tscn"
 config/icon="res://icon.png"
 
+[layer_names]
+
+2d_physics/layer_1="Slimes"
+2d_physics/layer_2="Food"
+
 [rendering]
 
 environment/default_environment="res://default_env.tres"

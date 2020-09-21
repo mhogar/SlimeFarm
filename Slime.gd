@@ -50,3 +50,7 @@ func wrap_screen():
 		position.y = env_height
 	elif position.y > env_height:
 		position.y = 0
+		
+
+func collect_food():
+	print("Food collected")
