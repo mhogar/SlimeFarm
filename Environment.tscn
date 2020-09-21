@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Slime.tscn" type="PackedScene" id=1]
+
+[node name="Environment" type="Node2D"]
+
+[node name="Simes" type="Node" parent="."]
+
+[node name="Slime" parent="Simes" instance=ExtResource( 1 )]
+position = Vector2( 229.329, 186.475 )
+init_face_dir = Vector2( 1, 1 )
+wander_force = 10.0
+displacement_offset = 10.0
+angle_change = 20.0
+
+[node name="Slime2" parent="Simes" instance=ExtResource( 1 )]
+position = Vector2( 625.443, 60.807 )
+init_face_dir = Vector2( -1, -1 )
+wander_force = 10.0
+displacement_offset = 10.0
+angle_change = 20.0
+
+[node name="Slime3" parent="Simes" instance=ExtResource( 1 )]
+position = Vector2( 545.525, 277.975 )
+init_face_dir = Vector2( 1, -1 )
+wander_force = 10.0
+displacement_offset = 10.0
+angle_change = 20.0
