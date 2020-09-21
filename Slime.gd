@@ -1,24 +1,35 @@
 extends Node2D
 
+onready var VisionCircle := $VisionCircle/CollisionShape2D
+
 export var speed : float
 export var init_face_dir : Vector2
-
 export var wander_force : float
 export var displacement_offset : float
 export var angle_change : float
+export var vision_radius : float
 
 var velocity : Vector2
 var wander_angle := 0.0
 
+var is_following_target : bool
+var target : Vector2
 
 func _ready():
 	#seed the generator
 	randomize()
 	
 	velocity = init_face_dir
+	VisionCircle.shape.radius = vision_radius
+	
+	is_following_target = false
 
 
 func _physics_process(delta):
+	wander(delta)
+
+
+func wander(delta):
 	velocity = calc_wander().clamped(speed * delta)
 	position += velocity
 	
@@ -54,3 +65,7 @@ func wrap_screen():
 
 func collect_food():
 	print("Food collected")
+
+
+func _on_VisionCircle_area_entered(area):
+	print("Food entered vision circle")
