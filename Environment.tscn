@@ -31,4 +31,16 @@ angle_change = 20.0
 [node name="Food" type="Node" parent="."]
 
 [node name="Food" parent="Food" instance=ExtResource( 2 )]
-position = Vector2( 173.155, 251.701 )
+position = Vector2( 113.796, 366.927 )
+
+[node name="Food2" parent="Food" instance=ExtResource( 2 )]
+position = Vector2( 319.806, 450.727 )
+
+[node name="Food3" parent="Food" instance=ExtResource( 2 )]
+position = Vector2( 706.51, 461.202 )
+
+[node name="Food4" parent="Food" instance=ExtResource( 2 )]
+position = Vector2( 800.786, 265.668 )
+
+[node name="Food5" parent="Food" instance=ExtResource( 2 )]
+position = Vector2( 406.225, 85.8459 )

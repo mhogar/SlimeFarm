@@ -1,6 +1,7 @@
 extends Node2D
 
-onready var VisionCircle := $VisionCircle/CollisionShape2D
+onready var VisionCircle := $VisionCircle
+onready var VisionCircleCollision := $VisionCircle/CollisionShape2D
 
 export var speed : float
 export var init_face_dir : Vector2
@@ -12,22 +13,50 @@ export var vision_radius : float
 var velocity : Vector2
 var wander_angle := 0.0
 
-var is_following_target : bool
-var target : Vector2
 
 func _ready():
 	#seed the generator
 	randomize()
 	
 	velocity = init_face_dir
-	VisionCircle.shape.radius = vision_radius
-	
-	is_following_target = false
+	VisionCircleCollision.shape.radius = vision_radius
 
 
 func _physics_process(delta):
-	wander(delta)
+	if not pathfind_to_food(delta):
+		wander(delta)
 
+
+func pathfind_to_food(delta) -> bool:
+	var dir := find_closest_food()
+	
+	# check for zero vector
+	if dir.length_squared() < 1:
+		return false
+	
+	# update velocity and position
+	velocity = dir
+	position += velocity * speed * delta
+	
+	return true
+
+
+func find_closest_food() -> Vector2:
+	var visible_food = VisionCircle.get_overlapping_areas()
+	
+	var target_pos := position
+	var smallest_dist := -1.0
+	
+	for food in visible_food:
+		var dist := position.distance_squared_to(food.position)
+		
+		if smallest_dist < 0 or dist < smallest_dist:
+			target_pos = food.position
+			smallest_dist = dist
+	
+	# returns zero vector if no food is visible
+	return position.direction_to(target_pos)
+	
 
 func wander(delta):
 	velocity = calc_wander().clamped(speed * delta)
@@ -39,7 +68,7 @@ func wander(delta):
 func calc_wander() -> Vector2:	
 	# calc center point and displacement vector
 	var displacement_center := velocity.normalized() * displacement_offset
-	var displacement := Vector2(0, 1) * wander_force
+	var displacement := Vector2(0, -1) * wander_force
 	
 	# update the wander angle 
 	wander_angle += (randf() - 0.5) * angle_change
@@ -65,7 +94,3 @@ func wrap_screen():
 
 func collect_food():
 	print("Food collected")
-
-
-func _on_VisionCircle_area_entered(area):
-	print("Food entered vision circle")
