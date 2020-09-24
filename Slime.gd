@@ -21,13 +21,13 @@ func _ready():
 	
 	velocity = init_face_dir
 	VisionCircleCollision.shape.radius = vision_radius
-	
-	AnimationPlayer.play("walk")
 
 
 func _physics_process(delta):
 	if not pathfind_to_food(delta):
 		wander(delta)
+		
+	update_walk_animation()
 
 
 func pathfind_to_food(delta) -> bool:
@@ -93,6 +93,16 @@ func wrap_screen():
 	elif position.y > env.env_height:
 		position.y = 0
 		
+
+func update_walk_animation():
+	if velocity.x < 0 and velocity.y < 0:
+		AnimationPlayer.play("walk_up_left")
+	elif velocity.x < 0 and velocity.y > 0:
+		AnimationPlayer.play("walk_down_left")
+	elif velocity.x > 0 and velocity.y < 0:
+		AnimationPlayer.play("walk_up_right")
+	elif velocity.x > 0 and velocity.y > 0:
+		AnimationPlayer.play("walk_down_right")
 
 func collect_food():
 	print("Food collected")
