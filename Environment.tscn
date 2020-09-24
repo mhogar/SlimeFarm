@@ -1,46 +1,24 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Slime.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Food.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Environment.gd" type="Script" id=3]
 
 [node name="Environment" type="Node2D"]
+script = ExtResource( 3 )
+env_width = 800
+env_height = 500
+num_slimes = 3
+num_food = 10
 
 [node name="Simes" type="Node" parent="."]
 
-[node name="Slime" parent="Simes" instance=ExtResource( 1 )]
-position = Vector2( 229.329, 186.475 )
+[node name="TemplateSlime" parent="Simes" instance=ExtResource( 1 )]
 init_face_dir = Vector2( 1, 1 )
-wander_force = 10.0
-displacement_offset = 10.0
-angle_change = 20.0
-
-[node name="Slime2" parent="Simes" instance=ExtResource( 1 )]
-position = Vector2( 625.443, 60.807 )
-init_face_dir = Vector2( -1, -1 )
-wander_force = 10.0
-displacement_offset = 10.0
-angle_change = 20.0
-
-[node name="Slime3" parent="Simes" instance=ExtResource( 1 )]
-position = Vector2( 545.525, 277.975 )
-init_face_dir = Vector2( 1, -1 )
 wander_force = 10.0
 displacement_offset = 10.0
 angle_change = 20.0
 
 [node name="Food" type="Node" parent="."]
 
-[node name="Food" parent="Food" instance=ExtResource( 2 )]
-position = Vector2( 113.796, 366.927 )
-
-[node name="Food2" parent="Food" instance=ExtResource( 2 )]
-position = Vector2( 319.806, 450.727 )
-
-[node name="Food3" parent="Food" instance=ExtResource( 2 )]
-position = Vector2( 706.51, 461.202 )
-
-[node name="Food4" parent="Food" instance=ExtResource( 2 )]
-position = Vector2( 800.786, 265.668 )
-
-[node name="Food5" parent="Food" instance=ExtResource( 2 )]
-position = Vector2( 406.225, 85.8459 )
+[node name="TemplateFood" parent="Food" instance=ExtResource( 2 )]

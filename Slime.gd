@@ -2,6 +2,7 @@ extends Node2D
 
 onready var VisionCircle := $VisionCircle
 onready var VisionCircleCollision := $VisionCircle/CollisionShape2D
+onready var AnimationPlayer := $AnimationPlayer
 
 export var speed : float
 export var init_face_dir : Vector2
@@ -20,6 +21,8 @@ func _ready():
 	
 	velocity = init_face_dir
 	VisionCircleCollision.shape.radius = vision_radius
+	
+	AnimationPlayer.play("walk")
 
 
 func _physics_process(delta):
@@ -78,17 +81,16 @@ func calc_wander() -> Vector2:
 	
 
 func wrap_screen():
-	var env_width := 800
-	var env_height := 500
+	var env := get_parent().get_parent()
 	
 	if position.x < 0:
-		position.x = env_width
-	elif position.x > env_width:
+		position.x = env.env_width
+	elif position.x > env.env_width:
 		position.x = 0
 		
 	if position.y < 0:
-		position.y = env_height
-	elif position.y > env_height:
+		position.y = env.env_height
+	elif position.y > env.env_height:
 		position.y = 0
 		
 
