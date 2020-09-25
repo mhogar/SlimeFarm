@@ -4,13 +4,13 @@ onready var VisionCircle := $VisionCircle
 onready var VisionCircleCollision := $VisionCircle/CollisionShape2D
 onready var AnimationPlayer := $AnimationPlayer
 
-export var speed : float
-export var init_face_dir : Vector2
+export var speed : float 
 export var wander_force : float
 export var displacement_offset : float
 export var angle_change : float
 export var vision_radius : float
 
+var init_face_dir : Vector2
 var velocity : Vector2
 var wander_angle := 0.0
 
