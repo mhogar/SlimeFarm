@@ -4,11 +4,16 @@ onready var VisionCircle := $VisionCircle
 onready var VisionCircleCollision := $VisionCircle/CollisionShape2D
 onready var AnimationPlayer := $AnimationPlayer
 
-export var speed : float 
+export var min_speed : float
+export var max_speed : float
+export var min_vision_radius : float
+export var max_vision_radius : float
 export var wander_force : float
 export var displacement_offset : float
-export var angle_change : float
-export var vision_radius : float
+export var angle_change : float 
+
+export var speed_gene : int
+export var vision_radius_gene : int
 
 var init_face_dir : Vector2
 var velocity : Vector2
@@ -20,17 +25,23 @@ func _ready():
 	randomize()
 	
 	velocity = init_face_dir
-	VisionCircleCollision.shape.radius = vision_radius
+	VisionCircleCollision.shape.radius = convert_gene(min_vision_radius, max_vision_radius, vision_radius_gene)
 
 
 func _physics_process(delta):
-	if not pathfind_to_food(delta):
-		wander(delta)
+	var speed := convert_gene(min_speed, max_speed, speed_gene)
+	
+	if not pathfind_to_food(speed, delta):
+		wander(speed, delta)
 		
 	update_walk_animation()
 
 
-func pathfind_to_food(delta) -> bool:
+func convert_gene(min_value, max_value, gene_value) -> float:
+	return (max_value - min_value) * (gene_value / 255.0) + min_value
+
+
+func pathfind_to_food(speed, delta) -> bool:
 	var dir := find_closest_food()
 	
 	# check for zero vector
@@ -61,7 +72,7 @@ func find_closest_food() -> Vector2:
 	return position.direction_to(target_pos)
 	
 
-func wander(delta):
+func wander(speed, delta):
 	velocity = calc_wander().clamped(speed * delta)
 	position += velocity
 	

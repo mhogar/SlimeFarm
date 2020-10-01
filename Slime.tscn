@@ -91,9 +91,13 @@ tracks/0/keys = {
 [node name="Slime" type="KinematicBody2D"]
 collision_mask = 0
 script = ExtResource( 2 )
-speed = 50.0
-angle_change = 5.0
-vision_radius = 100.0
+min_speed = 20.0
+max_speed = 100.0
+min_vision_radius = 50.0
+max_vision_radius = 200.0
+wander_force = 10.0
+displacement_offset = 10.0
+angle_change = 20.0
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 1.52588e-05, 0 )

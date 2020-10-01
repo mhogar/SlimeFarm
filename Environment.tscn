@@ -14,10 +14,6 @@
 0/tile_mode = 0
 0/occluder_offset = Vector2( 0, 0 )
 0/navigation_offset = Vector2( 0, 0 )
-0/shape_offset = Vector2( 0, 0 )
-0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-0/shape_one_way = false
-0/shape_one_way_margin = 0.0
 0/shapes = [  ]
 0/z_index = 0
 
@@ -35,9 +31,8 @@ current = true
 [node name="Simes" type="Node" parent="."]
 
 [node name="TemplateSlime" parent="Simes" instance=ExtResource( 1 )]
-wander_force = 10.0
-displacement_offset = 10.0
-angle_change = 20.0
+speed_gene = 255
+vision_radius_gene = 255
 
 [node name="Food" type="Node" parent="."]
 
