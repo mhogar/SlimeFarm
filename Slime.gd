@@ -1,5 +1,7 @@
 extends Node2D
 
+onready var Sprite := $Sprite
+onready var Particles := $Particles2D
 onready var VisionCircle := $VisionCircle
 onready var VisionCircleCollision := $VisionCircle/CollisionShape2D
 onready var AnimationPlayer := $AnimationPlayer
@@ -26,7 +28,9 @@ func _ready():
 	
 	velocity = init_face_dir
 	VisionCircleCollision.shape.radius = convert_gene(min_vision_radius, max_vision_radius, vision_radius_gene)
-
+	
+	set_colours()
+	
 
 func _physics_process(delta):
 	var speed := convert_gene(min_speed, max_speed, speed_gene)
@@ -39,6 +43,16 @@ func _physics_process(delta):
 
 func convert_gene(min_value, max_value, gene_value) -> float:
 	return (max_value - min_value) * (gene_value / 255.0) + min_value
+
+
+func set_colours():
+	var body_colour := Color.from_hsv(speed_gene/360.0, 0.74, 0.74)
+	var highlight_colour := Color.from_hsv(speed_gene/360.0, 0.65, 0.89)
+	
+	
+	Sprite.material.set_shader_param("body_color", body_colour)
+	Sprite.material.set_shader_param("highlight_color", highlight_colour)
+	Particles.process_material.color = body_colour
 
 
 func pathfind_to_food(speed, delta) -> bool:
