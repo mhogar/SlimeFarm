@@ -28,6 +28,8 @@ var init_face_dir : Vector2
 var velocity : Vector2
 var wander_angle := 0.0
 
+var food_collected : int
+
 
 func _ready():
 	velocity = init_face_dir
@@ -43,6 +45,10 @@ func _physics_process(delta : float):
 		wander(speed, delta)
 		
 	update_walk_animation()
+
+
+func reset_stats():
+	food_collected = 0
 
 
 func convert_gene(min_value : int, max_value : int, gene_index : int) -> float:
@@ -136,16 +142,16 @@ func update_walk_animation():
 
 
 func collect_food():
-	print("Food collected")
+	food_collected += 1
 	
 	
 func breed(other: Slime) -> Slime:
-	var new_slime : Slime = self.duplicate()
+	var new_slime : Slime = load("res://Slime.tscn").instance()
 	
 	# apply crossover to each gene
 	for i in range(genes.size()):
 		var cross_str := randi()
-		new_slime.genes[i] = (genes[i] & cross_str) + (other.genes[i] & (~cross_str))
+		new_slime.genes.append((genes[i] & cross_str) + (other.genes[i] & (~cross_str)))
 	
 	return new_slime
 	

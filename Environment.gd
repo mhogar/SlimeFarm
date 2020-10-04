@@ -2,7 +2,7 @@ extends Node2D
 
 export var env_width : int
 export var env_height : int
-export var num_slimes : int
+export var pop_size : int
 export var num_food : int
 
 onready var Slimes := $Slimes
@@ -37,15 +37,14 @@ func start_iteration():
 	
 
 func end_iteration():
-	# TODO: genetic algo stuff
-	
+	breed_slimes()
 	start_iteration()
 	
 
 func create_slimes():
 	var scene := load("res://Slime.tscn")
 	
-	for i in range(num_slimes):
+	for i in range(pop_size):
 		var slime : Slime = scene.instance()
 		
 		slime.genes.append(randi() % 256) # speed
@@ -57,6 +56,8 @@ func create_slimes():
 
 func setup_slimes():
 	for slime in Slimes.get_children():
+		slime.reset_stats()
+		
 		# choose random position
 		slime.position.x = randf() * env_width
 		slime.position.y = randf() * env_height
@@ -78,3 +79,31 @@ func create_food():
 		
 		# add food to list
 		Food.add_child(food)
+
+
+func select_parent_slime(slimes : Array) -> Slime:
+	# TODO: select slime using weighted probability
+	return slimes[randi() % slimes.size()]
+
+
+func breed_slimes():
+	var slimes := Slimes.get_children().duplicate()
+	
+	#for i in range(pop_size):
+	while slimes.size() > 0:
+		# select first parent
+		var parent1 := select_parent_slime(slimes)
+		slimes.erase(parent1)
+		#i += 1
+		
+		# if there are more slimes left to breed with
+		if slimes.size() > 0:
+			var parent2 := select_parent_slime(slimes)
+			slimes.erase(parent2)
+			
+			# breed the parents and add the child to the scene
+			Slimes.add_child(parent1.breed(parent2))
+
+	# remove any slimes that did not breed from the scene
+	for slime in slimes:
+		slime.queue_free()

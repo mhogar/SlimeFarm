@@ -19,7 +19,7 @@
 script = ExtResource( 3 )
 env_width = 1024
 env_height = 608
-num_slimes = 4
+pop_size = 4
 num_food = 20
 
 [node name="Camera2D" type="Camera2D" parent="."]
