@@ -1,5 +1,8 @@
 extends Node2D
 
+class_name Slime
+
+
 onready var Sprite := $Sprite
 onready var Particles := $Particles2D
 onready var VisionCircle := $VisionCircle
@@ -14,8 +17,12 @@ export var wander_force : float
 export var displacement_offset : float
 export var angle_change : float 
 
-export var speed_gene : int
-export var vision_radius_gene : int
+var genes : Array
+const speed_gene_index := 0
+const vision_radius_gene_index := 1
+
+var body_colour : Color
+var highlight_colour : Color
 
 var init_face_dir : Vector2
 var velocity : Vector2
@@ -23,17 +30,14 @@ var wander_angle := 0.0
 
 
 func _ready():
-	#seed the generator
-	randomize()
-	
 	velocity = init_face_dir
-	VisionCircleCollision.shape.radius = convert_gene(min_vision_radius, max_vision_radius, vision_radius_gene)
+	VisionCircleCollision.shape.radius = convert_gene(min_vision_radius, max_vision_radius, vision_radius_gene_index)
 	
-	set_colours()
-	
+	calc_colours()
 
-func _physics_process(delta):
-	var speed := convert_gene(min_speed, max_speed, speed_gene)
+
+func _physics_process(delta : float):
+	var speed := convert_gene(min_speed, max_speed, speed_gene_index)
 	
 	if not pathfind_to_food(speed, delta):
 		wander(speed, delta)
@@ -41,21 +45,22 @@ func _physics_process(delta):
 	update_walk_animation()
 
 
-func convert_gene(min_value, max_value, gene_value) -> float:
-	return (max_value - min_value) * (gene_value / 255.0) + min_value
+func convert_gene(min_value : int, max_value : int, gene_index : int) -> float:
+	return (max_value - min_value) * (genes[gene_index] / 255.0) + min_value
 
 
-func set_colours():
-	var body_colour := Color.from_hsv(speed_gene/360.0, 0.74, 0.74)
-	var highlight_colour := Color.from_hsv(speed_gene/360.0, 0.65, 0.89)
+func calc_colours():
+	var speed_gene : int = genes[speed_gene_index]
 	
+	body_colour = Color.from_hsv(speed_gene/360.0, 0.74, 0.74)
+	highlight_colour = Color.from_hsv(speed_gene/360.0, 0.65, 0.89)
 	
 	Sprite.material.set_shader_param("body_color", body_colour)
 	Sprite.material.set_shader_param("highlight_color", highlight_colour)
 	Particles.process_material.color = body_colour
+	
 
-
-func pathfind_to_food(speed, delta) -> bool:
+func pathfind_to_food(speed : float, delta : float) -> bool:
 	var dir := find_closest_food()
 	
 	# check for zero vector
@@ -86,7 +91,7 @@ func find_closest_food() -> Vector2:
 	return position.direction_to(target_pos)
 	
 
-func wander(speed, delta):
+func wander(speed : float, delta : float):
 	velocity = calc_wander().clamped(speed * delta)
 	position += velocity
 	
@@ -129,5 +134,18 @@ func update_walk_animation():
 	elif velocity.x > 0 and velocity.y > 0:
 		AnimationPlayer.play("walk_down_right")
 
+
 func collect_food():
 	print("Food collected")
+	
+	
+func breed(other: Slime) -> Slime:
+	var new_slime : Slime = self.duplicate()
+	
+	# apply crossover to each gene
+	for i in range(genes.size()):
+		var cross_str := randi()
+		new_slime.genes[i] = (genes[i] & cross_str) + (other.genes[i] & (~cross_str))
+	
+	return new_slime
+	

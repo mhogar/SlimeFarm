@@ -1,5 +1,7 @@
 extends Node2D
 
+class_name Food
+
 
 func _ready():
 	pass

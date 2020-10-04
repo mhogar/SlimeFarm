@@ -1,7 +1,5 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Slime.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Food.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Environment.gd" type="Script" id=3]
 [ext_resource path="res://GFX/Floor.png" type="Texture" id=4]
 
@@ -30,13 +28,7 @@ current = true
 
 [node name="Slimes" type="Node" parent="."]
 
-[node name="TemplateSlime" parent="Slimes" instance=ExtResource( 1 )]
-speed_gene = 255
-vision_radius_gene = 255
-
 [node name="Food" type="Node" parent="."]
-
-[node name="TemplateFood" parent="Food" instance=ExtResource( 2 )]
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource( 1 )

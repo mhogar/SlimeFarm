@@ -4,7 +4,8 @@
 [ext_resource path="res://Slime.gd" type="Script" id=2]
 [ext_resource path="res://Slime.shader" type="Shader" id=3]
 
-[sub_resource type="ParticlesMaterial" id=3]
+[sub_resource type="ParticlesMaterial" id=1]
+resource_local_to_scene = true
 flag_disable_z = true
 direction = Vector3( 0, 1, 0 )
 spread = 150.0
@@ -20,7 +21,8 @@ scale = 3.0
 scale_random = 1.0
 color = Color( 0.415686, 0.745098, 0.188235, 1 )
 
-[sub_resource type="ShaderMaterial" id=9]
+[sub_resource type="ShaderMaterial" id=2]
+resource_local_to_scene = true
 shader = ExtResource( 3 )
 shader_param/body_color = Plane( 0.415, 0.745, 0.188, 1 )
 shader_param/highlight_color = Plane( 0.553, 0.89, 0.31, 1 )
@@ -28,14 +30,13 @@ shader_param/body_mask = Vector3( 0.518, 0.494, 0.53 )
 shader_param/highlight_mask = Vector3( 0.501, 0.678, 0.718 )
 shader_param/threshold = 0.15
 
-[sub_resource type="CircleShape2D" id=1]
+[sub_resource type="CircleShape2D" id=3]
 radius = 23.076
 
-[sub_resource type="CircleShape2D" id=2]
+[sub_resource type="CircleShape2D" id=4]
 radius = 100.0
 
-[sub_resource type="Animation" id=4]
-resource_name = "walk_down_left"
+[sub_resource type="Animation" id=5]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -50,8 +51,7 @@ tracks/0/keys = {
 "values": [ 4, 5 ]
 }
 
-[sub_resource type="Animation" id=5]
-resource_name = "walk_down_right"
+[sub_resource type="Animation" id=6]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -66,7 +66,7 @@ tracks/0/keys = {
 "values": [ 6, 7 ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=7]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -81,8 +81,7 @@ tracks/0/keys = {
 "values": [ 0, 1 ]
 }
 
-[sub_resource type="Animation" id=7]
-resource_name = "walk_up_right"
+[sub_resource type="Animation" id=8]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -112,10 +111,10 @@ angle_change = 20.0
 position = Vector2( 0, 12.5 )
 explosiveness = 0.2
 local_coords = false
-process_material = SubResource( 3 )
+process_material = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
-material = SubResource( 9 )
+material = SubResource( 2 )
 position = Vector2( 1.52588e-05, 0 )
 scale = Vector2( 1.54496, 1.54496 )
 texture = ExtResource( 1 )
@@ -125,17 +124,17 @@ frame = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
 position = Vector2( 0, 4.15209 )
-shape = SubResource( 1 )
+shape = SubResource( 3 )
 
 [node name="VisionCircle" type="Area2D" parent="."]
 visible = false
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="VisionCircle"]
-shape = SubResource( 2 )
+shape = SubResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/walk_down_left = SubResource( 4 )
-anims/walk_down_right = SubResource( 5 )
-anims/walk_up_left = SubResource( 6 )
-anims/walk_up_right = SubResource( 7 )
+anims/walk_down_left = SubResource( 5 )
+anims/walk_down_right = SubResource( 6 )
+anims/walk_up_left = SubResource( 7 )
+anims/walk_up_right = SubResource( 8 )

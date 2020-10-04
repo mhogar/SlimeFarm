@@ -7,7 +7,6 @@ export var num_food : int
 
 onready var Slimes := $Slimes
 onready var Food := $Food
-onready var TemplateSlime := $Slimes/TemplateSlime
 
 var interation := 0
 
@@ -20,7 +19,7 @@ func _ready():
 	start_iteration()
 
 
-func _process(delta):
+func _process(_delta : float):
 	# check iteration is over
 	if Food.get_child_count() == 0:
 		end_iteration()
@@ -28,7 +27,6 @@ func _process(delta):
 
 func init_simulation():
 	create_slimes()
-	TemplateSlime.queue_free()
 
 
 func start_iteration():
@@ -45,19 +43,16 @@ func end_iteration():
 	
 
 func create_slimes():
+	var scene := load("res://Slime.tscn")
+	
 	for i in range(num_slimes):
-		var slime := TemplateSlime.duplicate()
+		var slime : Slime = scene.instance()
 		
-		# choose random position
-		slime.position.x = randf() * env_width
-		slime.position.y = randf() * env_height
-		
-		# choose random starting face direction
-		slime.init_face_dir.x = randf()
-		slime.init_face_dir.y = randf()
+		slime.genes.append(randi() % 256) # speed
+		slime.genes.append(randi() % 256) # vision radius
 		
 		# add slime to list
-		TemplateSlime.get_parent().add_child(slime)
+		Slimes.add_child(slime)
 
 
 func setup_slimes():
@@ -72,7 +67,7 @@ func setup_slimes():
 
 
 func create_food():
-	var scene = load("res://Food.tscn")
+	var scene := load("res://Food.tscn")
 	
 	for i in range(num_food):
 		var food = scene.instance()
@@ -81,5 +76,5 @@ func create_food():
 		food.position.x = randf() * env_width
 		food.position.y = randf() * env_height
 		
-		# add slime to list
+		# add food to list
 		Food.add_child(food)
