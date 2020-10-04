@@ -28,9 +28,9 @@ num_food = 20
 anchor_mode = 0
 current = true
 
-[node name="Simes" type="Node" parent="."]
+[node name="Slimes" type="Node" parent="."]
 
-[node name="TemplateSlime" parent="Simes" instance=ExtResource( 1 )]
+[node name="TemplateSlime" parent="Slimes" instance=ExtResource( 1 )]
 speed_gene = 255
 vision_radius_gene = 255
 
