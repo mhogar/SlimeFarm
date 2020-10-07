@@ -70,12 +70,15 @@ func setup_slimes():
 func create_food():
 	var scene := load("res://Food.tscn")
 	
+	var min_x := env_width * 0.1
+	var min_y := env_height * 0.1
+	
 	for i in range(num_food):
 		var food = scene.instance()
 		
-		# choose random position
-		food.position.x = randf() * env_width
-		food.position.y = randf() * env_height
+		# choose random position in inner box
+		food.position.x = randf() * (env_width - 2 * min_x) + min_x
+		food.position.y = randf() * (env_height - 2 * min_y) + min_y
 		
 		# add food to list
 		Food.add_child(food)
