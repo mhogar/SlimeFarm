@@ -82,27 +82,52 @@ func create_food():
 
 
 func select_parent_slime(slimes : Array) -> Slime:
-	# TODO: select slime using weighted probability
-	return slimes[randi() % slimes.size()]
+	# calc the total number of food collected by the slimes
+	var total_food_collected := 0
+	for slime in slimes:
+		total_food_collected += slime.food_collected
+	
+	# if no food was collected, then choose a slime at random
+	if total_food_collected == 0:
+		return slimes[randi() % slimes.size()]
+	
+	# generate the random value
+	var r := randf() * total_food_collected
+	
+	# select the slime with slimes who collected more food being more likely to be chosen
+	var total := 0
+	for slime in slimes:
+		total += slime.food_collected
+		if total >= r:
+			return slime
+	
+	# this should in theory never be reached, but return the last slime just to be safe
+	return slimes.back()
 
 
 func breed_slimes():
 	var slimes := Slimes.get_children().duplicate()
 	
-	#for i in range(pop_size):
-	while slimes.size() > 0:
+	var num_slimes := 0
+	while num_slimes < pop_size:
 		# select first parent
 		var parent1 := select_parent_slime(slimes)
 		slimes.erase(parent1)
-		#i += 1
+		num_slimes += 1
 		
-		# if there are more slimes left to breed with
-		if slimes.size() > 0:
-			var parent2 := select_parent_slime(slimes)
-			slimes.erase(parent2)
-			
-			# breed the parents and add the child to the scene
-			Slimes.add_child(parent1.breed(parent2))
+		if num_slimes >= pop_size:
+			break
+		
+		var parent2 := select_parent_slime(slimes)
+		slimes.erase(parent2)
+		num_slimes += 1
+		
+		if num_slimes >= pop_size:
+			break
+		
+		# breed the parents and add the child to the scene
+		Slimes.add_child(parent1.breed(parent2))
+		num_slimes += 1
 
 	# remove any slimes that did not breed from the scene
 	for slime in slimes:

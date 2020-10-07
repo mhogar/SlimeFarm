@@ -34,6 +34,7 @@ shader_param/threshold = 0.15
 radius = 23.076
 
 [sub_resource type="CircleShape2D" id=4]
+resource_local_to_scene = true
 radius = 100.0
 
 [sub_resource type="Animation" id=5]
@@ -97,25 +98,26 @@ tracks/0/keys = {
 }
 
 [node name="Slime" type="KinematicBody2D"]
+position = Vector2( 0, -0.230042 )
 collision_mask = 0
 script = ExtResource( 2 )
 min_speed = 30.0
 max_speed = 100.0
-min_vision_radius = 50.0
+min_vision_radius = 30.0
 max_vision_radius = 200.0
 wander_force = 10.0
 displacement_offset = 10.0
 angle_change = 20.0
 
 [node name="Particles2D" type="Particles2D" parent="."]
-position = Vector2( 0, 12.5 )
+position = Vector2( 0, 8.58945 )
 explosiveness = 0.2
 local_coords = false
 process_material = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
 material = SubResource( 2 )
-position = Vector2( 1.52588e-05, 0 )
+position = Vector2( 1.52588e-05, -3.91055 )
 scale = Vector2( 1.54496, 1.54496 )
 texture = ExtResource( 1 )
 hframes = 8
@@ -123,11 +125,12 @@ frame = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
-position = Vector2( 0, 4.15209 )
+position = Vector2( 0, 0.241537 )
 shape = SubResource( 3 )
 
 [node name="VisionCircle" type="Area2D" parent="."]
 visible = false
+position = Vector2( 0, -3.91055 )
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="VisionCircle"]

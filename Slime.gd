@@ -23,6 +23,7 @@ const vision_radius_gene_index := 1
 
 var body_colour : Color
 var highlight_colour : Color
+var vision_circle_colour : Color
 
 var init_face_dir : Vector2
 var velocity : Vector2
@@ -47,6 +48,11 @@ func _physics_process(delta : float):
 	update_walk_animation()
 
 
+func _draw():
+	# draw the vision circle
+	draw_arc(Vector2(), VisionCircleCollision.shape.radius, deg2rad(0), deg2rad(360), 35, vision_circle_colour, 2)
+
+
 func reset_stats():
 	food_collected = 0
 
@@ -57,9 +63,11 @@ func convert_gene(min_value : int, max_value : int, gene_index : int) -> float:
 
 func calc_colours():
 	var speed_gene : int = genes[speed_gene_index]
+	var vision_radius_gene : int = genes[vision_radius_gene_index]
 	
 	body_colour = Color.from_hsv(speed_gene/360.0, 0.74, 0.74)
 	highlight_colour = Color.from_hsv(speed_gene/360.0, 0.65, 0.89)
+	vision_circle_colour = Color.from_hsv(vision_radius_gene/360.0, 0.65, 0.89)
 	
 	Sprite.material.set_shader_param("body_color", body_colour)
 	Sprite.material.set_shader_param("highlight_color", highlight_colour)
