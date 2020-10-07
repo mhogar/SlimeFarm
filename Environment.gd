@@ -4,6 +4,7 @@ export var env_width : int
 export var env_height : int
 export var pop_size : int
 export var num_food : int
+export var mutation_prob : float
 
 onready var Slimes := $Slimes
 onready var Food := $Food

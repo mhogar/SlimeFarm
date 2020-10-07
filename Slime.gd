@@ -154,12 +154,20 @@ func collect_food():
 	
 	
 func breed(other: Slime) -> Slime:
+	var mutation_prob = get_parent().get_parent().mutation_prob
 	var new_slime : Slime = load("res://Slime.tscn").instance()
 	
 	# apply crossover to each gene
 	for i in range(genes.size()):
 		var cross_str := randi()
-		new_slime.genes.append((genes[i] & cross_str) + (other.genes[i] & (~cross_str)))
+		var gene : int = (genes[i] & cross_str) + (other.genes[i] & (~cross_str))
+		
+		# apply mutation
+		for i in range(8):
+			if randf() <= mutation_prob:
+				gene ^= (1 << i)
+		
+		new_slime.genes.append(gene)
 	
 	return new_slime
-	
+

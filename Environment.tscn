@@ -21,6 +21,7 @@ env_width = 1024
 env_height = 608
 pop_size = 6
 num_food = 20
+mutation_prob = 0.01
 
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0
