@@ -163,9 +163,9 @@ func breed(other: Slime) -> Slime:
 		var gene : int = (genes[i] & cross_str) + (other.genes[i] & (~cross_str))
 		
 		# apply mutation
-		for i in range(8):
+		for j in range(8):
 			if randf() <= mutation_prob:
-				gene ^= (1 << i)
+				gene ^= (1 << j)
 		
 		new_slime.genes.append(gene)
 	
