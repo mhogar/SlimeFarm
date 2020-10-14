@@ -1,5 +1,6 @@
 extends Node2D
 
+export var time_scale := 1.0
 export var env_width : int
 export var env_height : int
 export var pop_size : int
@@ -9,18 +10,24 @@ export var mutation_prob : float
 onready var Slimes := $Slimes
 onready var Food := $Food
 
-var interation := 0
+var iteration := 0
+var csv_file : File
 
 
 func _ready():
 	# seed the generator
 	randomize()
 	
+	Engine.set_time_scale(time_scale)
+	
 	init_simulation()
 	start_iteration()
 
 
-func _process(_delta : float):
+func _exit_tree():
+	csv_file.close()
+
+func _physics_process(_delta : float):
 	# check iteration is over
 	if Food.get_child_count() == 0:
 		end_iteration()
@@ -28,11 +35,13 @@ func _process(_delta : float):
 
 func init_simulation():
 	create_slimes()
+	create_csv()
 
 
 func start_iteration():
-	interation += 1
+	iteration += 1
 	
+	export_stats()
 	setup_slimes()
 	create_food()
 	
@@ -41,6 +50,12 @@ func end_iteration():
 	breed_slimes()
 	start_iteration()
 	
+
+func create_csv():
+	csv_file = File.new()
+	csv_file.open("user://data_%d.csv" % OS.get_unix_time(), File.WRITE)
+	csv_file.store_line("Iteration,Avg. Speed,Avg. Vision Radius")
+
 
 func create_slimes():
 	var scene := load("res://Slime.tscn")
@@ -53,6 +68,25 @@ func create_slimes():
 		
 		# add slime to list
 		Slimes.add_child(slime)
+
+
+func export_stats():
+	# calc the data
+	var data := PoolStringArray()
+	data.append(String(iteration))
+	data.append(String(calc_gene_avg(Slime.speed_gene_index)))
+	data.append(String(calc_gene_avg(Slime.vision_radius_gene_index)))
+	
+	# write the data to the file
+	csv_file.store_csv_line(data)
+
+
+func calc_gene_avg(index : int) -> float:
+	var total := 0
+	for slime in Slimes.get_children():
+		total += slime.genes[index]
+	
+	return float(total) / Slimes.get_child_count()
 
 
 func setup_slimes():
