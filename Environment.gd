@@ -13,11 +13,16 @@ onready var Food := $Food
 var iteration := 0
 var csv_file : File
 
+var timer : float
+var start_time: float
+var end_time : float
+
 
 func _ready():
 	# seed the generator
 	randomize()
 	
+	timer = 0.0
 	Engine.set_time_scale(time_scale)
 	
 	init_simulation()
@@ -27,7 +32,9 @@ func _ready():
 func _exit_tree():
 	csv_file.close()
 
-func _physics_process(_delta : float):
+func _physics_process(delta : float):
+	timer += delta;
+	
 	# check iteration is over
 	if Food.get_child_count() == 0:
 		end_iteration()
@@ -39,14 +46,17 @@ func init_simulation():
 
 
 func start_iteration():
+	start_time = timer
 	iteration += 1
 	
-	export_stats()
 	setup_slimes()
 	create_food()
 	
 
 func end_iteration():
+	end_time = timer
+	export_stats()
+	
 	breed_slimes()
 	start_iteration()
 	
@@ -54,7 +64,7 @@ func end_iteration():
 func create_csv():
 	csv_file = File.new()
 	csv_file.open("user://data_%d.csv" % OS.get_unix_time(), File.WRITE)
-	csv_file.store_line("Iteration,Avg. Speed,Avg. Vision Radius")
+	csv_file.store_line("Iteration,Time (s),Avg. Speed,Avg. Vision Radius")
 
 
 func create_slimes():
@@ -74,6 +84,7 @@ func export_stats():
 	# calc the data
 	var data := PoolStringArray()
 	data.append(String(iteration))
+	data.append(String(end_time - start_time))
 	data.append(String(calc_gene_avg(Slime.speed_gene_index)))
 	data.append(String(calc_gene_avg(Slime.vision_radius_gene_index)))
 	
