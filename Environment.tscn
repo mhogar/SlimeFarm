@@ -25,7 +25,6 @@ num_food = 20
 mutation_prob = 0.01
 
 [node name="Camera2D" type="Camera2D" parent="."]
-anchor_mode = 0
 current = true
 script = ExtResource( 1 )
 
