@@ -8,7 +8,8 @@ var pan_start : Vector2
 
 
 func _ready():
-	pass
+	position.x = Config.get_env_width() / 2.0
+	position.y = Config.get_env_height() / 2.0
 
 
 func _process(_delta):
@@ -35,4 +36,14 @@ func handle_pan():
 		var mouse_pos := get_viewport().get_mouse_position()
 		position += pan_start - mouse_pos
 		pan_start = mouse_pos
+		
+		if position.x < 0:
+			position.x = 0
+		elif position.x > Config.get_env_width():
+			position.x = Config.get_env_width()
+			
+		if position.y < 0:
+			position.y = 0
+		elif position.y > Config.get_env_height():
+			position.y = Config.get_env_height()
 		

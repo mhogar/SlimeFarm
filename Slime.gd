@@ -128,13 +128,13 @@ func wrap_screen():
 	var env := get_parent().get_parent()
 	
 	if position.x < 0:
-		position.x = env.env_width
-	elif position.x > env.env_width:
+		position.x = Config.get_env_width()
+	elif position.x > Config.get_env_width():
 		position.x = 0
 		
 	if position.y < 0:
-		position.y = env.env_height
-	elif position.y > env.env_height:
+		position.y = Config.get_env_height()
+	elif position.y > Config.get_env_height():
 		position.y = 0
 		
 

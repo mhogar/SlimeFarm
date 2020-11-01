@@ -1,12 +1,11 @@
 extends Node2D
 
 export var time_scale := 1.0
-export var env_width : int
-export var env_height : int
 export var pop_size : int
 export var num_food : int
 export var mutation_prob : float
 
+onready var Map := $TileMap
 onready var Slimes := $Slimes
 onready var Food := $Food
 
@@ -41,6 +40,7 @@ func _physics_process(delta : float):
 
 
 func init_simulation():
+	create_environment()
 	create_slimes()
 	create_csv()
 
@@ -59,6 +59,14 @@ func end_iteration():
 	
 	breed_slimes()
 	start_iteration()
+	
+
+func create_environment():
+	Map.clear()
+	
+	for x in range(Config.num_tiles_x):
+		for y in range(Config.num_tiles_y):
+			Map.set_cell(x, y, 0)
 	
 
 func create_csv():
@@ -105,8 +113,8 @@ func setup_slimes():
 		slime.reset_stats()
 		
 		# choose random position
-		slime.position.x = randf() * env_width
-		slime.position.y = randf() * env_height
+		slime.position.x = randf() * Config.get_env_width()
+		slime.position.y = randf() * Config.get_env_height()
 		
 		# choose random starting face direction
 		slime.init_face_dir.x = randf()
@@ -116,15 +124,15 @@ func setup_slimes():
 func create_food():
 	var scene := load("res://Food.tscn")
 	
-	var min_x := env_width * 0.1
-	var min_y := env_height * 0.1
+	var min_x := Config.get_env_width() * 0.1
+	var min_y := Config.get_env_height() * 0.1
 	
 	for i in range(num_food):
 		var food = scene.instance()
 		
 		# choose random position in inner box
-		food.position.x = randf() * (env_width - 2 * min_x) + min_x
-		food.position.y = randf() * (env_height - 2 * min_y) + min_y
+		food.position.x = randf() * (Config.get_env_width() - 2 * min_x) + min_x
+		food.position.y = randf() * (Config.get_env_height() - 2 * min_y) + min_y
 		
 		# add food to list
 		Food.add_child(food)

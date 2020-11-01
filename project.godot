@@ -30,6 +30,10 @@ config/name="SlimeFarm"
 run/main_scene="res://Environment.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Config="*res://Config.gd"
+
 [input]
 
 camera_zoom_in={
