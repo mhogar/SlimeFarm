@@ -1,6 +1,7 @@
 extends Node2D
 
-export var time_scale : float
+const max_time_scale := 8.0
+const min_time_scale := 1.0
 
 export var num_tiles_x : int
 export var num_tiles_y : int
@@ -31,8 +32,15 @@ func _exit_tree():
 	csv_file.close()
 
 
+func _process(_delta):
+	if Input.is_action_just_pressed("speed_up") && Engine.time_scale < max_time_scale:
+		Engine.time_scale *= 2.0
+	elif Input.is_action_just_pressed("slow_down") && Engine.time_scale > min_time_scale:
+		Engine.time_scale /= 2.0
+
+
 func init_simulation():
-	Engine.set_time_scale(time_scale)
+	Engine.set_time_scale(min_time_scale)
 	create_csv()
 	
 	var env_width : int = num_tiles_x * Environment.cell_size.x
