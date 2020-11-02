@@ -1,7 +1,15 @@
 extends Node2D
 
-export var time_scale := 4.0
+export var time_scale : float
 
+export var num_tiles_x : int
+export var num_tiles_y : int
+export var pop_size : int
+export var num_food : int
+export var mutation_prob : float
+
+onready var Environment := $Environment
+onready var Camera := $Camera
 onready var Iteration := $Iteration
 onready var Population := $Population
 
@@ -16,8 +24,7 @@ func _ready():
 	init_simulation()
 	
 	iteration = 1
-	Population.initiaize()
-	Iteration.start_new(Population.slimes)
+	Iteration.start_new()
 
 
 func _exit_tree():
@@ -27,6 +34,14 @@ func _exit_tree():
 func init_simulation():
 	Engine.set_time_scale(time_scale)
 	create_csv()
+	
+	var env_width : int = num_tiles_x * Environment.cell_size.x
+	var env_height : int = num_tiles_y * Environment.cell_size.y
+	
+	Environment.initialize(num_tiles_x, num_tiles_y)
+	Camera.initialize(env_width, env_height)
+	Population.initiaize(pop_size)
+	Iteration.initialize(env_width, env_height, Population.slimes, num_food)
 
 
 func create_csv():
@@ -47,5 +62,5 @@ func _on_Iteration_finished():
 	export_stats()
 	
 	iteration += 1
-	Population.breed_slimes()
-	Iteration.start_new(Population.slimes)
+	Population.breed_slimes(mutation_prob)
+	Iteration.start_new()

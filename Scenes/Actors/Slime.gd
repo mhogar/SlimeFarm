@@ -126,16 +126,19 @@ func calc_wander() -> Vector2:
 	
 
 func wrap_screen():
-	var env := get_parent().get_parent()
+	# TODO: remove dependency of needing to know the environment size
+	var simulation := get_parent().get_parent().get_parent()
+	var env_width : int = simulation.num_tiles_x * simulation.Environment.cell_size.x
+	var env_height : int = simulation.num_tiles_y * simulation.Environment.cell_size.y
 	
 	if position.x < 0:
-		position.x = Config.get_env_width()
-	elif position.x > Config.get_env_width():
+		position.x = env_width
+	elif position.x > env_width:
 		position.x = 0
 		
 	if position.y < 0:
-		position.y = Config.get_env_height()
-	elif position.y > Config.get_env_height():
+		position.y = env_height
+	elif position.y > env_height:
 		position.y = 0
 		
 
@@ -152,22 +155,3 @@ func update_walk_animation():
 
 func collect_food():
 	food_collected += 1
-	
-	
-func breed(other: Slime) -> Slime:
-	var new_slime : Slime = load("res://Scenes/Actors/Slime.tscn").instance()
-	
-	# apply crossover to each gene
-	for i in range(genes.size()):
-		var cross_str := randi()
-		var gene : int = (genes[i] & cross_str) + (other.genes[i] & (~cross_str))
-		
-		# apply mutation
-		for j in range(8):
-			if randf() <= Config.mutation_prob:
-				gene ^= (1 << j)
-		
-		new_slime.genes.append(gene)
-	
-	return new_slime
-

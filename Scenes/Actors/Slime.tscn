@@ -4,7 +4,6 @@
 [ext_resource path="res://GFX/Slime.png" type="Texture" id=2]
 [ext_resource path="res://Scenes/Actors/Slime.shader" type="Shader" id=3]
 
-
 [sub_resource type="ParticlesMaterial" id=1]
 resource_local_to_scene = true
 flag_disable_z = true

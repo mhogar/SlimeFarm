@@ -8,8 +8,13 @@
 
 [node name="Simulation" type="Node2D"]
 script = ExtResource( 1 )
+num_tiles_x = 50
+num_tiles_y = 50
+pop_size = 20
+num_food = 80
+mutation_prob = 0.01
 
-[node name="TileMap" parent="." instance=ExtResource( 3 )]
+[node name="Environment" parent="." instance=ExtResource( 3 )]
 
 [node name="Camera" parent="." instance=ExtResource( 2 )]
 current = true
