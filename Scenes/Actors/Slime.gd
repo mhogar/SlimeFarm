@@ -33,6 +33,7 @@ var food_collected : int
 
 
 func _ready():
+	reset_stats()
 	velocity = init_face_dir
 	VisionCircleCollision.shape.radius = convert_gene(min_vision_radius, max_vision_radius, vision_radius_gene_index)
 	
@@ -154,8 +155,7 @@ func collect_food():
 	
 	
 func breed(other: Slime) -> Slime:
-	var mutation_prob = get_parent().get_parent().mutation_prob
-	var new_slime : Slime = load("res://Slime.tscn").instance()
+	var new_slime : Slime = load("res://Scenes/Actors/Slime.tscn").instance()
 	
 	# apply crossover to each gene
 	for i in range(genes.size()):
@@ -164,7 +164,7 @@ func breed(other: Slime) -> Slime:
 		
 		# apply mutation
 		for j in range(8):
-			if randf() <= mutation_prob:
+			if randf() <= Config.mutation_prob:
 				gene ^= (1 << j)
 		
 		new_slime.genes.append(gene)

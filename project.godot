@@ -12,12 +12,12 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "Food",
 "language": "GDScript",
-"path": "res://Food.gd"
+"path": "res://Scenes/Actors/Food.gd"
 }, {
 "base": "Node2D",
 "class": "Slime",
 "language": "GDScript",
-"path": "res://Slime.gd"
+"path": "res://Scenes/Actors/Slime.gd"
 } ]
 _global_script_class_icons={
 "Food": "",
@@ -27,12 +27,12 @@ _global_script_class_icons={
 [application]
 
 config/name="SlimeFarm"
-run/main_scene="res://Environment.tscn"
+run/main_scene="res://Scenes/Simulation/Simulation.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
-Config="*res://Config.gd"
+Config="*res://Scenes/Config.gd"
 
 [input]
 
