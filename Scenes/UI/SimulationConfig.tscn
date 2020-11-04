@@ -32,7 +32,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="GUI/VBoxContainer"]
+[node name="SelectorContainer" type="VBoxContainer" parent="GUI/VBoxContainer"]
 margin_right = 343.0
 margin_bottom = 536.0
 size_flags_vertical = 3
@@ -41,7 +41,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TilesXSelector" parent="GUI/VBoxContainer/VBoxContainer2" instance=ExtResource( 2 )]
+[node name="TilesXSelector" parent="GUI/VBoxContainer/SelectorContainer" instance=ExtResource( 2 )]
 margin_left = 0.0
 margin_right = 343.0
 label = "Tiles X"
@@ -51,7 +51,7 @@ max_value = 100.0
 default_value = 20.0
 step = 1.0
 
-[node name="TilesYSelector" parent="GUI/VBoxContainer/VBoxContainer2" instance=ExtResource( 2 )]
+[node name="TilesYSelector" parent="GUI/VBoxContainer/SelectorContainer" instance=ExtResource( 2 )]
 margin_left = 0.0
 margin_top = 35.0
 margin_right = 343.0
@@ -63,7 +63,7 @@ max_value = 100.0
 default_value = 20.0
 step = 1.0
 
-[node name="PopSizeSelector" parent="GUI/VBoxContainer/VBoxContainer2" instance=ExtResource( 2 )]
+[node name="PopSizeSelector" parent="GUI/VBoxContainer/SelectorContainer" instance=ExtResource( 2 )]
 margin_left = 0.0
 margin_top = 70.0
 margin_right = 343.0
@@ -75,7 +75,7 @@ max_value = 100.0
 default_value = 6.0
 step = 1.0
 
-[node name="NumFoodSelector" parent="GUI/VBoxContainer/VBoxContainer2" instance=ExtResource( 2 )]
+[node name="NumFoodSelector" parent="GUI/VBoxContainer/SelectorContainer" instance=ExtResource( 2 )]
 margin_left = 0.0
 margin_top = 105.0
 margin_right = 343.0
@@ -87,7 +87,7 @@ max_value = 300.0
 default_value = 10.0
 step = 1.0
 
-[node name="MutProbSelector" parent="GUI/VBoxContainer/VBoxContainer2" instance=ExtResource( 2 )]
+[node name="MutProbSelector" parent="GUI/VBoxContainer/SelectorContainer" instance=ExtResource( 2 )]
 margin_left = 0.0
 margin_top = 140.0
 margin_right = 343.0
@@ -102,5 +102,7 @@ step = 0.01
 margin_top = 540.0
 margin_right = 343.0
 margin_bottom = 560.0
+toggle_mode = true
 text = "Start Simulation"
 [connection signal="pressed" from="GUI/VBoxContainer/Button" to="." method="_on_Button_pressed"]
+[connection signal="toggled" from="GUI/VBoxContainer/Button" to="." method="_on_Button_toggled"]

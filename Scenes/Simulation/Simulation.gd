@@ -1,6 +1,6 @@
 extends Node2D
 
-onready var Config := $SimulationConfig
+onready var ConfigUI := $SimulationConfig
 onready var Environment := $Environment
 onready var Camera := $Camera
 onready var Iteration := $Iteration
@@ -19,8 +19,7 @@ func _ready():
 
 
 func _exit_tree():
-	if csv_file != null:
-		csv_file.close()
+	close_csv()
 
 
 func _process(_delta):
@@ -32,14 +31,14 @@ func _process(_delta):
 
 func start_simulation():
 	# calc the environment's dimensions
-	var env_width : int = Config.get_num_tiles_x() * Environment.cell_size.x
-	var env_height : int = Config.get_num_tiles_y() * Environment.cell_size.y
+	var env_width : int = ConfigUI.get_num_tiles_x() * Environment.cell_size.x
+	var env_height : int = ConfigUI.get_num_tiles_y() * Environment.cell_size.y
 	
 	# initialize the scenes
-	Environment.initialize(Config.get_num_tiles_x(), Config.get_num_tiles_y())
+	Environment.initialize(ConfigUI.get_num_tiles_x(), ConfigUI.get_num_tiles_y())
 	Camera.initialize(env_width, env_height)
-	Population.initiaize(Config.get_population_size())
-	Iteration.initialize(env_width, env_height, Population.slimes, Config.get_num_food())
+	Population.initiaize(ConfigUI.get_population_size())
+	Iteration.initialize(env_width, env_height, Population.slimes, ConfigUI.get_num_food())
 	
 	# set default control values
 	Engine.set_time_scale(min_time_scale)
@@ -58,6 +57,11 @@ func create_csv():
 	csv_file.store_line("Iteration,Time (s),Avg. Speed,Avg. Vision Radius")
 	
 	
+func close_csv():	
+	if csv_file != null:
+		csv_file.close()
+		
+	
 func export_stats():
 	var data := PoolStringArray([iteration])
 	#data.append(String(iteration))
@@ -68,13 +72,16 @@ func export_stats():
 
 func _on_SimulationConfig_simulation_start():
 	start_simulation()
-	Config.hide()
+
+
+func _on_SimulationConfig_simulation_end():
+	Iteration.abort()
+	close_csv()
 
 
 func _on_Iteration_finished():
 	export_stats()
 	
 	iteration += 1
-	Population.breed_slimes(Config.get_mutation_probability())
+	Population.breed_slimes(ConfigUI.get_mutation_probability())
 	Iteration.start_new()
-

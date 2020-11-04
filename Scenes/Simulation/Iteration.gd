@@ -72,13 +72,23 @@ func create_food():
 		Food.add_child(food)
 
 
+func abort():
+	iteration_running = false
+	
+	for slime in Slimes.get_children():
+		slime.queue_free()
+		
+	for food in Food.get_children():
+		food.queue_free()
+	
+
 func end_iteration():
 	iteration_running = false
 	
 	calc_stats()
 	remove_slimes()
 	emit_signal("finished")
-	
+
 	
 func calc_stats():
 	stats = []

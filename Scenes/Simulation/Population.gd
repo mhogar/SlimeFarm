@@ -6,6 +6,7 @@ var slimes := []
 func initiaize(pop_size : int):
 	var scene := load("res://Scenes/Actors/Slime.tscn")
 	
+	slimes.clear()
 	for i in range(pop_size):
 		var slime : Slime = scene.instance()
 		

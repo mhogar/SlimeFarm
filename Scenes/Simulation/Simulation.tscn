@@ -21,4 +21,5 @@ current = true
 
 [node name="SimulationConfig" parent="." instance=ExtResource( 6 )]
 [connection signal="finished" from="Iteration" to="." method="_on_Iteration_finished"]
+[connection signal="simulation_end" from="SimulationConfig" to="." method="_on_SimulationConfig_simulation_end"]
 [connection signal="simulation_start" from="SimulationConfig" to="." method="_on_SimulationConfig_simulation_start"]

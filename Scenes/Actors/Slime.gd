@@ -128,8 +128,8 @@ func calc_wander() -> Vector2:
 func wrap_screen():
 	# TODO: remove dependency of needing to know the environment size
 	var simulation := get_parent().get_parent().get_parent()
-	var env_width : int = simulation.Config.get_num_tiles_x() * simulation.Environment.cell_size.x
-	var env_height : int = simulation.Config.get_num_tiles_y() * simulation.Environment.cell_size.y
+	var env_width : int = simulation.ConfigUI.get_num_tiles_x() * simulation.Environment.cell_size.x
+	var env_height : int = simulation.ConfigUI.get_num_tiles_y() * simulation.Environment.cell_size.y
 	
 	if position.x < 0:
 		position.x = env_width

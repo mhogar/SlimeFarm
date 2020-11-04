@@ -34,6 +34,16 @@ func get_value() -> float:
 	return SpinBox.value
 
 
+func disable_editing():
+	Slider.editable = false
+	SpinBox.editable = false
+	
+	
+func enable_editing():
+	Slider.editable = true
+	SpinBox.editable = true
+	
+
 func _on_HSlider_value_changed(value):
 	SpinBox.value = value
 
