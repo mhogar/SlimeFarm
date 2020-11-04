@@ -1,18 +1,13 @@
 extends Node2D
 
-const max_time_scale := 8.0
-const min_time_scale := 1.0
-
-export var num_tiles_x : int
-export var num_tiles_y : int
-export var pop_size : int
-export var num_food : int
-export var mutation_prob : float
-
+onready var Config := $SimulationConfig
 onready var Environment := $Environment
 onready var Camera := $Camera
 onready var Iteration := $Iteration
 onready var Population := $Population
+
+const max_time_scale := 8.0
+const min_time_scale := 1.0
 
 var iteration : int
 var csv_file : File
@@ -21,15 +16,11 @@ var csv_file : File
 func _ready():
 	# seed the generator
 	randomize()
-	
-	init_simulation()
-	
-	iteration = 1
-	Iteration.start_new()
 
 
 func _exit_tree():
-	csv_file.close()
+	if csv_file != null:
+		csv_file.close()
 
 
 func _process(_delta):
@@ -39,17 +30,26 @@ func _process(_delta):
 		Engine.time_scale /= 2.0
 
 
-func init_simulation():
+func start_simulation():
+	# calc the environment's dimensions
+	var env_width : int = Config.get_num_tiles_x() * Environment.cell_size.x
+	var env_height : int = Config.get_num_tiles_y() * Environment.cell_size.y
+	
+	# initialize the scenes
+	Environment.initialize(Config.get_num_tiles_x(), Config.get_num_tiles_y())
+	Camera.initialize(env_width, env_height)
+	Population.initiaize(Config.get_population_size())
+	Iteration.initialize(env_width, env_height, Population.slimes, Config.get_num_food())
+	
+	# set default control values
 	Engine.set_time_scale(min_time_scale)
+	
+	# create the stats file
 	create_csv()
 	
-	var env_width : int = num_tiles_x * Environment.cell_size.x
-	var env_height : int = num_tiles_y * Environment.cell_size.y
-	
-	Environment.initialize(num_tiles_x, num_tiles_y)
-	Camera.initialize(env_width, env_height)
-	Population.initiaize(pop_size)
-	Iteration.initialize(env_width, env_height, Population.slimes, num_food)
+	# start the first iteration
+	iteration = 1
+	Iteration.start_new()
 
 
 func create_csv():
@@ -64,11 +64,17 @@ func export_stats():
 	data.append_array(PoolStringArray(Iteration.stats))
 	
 	csv_file.store_csv_line(data)
-	
+
+
+func _on_SimulationConfig_simulation_start():
+	start_simulation()
+	Config.hide()
+
 
 func _on_Iteration_finished():
 	export_stats()
 	
 	iteration += 1
-	Population.breed_slimes(mutation_prob)
+	Population.breed_slimes(Config.get_mutation_probability())
 	Iteration.start_new()
+

@@ -1,0 +1,106 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scenes/UI/SimulationConfig.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/UI/ConfigValueSelector.tscn" type="PackedScene" id=2]
+[ext_resource path="res://GFX/glassPanel.png" type="Texture" id=3]
+
+[node name="SimulationConfig" type="CanvasLayer"]
+script = ExtResource( 1 )
+
+[node name="GUI" type="NinePatchRect" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -363.0
+texture = ExtResource( 3 )
+patch_margin_left = 10
+patch_margin_top = 10
+patch_margin_right = 10
+patch_margin_bottom = 10
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GUI"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 20.0
+margin_right = -10.0
+margin_bottom = -20.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="GUI/VBoxContainer"]
+margin_right = 343.0
+margin_bottom = 536.0
+size_flags_vertical = 3
+custom_constants/separation = 10
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TilesXSelector" parent="GUI/VBoxContainer/VBoxContainer2" instance=ExtResource( 2 )]
+margin_left = 0.0
+margin_right = 343.0
+label = "Tiles X"
+hint = "The number of tiles in the width of the environment"
+min_value = 10.0
+max_value = 100.0
+default_value = 20.0
+step = 1.0
+
+[node name="TilesYSelector" parent="GUI/VBoxContainer/VBoxContainer2" instance=ExtResource( 2 )]
+margin_left = 0.0
+margin_top = 35.0
+margin_right = 343.0
+margin_bottom = 60.0
+label = "Tiles Y"
+hint = "The number of tiles in the height of the environment"
+min_value = 10.0
+max_value = 100.0
+default_value = 20.0
+step = 1.0
+
+[node name="PopSizeSelector" parent="GUI/VBoxContainer/VBoxContainer2" instance=ExtResource( 2 )]
+margin_left = 0.0
+margin_top = 70.0
+margin_right = 343.0
+margin_bottom = 95.0
+label = "Population Size"
+hint = "The number of slimes in the population"
+min_value = 3.0
+max_value = 100.0
+default_value = 6.0
+step = 1.0
+
+[node name="NumFoodSelector" parent="GUI/VBoxContainer/VBoxContainer2" instance=ExtResource( 2 )]
+margin_left = 0.0
+margin_top = 105.0
+margin_right = 343.0
+margin_bottom = 130.0
+label = "Food Count"
+hint = "The number of food pellets in each iteration"
+min_value = 1.0
+max_value = 300.0
+default_value = 10.0
+step = 1.0
+
+[node name="MutProbSelector" parent="GUI/VBoxContainer/VBoxContainer2" instance=ExtResource( 2 )]
+margin_left = 0.0
+margin_top = 140.0
+margin_right = 343.0
+margin_bottom = 165.0
+label = "Mutation Probability"
+hint = "The probability that a gene mutation will occur during breeding"
+max_value = 1.0
+default_value = 0.01
+step = 0.01
+
+[node name="Button" type="Button" parent="GUI/VBoxContainer"]
+margin_top = 540.0
+margin_right = 343.0
+margin_bottom = 560.0
+text = "Start Simulation"
+[connection signal="pressed" from="GUI/VBoxContainer/Button" to="." method="_on_Button_pressed"]

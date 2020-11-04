@@ -13,8 +13,13 @@ var num_food : int
 var timer : float
 var stats : Array
 
+var iteration_running := false
+
 
 func _physics_process(delta):
+	if !iteration_running:
+		return
+	
 	timer += delta
 	
 	if Food.get_child_count() == 0:
@@ -30,6 +35,8 @@ func initialize(env_width : int, env_height : int, slimes : Array, num_food : in
 
 func start_new():
 	timer = 0.0
+	iteration_running = true
+	
 	setup_slimes()
 	create_food()
 
@@ -66,6 +73,8 @@ func create_food():
 
 
 func end_iteration():
+	iteration_running = false
+	
 	calc_stats()
 	remove_slimes()
 	emit_signal("finished")

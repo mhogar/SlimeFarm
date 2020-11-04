@@ -1,0 +1,45 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scenes/UI/ConfigValueSelector.gd" type="Script" id=1]
+
+[node name="ConfigValueSelector" type="HBoxContainer"]
+margin_left = 6.0
+margin_right = 1017.0
+margin_bottom = 25.0
+custom_constants/separation = 5
+alignment = 2
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+margin_top = 5.0
+margin_right = 777.0
+margin_bottom = 19.0
+size_flags_horizontal = 3
+text = "Sample Text"
+align = 2
+valign = 1
+autowrap = true
+
+[node name="HSlider" type="HSlider" parent="."]
+margin_left = 782.0
+margin_right = 932.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 150, 25 )
+scrollable = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SpinBox" type="SpinBox" parent="."]
+margin_left = 937.0
+margin_right = 1011.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 50, 20 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="value_changed" from="HSlider" to="." method="_on_HSlider_value_changed"]
+[connection signal="value_changed" from="SpinBox" to="." method="_on_SpinBox_value_changed"]
