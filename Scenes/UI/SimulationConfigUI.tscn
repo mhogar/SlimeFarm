@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scenes/UI/SimulationConfigUI.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/UI/ConfigValueSelector.tscn" type="PackedScene" id=2]
 [ext_resource path="res://GFX/glassPanel.png" type="Texture" id=3]
-[ext_resource path="res://GFX/dotWhite.png" type="Texture" id=4]
+[ext_resource path="res://GFX/arrow_right.png" type="Texture" id=4]
+[ext_resource path="res://GFX/arrow_left.png" type="Texture" id=5]
 
 [sub_resource type="Animation" id=1]
 resource_name = "hide"
@@ -75,14 +76,15 @@ __meta__ = {
 }
 
 [node name="ToggleButton" type="TextureButton" parent="GUI/Panel/HBoxContainer"]
-margin_right = 24.0
+margin_right = 32.0
 margin_bottom = 580.0
 size_flags_horizontal = 0
 toggle_mode = true
 texture_normal = ExtResource( 4 )
+texture_pressed = ExtResource( 5 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GUI/Panel/HBoxContainer"]
-margin_left = 34.0
+margin_left = 42.0
 margin_right = 360.0
 margin_bottom = 580.0
 size_flags_horizontal = 3
@@ -92,7 +94,7 @@ __meta__ = {
 }
 
 [node name="SelectorContainer" type="VBoxContainer" parent="GUI/Panel/HBoxContainer/VBoxContainer"]
-margin_right = 326.0
+margin_right = 318.0
 margin_bottom = 530.0
 size_flags_vertical = 3
 custom_constants/separation = 10
@@ -102,7 +104,7 @@ __meta__ = {
 
 [node name="TilesXSelector" parent="GUI/Panel/HBoxContainer/VBoxContainer/SelectorContainer" instance=ExtResource( 2 )]
 margin_left = 0.0
-margin_right = 326.0
+margin_right = 318.0
 label = "Tiles X"
 hint = "The number of tiles in the width of the environment"
 min_value = 10.0
@@ -113,7 +115,7 @@ step = 1.0
 [node name="TilesYSelector" parent="GUI/Panel/HBoxContainer/VBoxContainer/SelectorContainer" instance=ExtResource( 2 )]
 margin_left = 0.0
 margin_top = 35.0
-margin_right = 326.0
+margin_right = 318.0
 margin_bottom = 60.0
 label = "Tiles Y"
 hint = "The number of tiles in the height of the environment"
@@ -125,7 +127,7 @@ step = 1.0
 [node name="PopSizeSelector" parent="GUI/Panel/HBoxContainer/VBoxContainer/SelectorContainer" instance=ExtResource( 2 )]
 margin_left = 0.0
 margin_top = 70.0
-margin_right = 326.0
+margin_right = 318.0
 margin_bottom = 95.0
 label = "Population Size"
 hint = "The number of slimes in the population"
@@ -137,7 +139,7 @@ step = 1.0
 [node name="NumFoodSelector" parent="GUI/Panel/HBoxContainer/VBoxContainer/SelectorContainer" instance=ExtResource( 2 )]
 margin_left = 0.0
 margin_top = 105.0
-margin_right = 326.0
+margin_right = 318.0
 margin_bottom = 130.0
 label = "Food Count"
 hint = "The number of food pellets in each iteration"
@@ -149,7 +151,7 @@ step = 1.0
 [node name="MutProbSelector" parent="GUI/Panel/HBoxContainer/VBoxContainer/SelectorContainer" instance=ExtResource( 2 )]
 margin_left = 0.0
 margin_top = 140.0
-margin_right = 326.0
+margin_right = 318.0
 margin_bottom = 165.0
 label = "Mutation Probability"
 hint = "The probability that a gene mutation will occur during breeding"
@@ -159,13 +161,13 @@ step = 0.01
 
 [node name="RefreshButton" type="Button" parent="GUI/Panel/HBoxContainer/VBoxContainer"]
 margin_top = 535.0
-margin_right = 326.0
+margin_right = 318.0
 margin_bottom = 555.0
 text = "Refresh"
 
 [node name="SimulationToggleButton" type="Button" parent="GUI/Panel/HBoxContainer/VBoxContainer"]
 margin_top = 560.0
-margin_right = 326.0
+margin_right = 318.0
 margin_bottom = 580.0
 toggle_mode = true
 text = "Start Simulation"
