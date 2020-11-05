@@ -4,9 +4,6 @@ export var zoom_step := Vector2(0.1, 0.1)
 export var min_zoom := Vector2(0.5, 0.5)
 export var max_zoom := Vector2(2.0, 2.0)
 
-var env_width : int
-var env_height : int
-
 var pan_start : Vector2
 
 
@@ -15,13 +12,10 @@ func _process(_delta):
 	handle_pan()
 	
 
-func initialize(env_width : int, env_height : int):
-	self.env_width = env_width
-	self.env_height = env_height
+func center():
+	position.x = Config.calc_env_width() / 2.0
+	position.y = Config.calc_env_height() / 2.0
 	
-	position.x = env_width / 2.0
-	position.y = env_height / 2.0
-			
 	
 func handle_zoom():
 	if Input.is_action_just_released("camera_zoom_in"):
@@ -43,11 +37,13 @@ func handle_pan():
 		position += pan_start - mouse_pos
 		pan_start = mouse_pos
 		
+		var env_width := Config.calc_env_width()
 		if position.x < 0:
 			position.x = 0
 		elif position.x > env_width:
 			position.x = env_width
 			
+		var env_height := Config.calc_env_height()
 		if position.y < 0:
 			position.y = 0
 		elif position.y > env_height:

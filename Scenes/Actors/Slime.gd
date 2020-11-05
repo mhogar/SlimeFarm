@@ -125,17 +125,14 @@ func calc_wander() -> Vector2:
 	return displacement_center + displacement.rotated(deg2rad(wander_angle))
 	
 
-func wrap_screen():
-	# TODO: remove dependency of needing to know the environment size
-	var simulation := get_parent().get_parent().get_parent()
-	var env_width : int = simulation.ConfigUI.get_num_tiles_x() * simulation.Environment.cell_size.x
-	var env_height : int = simulation.ConfigUI.get_num_tiles_y() * simulation.Environment.cell_size.y
-	
+func wrap_screen():	
+	var env_width = Config.calc_env_width()
 	if position.x < 0:
 		position.x = env_width
 	elif position.x > env_width:
 		position.x = 0
 		
+	var env_height = Config.calc_env_height()
 	if position.y < 0:
 		position.y = env_height
 	elif position.y > env_height:

@@ -1,9 +1,9 @@
 extends TileMap
 
-	
-func initialize(num_tiles_x : int, num_tiles_y : int):
+
+func rebuild():
 	clear()
 	
-	for x in range(num_tiles_x):
-		for y in range(num_tiles_y):
+	for x in range(Config.num_tiles_x):
+		for y in range(Config.num_tiles_y):
 			set_cell(x, y, 0)

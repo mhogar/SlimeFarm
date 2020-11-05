@@ -1,6 +1,5 @@
 extends Node2D
 
-onready var ConfigUI := $SimulationConfig
 onready var Environment := $Environment
 onready var Camera := $Camera
 onready var Iteration := $Iteration
@@ -19,6 +18,7 @@ func _ready():
 	randomize()
 	
 	pause_simulation()
+	refresh()
 	
 
 func _exit_tree():
@@ -51,28 +51,27 @@ func pause_simulation():
 	get_tree().paused = true
 
 
+func refresh():
+	Environment.rebuild()
+	Camera.center()
+	Population.generate()
+	Iteration.create_new(Population.slimes)
+
+
 func start_simulation():
-	# calc the environment's dimensions
-	var env_width : int = ConfigUI.get_num_tiles_x() * Environment.cell_size.x
-	var env_height : int = ConfigUI.get_num_tiles_y() * Environment.cell_size.y
-	
-	# initialize the scenes
-	Environment.initialize(ConfigUI.get_num_tiles_x(), ConfigUI.get_num_tiles_y())
-	Camera.initialize(env_width, env_height)
-	Population.initiaize(ConfigUI.get_population_size())
-	Iteration.initialize(env_width, env_height, Population.slimes, ConfigUI.get_num_food())
-	
-	# set default control values
 	Engine.set_time_scale(min_time_scale)
-	
-	# create the stats file
 	create_csv()
 	
 	# start the first iteration
 	iteration = 1
-	Iteration.start_new()
 	play_simulation()
 
+
+func end_simulation():
+	pause_simulation()
+	close_csv()
+	refresh()
+	
 
 func create_csv():
 	csv_file = File.new()
@@ -92,20 +91,22 @@ func export_stats():
 	
 	csv_file.store_csv_line(data)
 
+	
+func _on_Iteration_finished():
+	export_stats()
+	iteration += 1
+	
+	Population.breed_slimes()
+	Iteration.create_new(Population.slimes)
 
-func _on_SimulationConfig_simulation_start():
+
+func _on_SimulationConfigUI_simulation_start():
 	start_simulation()
 
 
-func _on_SimulationConfig_simulation_end():
-	pause_simulation()
-	Iteration.abort()
-	close_csv()
+func _on_SimulationConfigUI_simulation_end():
+	end_simulation()
 
 
-func _on_Iteration_finished():
-	export_stats()
-	
-	iteration += 1
-	Population.breed_slimes(ConfigUI.get_mutation_probability())
-	Iteration.start_new()
+func _on_SimulationConfigUI_refresh():
+	refresh()

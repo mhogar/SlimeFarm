@@ -26,12 +26,16 @@ func _ready():
 	Slider.max_value = max_value
 	Slider.step = step
 	
-	SpinBox.value = default_value
-	Slider.value = default_value
+	set_value(default_value)
 
 
 func get_value() -> float:
 	return SpinBox.value
+
+
+func set_value(value : float):
+	SpinBox.value = value
+	Slider.value = value
 
 
 func disable_editing():

@@ -3,11 +3,11 @@ extends Node
 var slimes := []
 
 
-func initiaize(pop_size : int):
+func generate():
 	var scene := load("res://Scenes/Actors/Slime.tscn")
 	
 	slimes.clear()
-	for i in range(pop_size):
+	for i in range(Config.population_size):
 		var slime : Slime = scene.instance()
 		
 		slime.genes.append(randi() % 256) # speed
@@ -17,7 +17,7 @@ func initiaize(pop_size : int):
 		slimes.append(slime)
 
 
-func breed_slimes(mutation_prob : float):
+func breed_slimes():
 	var pop_size := slimes.size()
 	var slimes_copy := slimes.duplicate()
 	
@@ -39,7 +39,7 @@ func breed_slimes(mutation_prob : float):
 			break
 		
 		# breed the parents and add the child to the list
-		slimes.append(breed(parent1, parent2, mutation_prob))
+		slimes.append(breed(parent1, parent2))
 		num_slimes += 1
 
 	# remove any slimes that did not breed from the list
@@ -71,7 +71,7 @@ func select_parent_slime(slimes : Array) -> Slime:
 	return slimes.back()
 	
 	
-func breed(slime1 : Slime, slime2: Slime, mutation_prob : float) -> Slime:
+func breed(slime1 : Slime, slime2: Slime) -> Slime:
 	var new_slime : Slime = load("res://Scenes/Actors/Slime.tscn").instance()
 	
 	# apply crossover to each gene
@@ -81,7 +81,7 @@ func breed(slime1 : Slime, slime2: Slime, mutation_prob : float) -> Slime:
 		
 		# apply mutation
 		for j in range(8):
-			if randf() <= mutation_prob:
+			if randf() <= Config.mutation_probability:
 				gene ^= (1 << j)
 		
 		new_slime.genes.append(gene)

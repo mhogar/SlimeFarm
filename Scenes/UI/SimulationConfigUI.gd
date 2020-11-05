@@ -2,8 +2,11 @@ extends CanvasLayer
 
 signal simulation_start
 signal simulation_end
+signal refresh
 
 onready var AnimationPlayer := $AnimationPlayer
+
+onready var RefreshButton := $GUI/Panel/HBoxContainer/VBoxContainer/RefreshButton
 onready var SimulationToggleButton := $GUI/Panel/HBoxContainer/VBoxContainer/SimulationToggleButton
 
 onready var SelectorContainer := $GUI/Panel/HBoxContainer/VBoxContainer/SelectorContainer
@@ -16,24 +19,24 @@ onready var MutProbSelector := $GUI/Panel/HBoxContainer/VBoxContainer/SelectorCo
 var toggled := true
 
 
-func get_num_tiles_x() -> int:
-	return TilesXSelector.get_value()
+func _ready():
+	update_config()
 
 
-func get_num_tiles_y() -> int:
-	return TilesYSelector.get_value()
+func update_config():
+	Config.num_tiles_x = TilesXSelector.get_value()
+	Config.num_tiles_y = TilesYSelector.get_value()
+	Config.population_size = PopSizeSelector.get_value()
+	Config.num_food = NumFoodSelector.get_value()
+	Config.mutation_probability = MutProbSelector.get_value()
 
 
-func get_population_size() -> int:
-	return PopSizeSelector.get_value()
-
-
-func get_num_food() -> int:
-	return NumFoodSelector.get_value()
-	
-	
-func get_mutation_probability() -> float:
-	return MutProbSelector.get_value()
+func revert_to_config():
+	TilesXSelector.set_value(Config.num_tiles_x)
+	TilesYSelector.set_value(Config.num_tiles_y)
+	PopSizeSelector.set_value(Config.population_size)
+	NumFoodSelector.set_value(Config.num_food)
+	MutProbSelector.set_value(Config.mutation_probability)
 
 
 func hide():
@@ -47,11 +50,13 @@ func show():
 
 
 func disable_editing():
+	RefreshButton.disabled = true
 	for selector in SelectorContainer.get_children():
 		selector.disable_editing()
-	
+		
 	
 func enable_editing():
+	RefreshButton.disabled = false
 	for selector in SelectorContainer.get_children():
 		selector.enable_editing()
 
@@ -60,6 +65,7 @@ func start_simulation():
 	hide()
 	SimulationToggleButton.text = "End Simulation"
 	disable_editing()
+	revert_to_config()
 	emit_signal("simulation_start")
 
 
@@ -81,3 +87,8 @@ func _on_ToggleButton_pressed():
 		hide()
 	else:
 		show()
+
+
+func _on_RefreshButton_pressed():
+	update_config()
+	emit_signal("refresh")

@@ -5,7 +5,7 @@
 [ext_resource path="res://Scenes/Simulation/Environment.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/Simulation/Iteration.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/Simulation/Population.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Scenes/UI/SimulationConfig.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/UI/SimulationConfigUI.tscn" type="PackedScene" id=6]
 
 [node name="Simulation" type="Node2D"]
 pause_mode = 2
@@ -20,7 +20,8 @@ current = true
 
 [node name="Population" parent="." instance=ExtResource( 5 )]
 
-[node name="SimulationConfig" parent="." instance=ExtResource( 6 )]
+[node name="SimulationConfigUI" parent="." instance=ExtResource( 6 )]
 [connection signal="finished" from="Iteration" to="." method="_on_Iteration_finished"]
-[connection signal="simulation_end" from="SimulationConfig" to="." method="_on_SimulationConfig_simulation_end"]
-[connection signal="simulation_start" from="SimulationConfig" to="." method="_on_SimulationConfig_simulation_start"]
+[connection signal="refresh" from="SimulationConfigUI" to="." method="_on_SimulationConfigUI_refresh"]
+[connection signal="simulation_end" from="SimulationConfigUI" to="." method="_on_SimulationConfigUI_simulation_end"]
+[connection signal="simulation_start" from="SimulationConfigUI" to="." method="_on_SimulationConfigUI_simulation_start"]

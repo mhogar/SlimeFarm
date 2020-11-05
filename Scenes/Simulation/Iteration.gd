@@ -5,53 +5,31 @@ signal finished
 onready var Slimes := $Slimes
 onready var Food := $Food
 
-var env_width : int
-var env_height : int
 var slimes : Array
-var num_food : int
-
 var timer : float
 var stats : Array
 
 
 func _physics_process(delta):
-	pause()
-	return
-	
 	timer += delta
 	
 	if Food.get_child_count() == 0:
 		end_iteration()
+	
 
-
-func initialize(env_width : int, env_height : int, slimes : Array, num_food : int):
-	self.env_width = env_width
-	self.env_height = env_height
+func create_new(slimes : Array):
 	self.slimes = slimes
-	self.num_food = num_food
-
-
-func play():
-	pause_mode = Node.PAUSE_MODE_INHERIT
+	reset()
 	
-	
-func pause():
-	pause_mode = Node.PAUSE_MODE_STOP
-
-
-func start_new():
-	timer = 0.0
 	setup_slimes()
 	create_food()
-	
-	play()
 
 
 func setup_slimes():
 	for slime in slimes:
 		# choose random position
-		slime.position.x = randf() * env_width
-		slime.position.y = randf() * env_height
+		slime.position.x = randf() * Config.calc_env_width()
+		slime.position.y = randf() * Config.calc_env_height()
 		
 		# choose random starting face direction
 		slime.init_face_dir.x = randf()
@@ -64,10 +42,13 @@ func setup_slimes():
 func create_food():
 	var scene := load("res://Scenes/Actors/Food.tscn")
 	
+	var env_width := Config.calc_env_width()
+	var env_height := Config.calc_env_height()
+	
 	var min_x := env_width * 0.1
 	var min_y := env_height * 0.1
 	
-	for i in range(num_food):
+	for i in range(Config.num_food):
 		var food = scene.instance()
 		
 		# choose random position in inner box
@@ -78,8 +59,8 @@ func create_food():
 		Food.add_child(food)
 
 
-func abort():
-	pause()
+func reset():
+	timer = 0.0
 	
 	for slime in Slimes.get_children():
 		slime.queue_free()
@@ -88,9 +69,7 @@ func abort():
 		food.queue_free()
 	
 
-func end_iteration():
-	pause()
-	
+func end_iteration():	
 	calc_stats()
 	remove_slimes()
 	emit_signal("finished")
