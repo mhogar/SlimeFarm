@@ -3,6 +3,7 @@
 [ext_resource path="res://Scenes/Simulation/Iteration.gd" type="Script" id=1]
 
 [node name="Iteration" type="Node"]
+pause_mode = 1
 script = ExtResource( 1 )
 
 [node name="Slimes" type="Node" parent="."]

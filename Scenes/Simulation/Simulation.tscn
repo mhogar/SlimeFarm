@@ -8,6 +8,7 @@
 [ext_resource path="res://Scenes/UI/SimulationConfig.tscn" type="PackedScene" id=6]
 
 [node name="Simulation" type="Node2D"]
+pause_mode = 2
 script = ExtResource( 1 )
 
 [node name="Environment" parent="." instance=ExtResource( 3 )]

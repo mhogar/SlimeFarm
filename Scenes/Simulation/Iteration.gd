@@ -13,12 +13,10 @@ var num_food : int
 var timer : float
 var stats : Array
 
-var iteration_running := false
-
 
 func _physics_process(delta):
-	if !iteration_running:
-		return
+	pause()
+	return
 	
 	timer += delta
 	
@@ -33,12 +31,20 @@ func initialize(env_width : int, env_height : int, slimes : Array, num_food : in
 	self.num_food = num_food
 
 
+func play():
+	pause_mode = Node.PAUSE_MODE_INHERIT
+	
+	
+func pause():
+	pause_mode = Node.PAUSE_MODE_STOP
+
+
 func start_new():
 	timer = 0.0
-	iteration_running = true
-	
 	setup_slimes()
 	create_food()
+	
+	play()
 
 
 func setup_slimes():
@@ -73,7 +79,7 @@ func create_food():
 
 
 func abort():
-	iteration_running = false
+	pause()
 	
 	for slime in Slimes.get_children():
 		slime.queue_free()
@@ -83,7 +89,7 @@ func abort():
 	
 
 func end_iteration():
-	iteration_running = false
+	pause()
 	
 	calc_stats()
 	remove_slimes()
