@@ -3,16 +3,19 @@ extends CanvasLayer
 signal simulation_start
 signal simulation_end
 
+onready var AnimationPlayer := $AnimationPlayer
 onready var GUI := $GUI
-onready var Button := $GUI/VBoxContainer/Button
+onready var SimulationToggleButton := $GUI/HBoxContainer/VBoxContainer/SimulationToggleButton
 
-onready var SelectorContainer := $GUI/VBoxContainer/SelectorContainer
-onready var TilesXSelector := $GUI/VBoxContainer/SelectorContainer/TilesXSelector
-onready var TilesYSelector := $GUI/VBoxContainer/SelectorContainer/TilesYSelector
-onready var PopSizeSelector := $GUI/VBoxContainer/SelectorContainer/PopSizeSelector
-onready var NumFoodSelector := $GUI/VBoxContainer/SelectorContainer/NumFoodSelector
-onready var MutProbSelector := $GUI/VBoxContainer/SelectorContainer/MutProbSelector
-	
+onready var SelectorContainer := $GUI/HBoxContainer/VBoxContainer/SelectorContainer
+onready var TilesXSelector := $GUI/HBoxContainer/VBoxContainer/SelectorContainer/TilesXSelector
+onready var TilesYSelector := $GUI/HBoxContainer/VBoxContainer/SelectorContainer/TilesYSelector
+onready var PopSizeSelector := $GUI/HBoxContainer/VBoxContainer/SelectorContainer/PopSizeSelector
+onready var NumFoodSelector := $GUI/HBoxContainer/VBoxContainer/SelectorContainer/NumFoodSelector
+onready var MutProbSelector := $GUI/HBoxContainer/VBoxContainer/SelectorContainer/MutProbSelector
+
+var toggled := true
+
 
 func get_num_tiles_x() -> int:
 	return TilesXSelector.get_value()
@@ -35,11 +38,13 @@ func get_mutation_probability() -> float:
 
 
 func hide():
-	GUI.hide()
+	toggled = false
+	AnimationPlayer.play("hide")
 	
 	
 func show():
-	GUI.show()
+	toggled = true
+	AnimationPlayer.play("show")
 
 
 func disable_editing():
@@ -53,19 +58,27 @@ func enable_editing():
 
 
 func start_simulation():
-	Button.text = "End Simulation"
+	hide()
+	SimulationToggleButton.text = "End Simulation"
 	disable_editing()
 	emit_signal("simulation_start")
 
 
 func end_simulation():
-	Button.text = "Start Simulation"
+	SimulationToggleButton.text = "Start Simulation"
 	enable_editing()
 	emit_signal("simulation_end")
 
 
-func _on_Button_toggled(button_pressed):
+func _on_SimulationToggleButton_toggled(button_pressed):
 	if button_pressed:
 		start_simulation()
 	else:
 		end_simulation()
+		
+
+func _on_ToggleButton_pressed():
+	if toggled:
+		hide()
+	else:
+		show()

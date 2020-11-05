@@ -99,10 +99,10 @@ func calc_stats():
 
 func calc_gene_avg(index : int) -> float:
 	var total := 0
-	for slime in Slimes.get_children():
+	for slime in slimes:
 		total += slime.genes[index]
 	
-	return float(total) / Slimes.get_child_count()
+	return float(total) / slimes.size()
 	
 	
 func remove_slimes():

@@ -1,8 +1,41 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scenes/UI/SimulationConfig.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/UI/ConfigValueSelector.tscn" type="PackedScene" id=2]
 [ext_resource path="res://GFX/glassPanel.png" type="Texture" id=3]
+[ext_resource path="res://GFX/dotWhite.png" type="Texture" id=4]
+
+[sub_resource type="Animation" id=1]
+resource_name = "hide"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/path = NodePath("GUI:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 643, 0 ), Vector2( 985, 0 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "show"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/path = NodePath("GUI:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 985, 0 ), Vector2( 643, 0 ) ]
+}
 
 [node name="SimulationConfig" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -11,7 +44,8 @@ script = ExtResource( 1 )
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -363.0
+margin_left = -381.0
+margin_right = 0.000244141
 texture = ExtResource( 3 )
 patch_margin_left = 10
 patch_margin_top = 10
@@ -21,29 +55,46 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="GUI"]
+[node name="HBoxContainer" type="HBoxContainer" parent="GUI"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 10.0
-margin_top = 20.0
+margin_top = 10.0
 margin_right = -10.0
-margin_bottom = -20.0
+margin_bottom = -10.0
+custom_constants/separation = 10
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="SelectorContainer" type="VBoxContainer" parent="GUI/VBoxContainer"]
-margin_right = 343.0
-margin_bottom = 536.0
+[node name="ToggleButton" type="TextureButton" parent="GUI/HBoxContainer"]
+margin_right = 24.0
+margin_bottom = 580.0
+size_flags_horizontal = 0
+toggle_mode = true
+texture_normal = ExtResource( 4 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GUI/HBoxContainer"]
+margin_left = 34.0
+margin_right = 361.0
+margin_bottom = 580.0
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SelectorContainer" type="VBoxContainer" parent="GUI/HBoxContainer/VBoxContainer"]
+margin_right = 327.0
+margin_bottom = 556.0
 size_flags_vertical = 3
 custom_constants/separation = 10
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TilesXSelector" parent="GUI/VBoxContainer/SelectorContainer" instance=ExtResource( 2 )]
+[node name="TilesXSelector" parent="GUI/HBoxContainer/VBoxContainer/SelectorContainer" instance=ExtResource( 2 )]
 margin_left = 0.0
-margin_right = 343.0
+margin_right = 327.0
 label = "Tiles X"
 hint = "The number of tiles in the width of the environment"
 min_value = 10.0
@@ -51,10 +102,10 @@ max_value = 100.0
 default_value = 20.0
 step = 1.0
 
-[node name="TilesYSelector" parent="GUI/VBoxContainer/SelectorContainer" instance=ExtResource( 2 )]
+[node name="TilesYSelector" parent="GUI/HBoxContainer/VBoxContainer/SelectorContainer" instance=ExtResource( 2 )]
 margin_left = 0.0
 margin_top = 35.0
-margin_right = 343.0
+margin_right = 327.0
 margin_bottom = 60.0
 label = "Tiles Y"
 hint = "The number of tiles in the height of the environment"
@@ -63,10 +114,10 @@ max_value = 100.0
 default_value = 20.0
 step = 1.0
 
-[node name="PopSizeSelector" parent="GUI/VBoxContainer/SelectorContainer" instance=ExtResource( 2 )]
+[node name="PopSizeSelector" parent="GUI/HBoxContainer/VBoxContainer/SelectorContainer" instance=ExtResource( 2 )]
 margin_left = 0.0
 margin_top = 70.0
-margin_right = 343.0
+margin_right = 327.0
 margin_bottom = 95.0
 label = "Population Size"
 hint = "The number of slimes in the population"
@@ -75,10 +126,10 @@ max_value = 100.0
 default_value = 6.0
 step = 1.0
 
-[node name="NumFoodSelector" parent="GUI/VBoxContainer/SelectorContainer" instance=ExtResource( 2 )]
+[node name="NumFoodSelector" parent="GUI/HBoxContainer/VBoxContainer/SelectorContainer" instance=ExtResource( 2 )]
 margin_left = 0.0
 margin_top = 105.0
-margin_right = 343.0
+margin_right = 327.0
 margin_bottom = 130.0
 label = "Food Count"
 hint = "The number of food pellets in each iteration"
@@ -87,10 +138,10 @@ max_value = 300.0
 default_value = 10.0
 step = 1.0
 
-[node name="MutProbSelector" parent="GUI/VBoxContainer/SelectorContainer" instance=ExtResource( 2 )]
+[node name="MutProbSelector" parent="GUI/HBoxContainer/VBoxContainer/SelectorContainer" instance=ExtResource( 2 )]
 margin_left = 0.0
 margin_top = 140.0
-margin_right = 343.0
+margin_right = 327.0
 margin_bottom = 165.0
 label = "Mutation Probability"
 hint = "The probability that a gene mutation will occur during breeding"
@@ -98,11 +149,15 @@ max_value = 1.0
 default_value = 0.01
 step = 0.01
 
-[node name="Button" type="Button" parent="GUI/VBoxContainer"]
-margin_top = 540.0
-margin_right = 343.0
-margin_bottom = 560.0
+[node name="SimulationToggleButton" type="Button" parent="GUI/HBoxContainer/VBoxContainer"]
+margin_top = 560.0
+margin_right = 327.0
+margin_bottom = 580.0
 toggle_mode = true
 text = "Start Simulation"
-[connection signal="pressed" from="GUI/VBoxContainer/Button" to="." method="_on_Button_pressed"]
-[connection signal="toggled" from="GUI/VBoxContainer/Button" to="." method="_on_Button_toggled"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/hide = SubResource( 1 )
+anims/show = SubResource( 2 )
+[connection signal="pressed" from="GUI/HBoxContainer/ToggleButton" to="." method="_on_ToggleButton_pressed"]
+[connection signal="toggled" from="GUI/HBoxContainer/VBoxContainer/SimulationToggleButton" to="." method="_on_SimulationToggleButton_toggled"]
