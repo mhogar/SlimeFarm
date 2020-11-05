@@ -4,15 +4,14 @@ signal simulation_start
 signal simulation_end
 
 onready var AnimationPlayer := $AnimationPlayer
-onready var GUI := $GUI
-onready var SimulationToggleButton := $GUI/HBoxContainer/VBoxContainer/SimulationToggleButton
+onready var SimulationToggleButton := $GUI/Panel/HBoxContainer/VBoxContainer/SimulationToggleButton
 
-onready var SelectorContainer := $GUI/HBoxContainer/VBoxContainer/SelectorContainer
-onready var TilesXSelector := $GUI/HBoxContainer/VBoxContainer/SelectorContainer/TilesXSelector
-onready var TilesYSelector := $GUI/HBoxContainer/VBoxContainer/SelectorContainer/TilesYSelector
-onready var PopSizeSelector := $GUI/HBoxContainer/VBoxContainer/SelectorContainer/PopSizeSelector
-onready var NumFoodSelector := $GUI/HBoxContainer/VBoxContainer/SelectorContainer/NumFoodSelector
-onready var MutProbSelector := $GUI/HBoxContainer/VBoxContainer/SelectorContainer/MutProbSelector
+onready var SelectorContainer := $GUI/Panel/HBoxContainer/VBoxContainer/SelectorContainer
+onready var TilesXSelector := $GUI/Panel/HBoxContainer/VBoxContainer/SelectorContainer/TilesXSelector
+onready var TilesYSelector := $GUI/Panel/HBoxContainer/VBoxContainer/SelectorContainer/TilesYSelector
+onready var PopSizeSelector := $GUI/Panel/HBoxContainer/VBoxContainer/SelectorContainer/PopSizeSelector
+onready var NumFoodSelector := $GUI/Panel/HBoxContainer/VBoxContainer/SelectorContainer/NumFoodSelector
+onready var MutProbSelector := $GUI/Panel/HBoxContainer/VBoxContainer/SelectorContainer/MutProbSelector
 
 var toggled := true
 
