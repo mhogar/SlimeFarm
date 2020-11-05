@@ -10,6 +10,8 @@ const min_time_scale := 1.0
 
 var simulation_running : bool
 var iteration : int
+
+var csv_filepath : String
 var csv_file : File
 
 
@@ -19,10 +21,6 @@ func _ready():
 	
 	pause_simulation()
 	refresh()
-	
-
-func _exit_tree():
-	close_csv()
 
 
 func _process(_delta):
@@ -69,27 +67,33 @@ func start_simulation():
 
 func end_simulation():
 	pause_simulation()
-	close_csv()
 	refresh()
 	
 
 func create_csv():
+	# create the file
+	csv_filepath = "user://data_%d.csv" % OS.get_unix_time()
 	csv_file = File.new()
-	csv_file.open("user://data_%d.csv" % OS.get_unix_time(), File.WRITE)
+	csv_file.open(csv_filepath, File.WRITE)
+	
+	#store the data
+	csv_file.store_line("Num Tiles X,Num Tiles Y,Population Size,Num Food,Mutation Probability")
+	csv_file.store_csv_line(PoolStringArray([Config.num_tiles_x, Config.num_tiles_y, Config.population_size, Config.num_food, Config.mutation_probability]))
+	csv_file.store_line("")
 	csv_file.store_line("Iteration,Time (s),Avg. Speed,Avg. Vision Radius")
 	
+	# close the file
+	csv_file.close()
 	
-func close_csv():	
-	if csv_file != null:
-		csv_file.close()
-		
 	
 func export_stats():
 	var data := PoolStringArray([iteration])
-	#data.append(String(iteration))
 	data.append_array(PoolStringArray(Iteration.stats))
 	
+	csv_file.open(csv_filepath, File.READ_WRITE)
+	csv_file.seek_end()
 	csv_file.store_csv_line(data)
+	csv_file.close()
 
 	
 func _on_Iteration_finished():
