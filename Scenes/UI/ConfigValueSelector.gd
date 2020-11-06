@@ -9,7 +9,6 @@ export(String, MULTILINE) var hint : String
 
 export var min_value : float
 export var max_value : float
-export var default_value : float
 export var step : float
 
 
@@ -25,8 +24,6 @@ func _ready():
 	Slider.min_value = min_value
 	Slider.max_value = max_value
 	Slider.step = step
-	
-	set_value(default_value)
 
 
 func get_value() -> float:

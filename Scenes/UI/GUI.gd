@@ -25,7 +25,7 @@ var toggled := true
 
 
 func _ready():
-	update_config()
+	load_from_config()
 	update_iteration_counter(0)
 
 
@@ -38,7 +38,7 @@ func update_config():
 	Config.csv_dir = ChooseDirLineEdit.text
 
 
-func revert_to_config():
+func load_from_config():
 	TilesXSelector.set_value(Config.num_tiles_x)
 	TilesYSelector.set_value(Config.num_tiles_y)
 	PopSizeSelector.set_value(Config.population_size)
@@ -77,7 +77,7 @@ func start_simulation():
 	hide()
 	SimulationToggleButton.text = "End Simulation"
 	disable_editing()
-	revert_to_config()
+	load_from_config()
 	emit_signal("simulation_start")
 
 
