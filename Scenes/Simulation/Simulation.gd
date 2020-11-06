@@ -1,5 +1,6 @@
 extends Node2D
 
+onready var GUI := $GUI
 onready var Environment := $Environment
 onready var Camera := $Camera
 onready var Iteration := $Iteration
@@ -62,6 +63,7 @@ func start_simulation():
 	
 	# start the first iteration
 	iteration = 1
+	GUI.update_iteration_counter(iteration)
 	play_simulation()
 
 
@@ -71,8 +73,12 @@ func end_simulation():
 	
 
 func create_csv():
+	var csv_dir := Config.csv_dir
+	if csv_dir == "":
+		csv_dir = "user://"
+	
 	# create the file
-	csv_filepath = "user://data_%d.csv" % OS.get_unix_time()
+	csv_filepath = csv_dir + "stats_%d.csv" % OS.get_unix_time()
 	csv_file = File.new()
 	csv_file.open(csv_filepath, File.WRITE)
 	
@@ -98,7 +104,9 @@ func export_stats():
 	
 func _on_Iteration_finished():
 	export_stats()
+	
 	iteration += 1
+	GUI.update_iteration_counter(iteration)
 	
 	Population.breed_slimes()
 	Iteration.create_new(Population.slimes)

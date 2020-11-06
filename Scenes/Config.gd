@@ -5,6 +5,7 @@ var num_tiles_y : int
 var population_size :int
 var num_food : int
 var mutation_probability : float
+var csv_dir : String
 
 
 func calc_env_width() -> int:

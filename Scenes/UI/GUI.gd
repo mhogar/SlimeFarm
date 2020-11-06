@@ -6,21 +6,27 @@ signal refresh
 
 onready var AnimationPlayer := $AnimationPlayer
 
-onready var RefreshButton := $GUI/Panel/HBoxContainer/VBoxContainer/RefreshButton
-onready var SimulationToggleButton := $GUI/Panel/HBoxContainer/VBoxContainer/SimulationToggleButton
+onready var FileDialog := $FileDialog
+onready var ChooseDirLineEdit := $ConfigGUI/Panel/HBoxContainer/VBoxContainer/HBoxContainer/ChooseDirLineEdit
 
-onready var SelectorContainer := $GUI/Panel/HBoxContainer/VBoxContainer/SelectorContainer
-onready var TilesXSelector := $GUI/Panel/HBoxContainer/VBoxContainer/SelectorContainer/TilesXSelector
-onready var TilesYSelector := $GUI/Panel/HBoxContainer/VBoxContainer/SelectorContainer/TilesYSelector
-onready var PopSizeSelector := $GUI/Panel/HBoxContainer/VBoxContainer/SelectorContainer/PopSizeSelector
-onready var NumFoodSelector := $GUI/Panel/HBoxContainer/VBoxContainer/SelectorContainer/NumFoodSelector
-onready var MutProbSelector := $GUI/Panel/HBoxContainer/VBoxContainer/SelectorContainer/MutProbSelector
+onready var IterationLabel := $ControlGUI/IterationLabel
+
+onready var RefreshButton := $ConfigGUI/Panel/HBoxContainer/VBoxContainer/RefreshButton
+onready var SimulationToggleButton := $ConfigGUI/Panel/HBoxContainer/VBoxContainer/SimulationToggleButton
+
+onready var SelectorContainer := $ConfigGUI/Panel/HBoxContainer/VBoxContainer/SelectorContainer
+onready var TilesXSelector := $ConfigGUI/Panel/HBoxContainer/VBoxContainer/SelectorContainer/TilesXSelector
+onready var TilesYSelector := $ConfigGUI/Panel/HBoxContainer/VBoxContainer/SelectorContainer/TilesYSelector
+onready var PopSizeSelector := $ConfigGUI/Panel/HBoxContainer/VBoxContainer/SelectorContainer/PopSizeSelector
+onready var NumFoodSelector := $ConfigGUI/Panel/HBoxContainer/VBoxContainer/SelectorContainer/NumFoodSelector
+onready var MutProbSelector := $ConfigGUI/Panel/HBoxContainer/VBoxContainer/SelectorContainer/MutProbSelector
 
 var toggled := true
 
 
 func _ready():
 	update_config()
+	update_iteration_counter(0)
 
 
 func update_config():
@@ -29,6 +35,7 @@ func update_config():
 	Config.population_size = PopSizeSelector.get_value()
 	Config.num_food = NumFoodSelector.get_value()
 	Config.mutation_probability = MutProbSelector.get_value()
+	Config.csv_dir = ChooseDirLineEdit.text
 
 
 func revert_to_config():
@@ -37,6 +44,7 @@ func revert_to_config():
 	PopSizeSelector.set_value(Config.population_size)
 	NumFoodSelector.set_value(Config.num_food)
 	MutProbSelector.set_value(Config.mutation_probability)
+	ChooseDirLineEdit.text = Config.csv_dir
 
 
 func hide():
@@ -61,6 +69,10 @@ func enable_editing():
 		selector.enable_editing()
 
 
+func update_iteration_counter(iteration : int):
+	IterationLabel.text = "Iteration: %d" % iteration
+
+
 func start_simulation():
 	hide()
 	SimulationToggleButton.text = "End Simulation"
@@ -70,6 +82,7 @@ func start_simulation():
 
 
 func end_simulation():
+	update_iteration_counter(0)
 	SimulationToggleButton.text = "Start Simulation"
 	enable_editing()
 	emit_signal("simulation_end")
@@ -92,3 +105,13 @@ func _on_ToggleButton_pressed():
 func _on_RefreshButton_pressed():
 	update_config()
 	emit_signal("refresh")
+
+
+func _on_ChooseDirButton_pressed():
+	FileDialog.popup_centered()
+
+
+func _on_FileDialog_dir_selected(dir):
+	dir += "/"
+	ChooseDirLineEdit.text = dir
+	Config.csv_dir = dir
