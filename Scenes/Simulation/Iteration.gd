@@ -5,7 +5,8 @@ signal finished
 onready var Slimes := $Slimes
 onready var Food := $Food
 
-const env_margin : int = 1
+export var padding : float
+export var num_chunks : int
 
 var slimes : Array
 var timer : float
@@ -49,11 +50,14 @@ func create_food():
 
 
 func place_actors(actors : Array):
-	var num_tiles_x := Config.num_tiles_x - env_margin * 2
-	var num_tiles_y := Config.num_tiles_y - env_margin * 2
+	var chunk_size_x = Config.calc_env_width() / float(num_chunks)
+	var chunk_size_y = Config.calc_env_height() / float(num_chunks)
+	
+	var chunk_padding_x = chunk_size_x * padding
+	var chunk_padding_y = chunk_size_y * padding
 	
 	# create array with entry for every tile
-	var tiles := range(num_tiles_x * num_tiles_y)
+	var tiles := range(num_chunks * num_chunks)
 	var tile_ptr := tiles.size()
 	
 	for actor in actors:
@@ -65,12 +69,12 @@ func place_actors(actors : Array):
 		# select the next tile index and convert it to 2d coords 
 		var index : int = tiles[tile_ptr]
 		tile_ptr += 1
-		var x_coord := index % num_tiles_x + env_margin
-		var y_coord := index / num_tiles_x + env_margin
+		var x_coord := index % num_chunks
+		var y_coord := index / num_chunks
 		
 		# place the entity randomly in the tile
-		actor.position.x = x_coord * Config.TILE_SIZE + randf() * (Config.TILE_SIZE)
-		actor.position.y = y_coord * Config.TILE_SIZE + randf() * (Config.TILE_SIZE)
+		actor.position.x = x_coord * chunk_size_x + randf() * (chunk_size_x - chunk_padding_x * 2) + chunk_padding_x
+		actor.position.y = y_coord * chunk_size_y + randf() * (chunk_size_y - chunk_padding_y * 2) + chunk_padding_y
 		
 
 func reset():

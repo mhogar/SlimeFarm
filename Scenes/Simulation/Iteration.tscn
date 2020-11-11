@@ -5,6 +5,8 @@
 [node name="Iteration" type="Node"]
 pause_mode = 1
 script = ExtResource( 1 )
+padding = 0.1
+num_chunks = 4
 
 [node name="Slimes" type="Node" parent="."]
 
