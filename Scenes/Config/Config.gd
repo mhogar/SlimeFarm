@@ -1,6 +1,7 @@
 extends Node
 
 enum {SCENARIO_1, SCENARIO_2, SCENARIO_3}
+const TILE_SIZE : int = 32
 
 var csv_dir : String = ""
 
@@ -25,11 +26,11 @@ func _exit_tree():
 
 
 func calc_env_width() -> int:
-	return num_tiles_x * 32
+	return num_tiles_x * TILE_SIZE
 	
 
 func calc_env_height() -> int:
-	return num_tiles_y * 32
+	return num_tiles_y * TILE_SIZE
 	
 
 func load_config():
