@@ -82,11 +82,20 @@ func create_csv():
 	csv_file = File.new()
 	csv_file.open(csv_filepath, File.WRITE)
 	
+	var config_header := "Num Tiles X,Num Tiles Y,Population Size,Num Food,Mutation Probability,Scenario"
+	var config_values := [Config.num_tiles_x, Config.num_tiles_y, Config.population_size, Config.num_food, Config.mutation_probability, Config.scenario + 1]
+	
+	# update the config header and values based on the scenario
+	if Config.scenario == Config.SCENARIO_3:
+		config_header += ",Vision Radius,Energy Consumption Rate"
+		config_values.append(Config.scenario3_vision_radius)
+		config_values.append(Config.scenario3_energy_consumption_rate)
+	
 	#store the data
-	csv_file.store_line("Num Tiles X,Num Tiles Y,Population Size,Num Food,Mutation Probability")
-	csv_file.store_csv_line(PoolStringArray([Config.num_tiles_x, Config.num_tiles_y, Config.population_size, Config.num_food, Config.mutation_probability]))
+	csv_file.store_line(config_header)
+	csv_file.store_csv_line(PoolStringArray(config_values))
 	csv_file.store_line("")
-	csv_file.store_line("Iteration,Time (s),Avg. Speed,Avg. Vision Radius")
+	csv_file.store_line("Iteration,Time (s),Avg. Speed,Avg. Vision Radius,Speed Range,Vision Radius Range")
 	
 	# close the file
 	csv_file.close()
