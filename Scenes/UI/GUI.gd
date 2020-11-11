@@ -8,6 +8,7 @@ onready var AnimationPlayer := $AnimationPlayer
 
 onready var FileDialog := $FileDialog
 onready var ChooseDirLineEdit := $ConfigGUI/Panel/HBoxContainer/VBoxContainer/HBoxContainer/ChooseDirLineEdit
+onready var ChooseDirButton := $ConfigGUI/Panel/HBoxContainer/VBoxContainer/HBoxContainer/ChooseDirButton
 
 onready var IterationLabel := $ControlGUI/IterationLabel
 
@@ -59,12 +60,16 @@ func show():
 
 func disable_editing():
 	RefreshButton.disabled = true
+	ChooseDirButton.disabled = true
+	
 	for selector in SelectorContainer.get_children():
 		selector.disable_editing()
 		
 	
 func enable_editing():
 	RefreshButton.disabled = false
+	ChooseDirButton.disabled = false
+	
 	for selector in SelectorContainer.get_children():
 		selector.enable_editing()
 
