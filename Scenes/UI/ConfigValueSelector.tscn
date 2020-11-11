@@ -15,7 +15,7 @@ __meta__ = {
 
 [node name="Label" type="Label" parent="."]
 margin_top = 5.0
-margin_right = 777.0
+margin_right = 776.0
 margin_bottom = 19.0
 size_flags_horizontal = 3
 text = "Sample Text"
@@ -24,8 +24,8 @@ valign = 1
 autowrap = true
 
 [node name="HSlider" type="HSlider" parent="."]
-margin_left = 782.0
-margin_right = 932.0
+margin_left = 781.0
+margin_right = 931.0
 margin_bottom = 25.0
 rect_min_size = Vector2( 150, 25 )
 scrollable = false
@@ -34,10 +34,10 @@ __meta__ = {
 }
 
 [node name="SpinBox" type="SpinBox" parent="."]
-margin_left = 937.0
+margin_left = 936.0
 margin_right = 1011.0
 margin_bottom = 25.0
-rect_min_size = Vector2( 50, 20 )
+rect_min_size = Vector2( 75, 20 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

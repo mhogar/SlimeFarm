@@ -21,6 +21,7 @@ onready var TilesYSelector := $ConfigGUI/Panel/HBoxContainer/VBoxContainer/Selec
 onready var PopSizeSelector := $ConfigGUI/Panel/HBoxContainer/VBoxContainer/SelectorContainer/PopSizeSelector
 onready var NumFoodSelector := $ConfigGUI/Panel/HBoxContainer/VBoxContainer/SelectorContainer/NumFoodSelector
 onready var MutProbSelector := $ConfigGUI/Panel/HBoxContainer/VBoxContainer/SelectorContainer/MutProbSelector
+onready var ScenarioSelector := $ConfigGUI/Panel/HBoxContainer/VBoxContainer/SelectorContainer/ScenarioSelector
 
 var toggled := true
 
@@ -37,6 +38,9 @@ func update_config():
 	Config.num_food = NumFoodSelector.get_value()
 	Config.mutation_probability = MutProbSelector.get_value()
 	Config.csv_dir = ChooseDirLineEdit.text
+	Config.scenario = ScenarioSelector.get_selected_scenario()
+	Config.Scenario3.vision_radius = ScenarioSelector.Scenario3VisionRadiusValueSelector.get_value()
+	Config.Scenario3.energy_consumption_rate = ScenarioSelector.Scenario3EnergyConsumptionRateSelector.get_value()
 
 
 func load_from_config():
@@ -46,6 +50,9 @@ func load_from_config():
 	NumFoodSelector.set_value(Config.num_food)
 	MutProbSelector.set_value(Config.mutation_probability)
 	ChooseDirLineEdit.text = Config.csv_dir
+	ScenarioSelector.set_selected_scenario(Config.scenario)
+	ScenarioSelector.Scenario3VisionRadiusValueSelector.set_value(Config.Scenario3.vision_radius)
+	ScenarioSelector.Scenario3EnergyConsumptionRateSelector.set_value(Config.Scenario3.energy_consumption_rate)
 
 
 func hide():
@@ -93,6 +100,11 @@ func end_simulation():
 	emit_signal("simulation_end")
 
 
+func refresh():
+	update_config()
+	emit_signal("refresh")
+
+
 func _on_SimulationToggleButton_toggled(button_pressed):
 	if button_pressed:
 		start_simulation()
@@ -108,8 +120,7 @@ func _on_ToggleButton_pressed():
 
 
 func _on_RefreshButton_pressed():
-	update_config()
-	emit_signal("refresh")
+	refresh()
 
 
 func _on_ChooseDirButton_pressed():
@@ -120,3 +131,7 @@ func _on_FileDialog_dir_selected(dir):
 	dir += "/"
 	ChooseDirLineEdit.text = dir
 	Config.csv_dir = dir
+
+
+func _on_ScenarioSelector_scenario_changed():
+	refresh()

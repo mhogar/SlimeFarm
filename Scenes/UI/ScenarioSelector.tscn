@@ -1,0 +1,86 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scenes/UI/ScenarioSelector.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/UI/ConfigValueSelector.tscn" type="PackedScene" id=2]
+
+[node name="ScenarioSelect" type="VBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/separation = 10
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_right = 1024.0
+margin_bottom = 20.0
+custom_constants/separation = 5
+
+[node name="DropDown" type="OptionButton" parent="HBoxContainer"]
+margin_right = 1001.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 230, 0 )
+size_flags_horizontal = 3
+
+[node name="InfoButton" type="Button" parent="HBoxContainer"]
+margin_left = 1006.0
+margin_right = 1024.0
+margin_bottom = 20.0
+text = "?"
+
+[node name="Scenario3" type="VBoxContainer" parent="."]
+margin_top = 30.0
+margin_right = 1024.0
+margin_bottom = 90.0
+custom_constants/separation = 10
+
+[node name="VisionRadiusValueSelector" parent="Scenario3" instance=ExtResource( 2 )]
+margin_left = 0.0
+margin_right = 1024.0
+label = "Vision Radius Value"
+max_value = 255.0
+step = 1.0
+
+[node name="EnergyConsumptionRateSelector" parent="Scenario3" instance=ExtResource( 2 )]
+margin_left = 0.0
+margin_top = 35.0
+margin_right = 1024.0
+margin_bottom = 60.0
+label = "Energy Consumption Rate"
+min_value = 0.01
+max_value = 1.0
+step = 0.01
+
+[node name="Scenario1InfoDialog" type="AcceptDialog" parent="."]
+margin_top = 100.0
+margin_right = 1024.0
+margin_bottom = 158.0
+window_title = "Scenario 1"
+dialog_text = "This is the basic scenario. A slime's speed and vision radius are uncorrelated."
+dialog_autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Scenario2InfoDialog" type="AcceptDialog" parent="."]
+margin_top = 100.0
+margin_right = 1024.0
+margin_bottom = 209.0
+window_title = "Scenario 2"
+dialog_text = "In this scenario, a slime's speed is inversely proportional to its vision radius. For example, a speed of 0 will correspond to a vision radius of 255; and a speed of 255 will correspond to a vision radius of 0.
+
+The results of this simulation infere which gene is more benefical to foraging."
+dialog_autowrap = true
+
+[node name="Scenario3InfoDialog" type="AcceptDialog" parent="."]
+margin_top = 100.0
+margin_right = 1024.0
+margin_bottom = 226.0
+window_title = "Scenario 3"
+dialog_text = "In this scenario, all slimes have the same vision radius. Movement will consume energy which can only be replenished by consuming food. The amount of energy lost is directly proporitional to the distance moved, so slimes with higher speed will consume energy faster. If a slime runs out of energy, it will be removed from the current iteration and will not be able to forage for any more food.
+
+The results of this simulation infere an upper limit for a slime's speed where being faster becomes more harmful than benefical."
+dialog_autowrap = true
+[connection signal="item_selected" from="HBoxContainer/DropDown" to="." method="_on_DropDown_item_selected"]
+[connection signal="pressed" from="HBoxContainer/InfoButton" to="." method="_on_InfoButton_pressed"]
