@@ -41,15 +41,27 @@ func scenario_selection_changed(scenario : int):
 		Scenario3.show()
 
 
+func disable_editing():
+	DropDown.disabled = true
+	Scenario3VisionRadiusValueSelector.disable_editing()
+	Scenario3EnergyConsumptionRateSelector.disable_editing()
+	
+	
+func enable_editing():
+	DropDown.disabled = false
+	Scenario3VisionRadiusValueSelector.enable_editing()
+	Scenario3EnergyConsumptionRateSelector.enable_editing()
+
+
 func _on_DropDown_item_selected(index):
 	scenario_selection_changed(index)
 	emit_signal("scenario_changed")
 
 
-func _on_InfoButton_pressed():
-	if DropDown.selected == Config.SCENARIO_1:
-		Scenario1InfoDialog.popup_centered(info_dialog_size)
-	elif DropDown.selected == Config.SCENARIO_2:
+func _on_InfoButton_pressed():	
+	if DropDown.selected == Config.SCENARIO_2:
 		Scenario2InfoDialog.popup_centered(info_dialog_size)
 	elif DropDown.selected == Config.SCENARIO_3:
 		Scenario3InfoDialog.popup_centered(info_dialog_size)
+	else: # SCENARIO_1
+		Scenario1InfoDialog.popup_centered(info_dialog_size)

@@ -18,8 +18,8 @@ export var displacement_offset : float
 export var angle_change : float 
 
 var genes : Array
-const speed_gene_index := 0
-const vision_radius_gene_index := 1
+const MAX_GENE_VALUE : int = 255
+enum {SPEED_GENE_INDEX, VISION_RADIUS_GENE_INDEX}
 
 var body_colour : Color
 var highlight_colour : Color
@@ -35,13 +35,13 @@ var food_collected : int
 func _ready():
 	reset_stats()
 	velocity = init_face_dir
-	VisionCircleCollision.shape.radius = convert_gene(min_vision_radius, max_vision_radius, vision_radius_gene_index)
+	VisionCircleCollision.shape.radius = convert_gene(min_vision_radius, max_vision_radius, VISION_RADIUS_GENE_INDEX)
 	
 	calc_colours()
 
 
 func _physics_process(delta : float):
-	var speed := convert_gene(min_speed, max_speed, speed_gene_index)
+	var speed := convert_gene(min_speed, max_speed, SPEED_GENE_INDEX)
 	
 	if not pathfind_to_food(speed, delta):
 		wander(speed, delta)
@@ -59,12 +59,12 @@ func reset_stats():
 
 
 func convert_gene(min_value : int, max_value : int, gene_index : int) -> float:
-	return (max_value - min_value) * (genes[gene_index] / 255.0) + min_value
+	return (max_value - min_value) * (genes[gene_index] / float(MAX_GENE_VALUE)) + min_value
 
 
 func calc_colours():
-	var speed_gene : int = genes[speed_gene_index]
-	var vision_radius_gene : int = genes[vision_radius_gene_index]
+	var speed_gene : int = genes[SPEED_GENE_INDEX]
+	var vision_radius_gene : int = genes[VISION_RADIUS_GENE_INDEX]
 	
 	body_colour = Color.from_hsv(speed_gene/360.0, 0.74, 0.74)
 	highlight_colour = Color.from_hsv(speed_gene/360.0, 0.65, 0.89)

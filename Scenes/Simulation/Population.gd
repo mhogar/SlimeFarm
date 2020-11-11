@@ -10,8 +10,25 @@ func generate():
 	for i in range(Config.population_size):
 		var slime : Slime = scene.instance()
 		
-		slime.genes.append(randi() % 256) # speed
-		slime.genes.append(randi() % 256) # vision radius
+		if Config.scenario == Config.SCENARIO_2:
+			# give random value to speed gene
+			var gene := randi() % (Slime.MAX_GENE_VALUE + 1)
+			slime.genes.append(gene)
+			
+			# calc vision radius based on speed
+			slime.genes.append(Slime.MAX_GENE_VALUE - gene)
+			
+		elif Config.scenario == Config.SCENARIO_3:
+			# give random value to speed gene
+			slime.genes.append(randi() % (Slime.MAX_GENE_VALUE + 1))
+			
+			# assign fixed value to vision radius
+			slime.genes.append(Config.scenario3_vision_radius)
+			
+		else: # SCENARIO_1
+			# give random value to both genes
+			slime.genes.append(randi() % (Slime.MAX_GENE_VALUE + 1))
+			slime.genes.append(randi() % (Slime.MAX_GENE_VALUE + 1))
 		
 		# add slime to list
 		slimes.append(slime)
@@ -74,16 +91,38 @@ func select_parent_slime(slimes : Array) -> Slime:
 func breed(slime1 : Slime, slime2: Slime) -> Slime:
 	var new_slime : Slime = load("res://Scenes/Actors/Slime.tscn").instance()
 	
-	# apply crossover to each gene
-	for i in range(slime1.genes.size()):
-		var cross_str := randi()
-		var gene : int = (slime1.genes[i] & cross_str) + (slime2.genes[i] & (~cross_str))
-		
-		# apply mutation
-		for j in range(8):
-			if randf() <= Config.mutation_probability:
-				gene ^= (1 << j)
-		
+	if Config.scenario == Config.SCENARIO_2:
+		# apply crossover to speed gene
+		var gene := cross_over_genes(slime1.genes[Slime.SPEED_GENE_INDEX], slime2.genes[Slime.VISION_RADIUS_GENE_INDEX])
 		new_slime.genes.append(gene)
+		
+		# calc vision radius
+		new_slime.genes.append(Slime.MAX_GENE_VALUE - gene)
+		
+	elif Config.scenario == Config.SCENARIO_3:
+		# apply crossover to speed gene
+		var gene := cross_over_genes(slime1.genes[Slime.SPEED_GENE_INDEX], slime2.genes[Slime.VISION_RADIUS_GENE_INDEX])
+		new_slime.genes.append(gene)
+		
+		# set vision radius to fixed value
+		new_slime.genes.append(Config.scenario3_vision_radius)
+			
+	else: # SCENARIO_1
+		# apply crossover to each gene
+		for i in range(slime1.genes.size()):
+			var gene := cross_over_genes(slime1.genes[i], slime2.genes[i])
+			new_slime.genes.append(gene)
 	
 	return new_slime
+
+
+func cross_over_genes(gene1 : int, gene2 : int) -> int:
+	var cross_str := randi()
+	var new_gene : int = (gene1 & cross_str) + (gene2 & (~cross_str))
+	
+	# apply mutation
+	for j in range(8):
+		if randf() <= Config.mutation_probability:
+			new_gene ^= (1 << j)
+			
+	return new_gene

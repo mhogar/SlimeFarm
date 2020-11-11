@@ -39,8 +39,8 @@ func update_config():
 	Config.mutation_probability = MutProbSelector.get_value()
 	Config.csv_dir = ChooseDirLineEdit.text
 	Config.scenario = ScenarioSelector.get_selected_scenario()
-	Config.Scenario3.vision_radius = ScenarioSelector.Scenario3VisionRadiusValueSelector.get_value()
-	Config.Scenario3.energy_consumption_rate = ScenarioSelector.Scenario3EnergyConsumptionRateSelector.get_value()
+	Config.scenario3_vision_radius = ScenarioSelector.Scenario3VisionRadiusValueSelector.get_value()
+	Config.scenario3_energy_consumption_rate = ScenarioSelector.Scenario3EnergyConsumptionRateSelector.get_value()
 
 
 func load_from_config():
@@ -51,8 +51,8 @@ func load_from_config():
 	MutProbSelector.set_value(Config.mutation_probability)
 	ChooseDirLineEdit.text = Config.csv_dir
 	ScenarioSelector.set_selected_scenario(Config.scenario)
-	ScenarioSelector.Scenario3VisionRadiusValueSelector.set_value(Config.Scenario3.vision_radius)
-	ScenarioSelector.Scenario3EnergyConsumptionRateSelector.set_value(Config.Scenario3.energy_consumption_rate)
+	ScenarioSelector.Scenario3VisionRadiusValueSelector.set_value(Config.scenario3_vision_radius)
+	ScenarioSelector.Scenario3EnergyConsumptionRateSelector.set_value(Config.scenario3_energy_consumption_rate)
 
 
 func hide():

@@ -78,8 +78,8 @@ func end_iteration():
 func calc_stats():
 	stats = []
 	stats.append(timer)
-	stats.append(calc_gene_avg(Slime.speed_gene_index))
-	stats.append(calc_gene_avg(Slime.vision_radius_gene_index))
+	stats.append(calc_gene_avg(Slime.SPEED_GENE_INDEX))
+	stats.append(calc_gene_avg(Slime.VISION_RADIUS_GENE_INDEX))
 
 
 func calc_gene_avg(index : int) -> float:
