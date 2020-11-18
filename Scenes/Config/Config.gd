@@ -39,15 +39,15 @@ func load_config():
 	if err != OK:
 		return
 		
-	csv_dir = config.get_value("general", "csv_dir")
-	num_tiles_x = config.get_value("environment", "num_tiles_x")
-	num_tiles_y = config.get_value("environment", "num_tiles_y")
-	population_size = config.get_value("environment", "population_size")
-	num_food = config.get_value("environment", "num_food")
-	mutation_probability = config.get_value("genetic_algorithm", "mutation_probability")
-	scenario = config.get_value("scenario", "scenario")
-	scenario3_vision_radius = config.get_value("scenario3", "vision_radius")
-	scenario3_energy_consumption_rate = config.get_value("scenario3", "energy_consumption_rate")
+	csv_dir = config.get_value("general", "csv_dir", csv_dir)
+	num_tiles_x = config.get_value("environment", "num_tiles_x", num_tiles_x)
+	num_tiles_y = config.get_value("environment", "num_tiles_y", num_tiles_y)
+	population_size = config.get_value("environment", "population_size", population_size)
+	num_food = config.get_value("environment", "num_food", num_food)
+	mutation_probability = config.get_value("genetic_algorithm", "mutation_probability", mutation_probability)
+	scenario = config.get_value("scenario", "scenario", scenario)
+	scenario3_vision_radius = config.get_value("scenario3", "vision_radius", scenario3_vision_radius)
+	scenario3_energy_consumption_rate = config.get_value("scenario3", "energy_consumption_rate", scenario3_energy_consumption_rate)
 	
 	
 func save_config():
