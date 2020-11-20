@@ -7,7 +7,9 @@ onready var Sprite := $Sprite
 onready var Particles := $Particles2D
 onready var VisionCircle := $VisionCircle
 onready var VisionCircleCollision := $VisionCircle/CollisionShape2D
+onready var EnergyIndicator := $EnergyIndicator
 onready var AnimationPlayer := $AnimationPlayer
+
 
 export var min_speed : float
 export var max_speed : float
@@ -15,7 +17,8 @@ export var min_vision_radius : float
 export var max_vision_radius : float
 export var wander_force : float
 export var displacement_offset : float
-export var angle_change : float 
+export var angle_change : float
+export var energy_consumption_speed : float
 
 var genes : Array
 const MAX_GENE_VALUE : int = 255
@@ -33,7 +36,8 @@ var food_collected : int
 
 
 func _ready():
-	reset_stats()
+	reset()
+	init_energy_indicator()
 	velocity = init_face_dir
 	VisionCircleCollision.shape.radius = convert_gene(min_vision_radius, max_vision_radius, VISION_RADIUS_GENE_INDEX)
 	
@@ -45,7 +49,10 @@ func _physics_process(delta : float):
 	
 	if not pathfind_to_food(speed, delta):
 		wander(speed, delta)
-		
+	
+	if EnergyIndicator.value <= 0:
+		get_parent().remove_child(self)
+	
 	update_walk_animation()
 
 
@@ -54,8 +61,33 @@ func _draw():
 	draw_arc(Vector2(), VisionCircleCollision.shape.radius, deg2rad(0), deg2rad(360), 35, vision_circle_colour, 2)
 
 
-func reset_stats():
+func reset():
 	food_collected = 0
+	
+	if Config.scenario == Config.SCENARIO_3:
+		update_energy_indicator(EnergyIndicator.max_value)
+
+
+func init_energy_indicator():
+	if Config.scenario == Config.SCENARIO_3:
+		EnergyIndicator.max_value = Config.scenario3_max_energy
+		EnergyIndicator.value = EnergyIndicator.max_value
+		configure_energy_step()
+	else:
+		EnergyIndicator.hide()
+
+
+func configure_energy_step():
+	var modifer := Config.scenario3_energy_consumption_modifier
+	var inverse_modifier : float = 1.0 / modifer
+	
+	var val : int = genes[SPEED_GENE_INDEX]
+	var mid_val : float = MAX_GENE_VALUE / 2.0
+	
+	if val < mid_val:
+		EnergyIndicator.step = (val / mid_val) * inverse_modifier + inverse_modifier
+	else:
+		EnergyIndicator.step = (val - mid_val) / (MAX_GENE_VALUE - mid_val) * (modifer - 1) + 1
 
 
 func convert_gene(min_value : int, max_value : int, gene_index : int) -> float:
@@ -83,8 +115,8 @@ func pathfind_to_food(speed : float, delta : float) -> bool:
 		return false
 	
 	# update velocity and position
-	velocity = dir
-	position += velocity * speed * delta
+	velocity = dir * speed * delta
+	move(velocity, delta)
 	
 	return true
 
@@ -108,7 +140,7 @@ func find_closest_food() -> Vector2:
 
 func wander(speed : float, delta : float):
 	velocity = calc_wander().clamped(speed * delta)
-	position += velocity
+	move(velocity, delta)
 	
 	wrap_screen()
 
@@ -137,7 +169,14 @@ func wrap_screen():
 		position.y = env_height
 	elif position.y > env_height:
 		position.y = 0
-		
+
+
+func move(velocity : Vector2, delta : float):
+	position += velocity
+	
+	if Config.scenario == Config.SCENARIO_3:
+		update_energy_indicator(EnergyIndicator.value - (EnergyIndicator.step * energy_consumption_speed * delta))
+
 
 func update_walk_animation():
 	if velocity.x < 0 and velocity.y < 0:
@@ -152,3 +191,8 @@ func update_walk_animation():
 
 func collect_food():
 	food_collected += 1
+	update_energy_indicator(EnergyIndicator.max_value)
+	
+
+func update_energy_indicator(value : float):
+	EnergyIndicator.value = value

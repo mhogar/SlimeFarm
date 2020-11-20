@@ -40,7 +40,8 @@ func update_config():
 	Config.csv_dir = ChooseDirLineEdit.text
 	Config.scenario = ScenarioSelector.get_selected_scenario()
 	Config.scenario3_vision_radius = ScenarioSelector.Scenario3VisionRadiusValueSelector.get_value()
-	Config.scenario3_energy_consumption_rate = ScenarioSelector.Scenario3EnergyConsumptionRateSelector.get_value()
+	Config.scenario3_max_energy = ScenarioSelector.Scenario3MaxEnergySelector.get_value()
+	Config.scenario3_energy_consumption_modifier = ScenarioSelector.Scenario3EnergyConsumptionModifierSelector.get_value()
 
 
 func load_from_config():
@@ -52,7 +53,8 @@ func load_from_config():
 	ChooseDirLineEdit.text = Config.csv_dir
 	ScenarioSelector.set_selected_scenario(Config.scenario)
 	ScenarioSelector.Scenario3VisionRadiusValueSelector.set_value(Config.scenario3_vision_radius)
-	ScenarioSelector.Scenario3EnergyConsumptionRateSelector.set_value(Config.scenario3_energy_consumption_rate)
+	ScenarioSelector.Scenario3MaxEnergySelector.set_value(Config.scenario3_max_energy)
+	ScenarioSelector.Scenario3EnergyConsumptionModifierSelector.set_value(Config.scenario3_energy_consumption_modifier)
 
 
 func hide():

@@ -14,7 +14,8 @@ var mutation_probability : float = 0.01
 
 var scenario : int = SCENARIO_1
 var scenario3_vision_radius : int = 127
-var scenario3_energy_consumption_rate : float = 0.5
+var scenario3_max_energy : int = 500
+var scenario3_energy_consumption_modifier : float = 2.0
 
 
 func _ready():
@@ -47,7 +48,8 @@ func load_config():
 	mutation_probability = config.get_value("genetic_algorithm", "mutation_probability", mutation_probability)
 	scenario = config.get_value("scenario", "scenario", scenario)
 	scenario3_vision_radius = config.get_value("scenario3", "vision_radius", scenario3_vision_radius)
-	scenario3_energy_consumption_rate = config.get_value("scenario3", "energy_consumption_rate", scenario3_energy_consumption_rate)
+	scenario3_max_energy = config.get_value("scenario3", "max_energy", scenario3_max_energy)
+	scenario3_energy_consumption_modifier = config.get_value("scenario3", "energy_consumption_modifier", scenario3_energy_consumption_modifier)
 	
 	
 func save_config():
@@ -61,6 +63,7 @@ func save_config():
 	config.set_value("genetic_algorithm", "mutation_probability", mutation_probability)
 	config.set_value("scenario", "scenario", scenario)
 	config.set_value("scenario3", "vision_radius", scenario3_vision_radius)
-	config.set_value("scenario3", "energy_consumption_rate", scenario3_energy_consumption_rate)
+	config.set_value("scenario3", "max_energy", scenario3_max_energy)
+	config.set_value("scenario3", "energy_consumption_modifier", scenario3_energy_consumption_modifier)
 	
 	config.save("user://settings.cfg")

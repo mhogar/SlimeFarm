@@ -6,7 +6,8 @@ onready var DropDown := $HBoxContainer/DropDown
 
 onready var Scenario3 := $Scenario3
 onready var Scenario3VisionRadiusValueSelector := $Scenario3/VisionRadiusValueSelector
-onready var Scenario3EnergyConsumptionRateSelector := $Scenario3/EnergyConsumptionRateSelector
+onready var Scenario3MaxEnergySelector := $Scenario3/MaxEnergySelector
+onready var Scenario3EnergyConsumptionModifierSelector := $Scenario3/EnergyConsumptionModifierSelector
 
 onready var Scenario1InfoDialog := $Scenario1InfoDialog
 onready var Scenario2InfoDialog := $Scenario2InfoDialog
@@ -44,13 +45,15 @@ func scenario_selection_changed(scenario : int):
 func disable_editing():
 	DropDown.disabled = true
 	Scenario3VisionRadiusValueSelector.disable_editing()
-	Scenario3EnergyConsumptionRateSelector.disable_editing()
+	Scenario3MaxEnergySelector.disable_editing()
+	Scenario3EnergyConsumptionModifierSelector.disable_editing()
 	
 	
 func enable_editing():
 	DropDown.disabled = false
 	Scenario3VisionRadiusValueSelector.enable_editing()
-	Scenario3EnergyConsumptionRateSelector.enable_editing()
+	Scenario3MaxEnergySelector.enable_editing()
+	Scenario3EnergyConsumptionModifierSelector.enable_editing()
 
 
 func _on_DropDown_item_selected(index):

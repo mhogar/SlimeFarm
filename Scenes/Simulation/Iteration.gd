@@ -16,7 +16,7 @@ var stats : Array
 func _physics_process(delta):
 	timer += delta
 	
-	if Food.get_child_count() == 0:
+	if Food.get_child_count() == 0 || Slimes.get_child_count() == 0:
 		end_iteration()
 	
 
@@ -89,7 +89,7 @@ func reset():
 
 func end_iteration():	
 	calc_stats()
-	remove_slimes()
+	remove_and_reset_slimes()
 	emit_signal("finished")
 
 	
@@ -124,6 +124,7 @@ func calc_gene_range(index : int) -> int:
 	return max_val - min_val
 	
 	
-func remove_slimes():
-	for child in Slimes.get_children():
-		Slimes.remove_child(child)
+func remove_and_reset_slimes():
+	for slime in slimes:
+		slime.reset()
+		Slimes.remove_child(slime)

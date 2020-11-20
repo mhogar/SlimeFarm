@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Scenes/Actors/Slime.gd" type="Script" id=1]
 [ext_resource path="res://GFX/Slime.png" type="Texture" id=2]
 [ext_resource path="res://Scenes/Actors/Slime.shader" type="Shader" id=3]
+[ext_resource path="res://GFX/barHorizontal_blue_mid.png" type="Texture" id=4]
 
 [sub_resource type="ParticlesMaterial" id=1]
 resource_local_to_scene = true
@@ -108,6 +109,7 @@ max_vision_radius = 200.0
 wander_force = 10.0
 displacement_offset = 10.0
 angle_change = 20.0
+energy_consumption_speed = 50.0
 
 [node name="Particles2D" type="Particles2D" parent="."]
 position = Vector2( 0, 8.58945 )
@@ -134,6 +136,19 @@ collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="VisionCircle"]
 shape = SubResource( 4 )
+
+[node name="EnergyIndicator" type="TextureProgress" parent="."]
+margin_left = -20.0
+margin_top = -25.0
+margin_right = 20.0
+margin_bottom = -21.0
+max_value = 500.0
+step = 1.0
+texture_progress = ExtResource( 4 )
+nine_patch_stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/walk_down_left = SubResource( 5 )
