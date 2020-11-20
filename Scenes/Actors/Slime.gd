@@ -33,6 +33,7 @@ var velocity : Vector2
 var wander_angle := 0.0
 
 var food_collected : int
+var time_in_iteration : float
 
 
 func _ready():
@@ -45,12 +46,14 @@ func _ready():
 
 
 func _physics_process(delta : float):
+	time_in_iteration += delta
+	
 	var speed := convert_gene(min_speed, max_speed, SPEED_GENE_INDEX)
 	
 	if not pathfind_to_food(speed, delta):
 		wander(speed, delta)
 	
-	if EnergyIndicator.value <= 0:
+	if Config.scenario == Config.SCENARIO_3 && EnergyIndicator.value <= 0:
 		get_parent().remove_child(self)
 	
 	update_walk_animation()
@@ -62,6 +65,7 @@ func _draw():
 
 
 func reset():
+	time_in_iteration = 0.0
 	food_collected = 0
 	
 	if Config.scenario == Config.SCENARIO_3:
@@ -78,16 +82,7 @@ func init_energy_indicator():
 
 
 func configure_energy_step():
-	var modifer := Config.scenario3_energy_consumption_modifier
-	var inverse_modifier : float = 1.0 / modifer
-	
-	var val : int = genes[SPEED_GENE_INDEX]
-	var mid_val : float = MAX_GENE_VALUE / 2.0
-	
-	if val < mid_val:
-		EnergyIndicator.step = (val / mid_val) * inverse_modifier + inverse_modifier
-	else:
-		EnergyIndicator.step = (val - mid_val) / (MAX_GENE_VALUE - mid_val) * (modifer - 1) + 1
+	EnergyIndicator.step = (genes[SPEED_GENE_INDEX] / float(MAX_GENE_VALUE)) * (Config.scenario3_energy_consumption_modifier - 1) + 1
 
 
 func convert_gene(min_value : int, max_value : int, gene_index : int) -> float:

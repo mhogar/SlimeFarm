@@ -87,8 +87,9 @@ func create_csv():
 	
 	# update the config header and values based on the scenario
 	if Config.scenario == Config.SCENARIO_3:
-		config_header += ",Vision Radius,Energy Consumption Modifer"
+		config_header += ",Vision Radius,Max Energy,Energy Consumption Modifer"
 		config_values.append(Config.scenario3_vision_radius)
+		config_values.append(Config.scenario3_max_energy)
 		config_values.append(Config.scenario3_energy_consumption_modifier)
 	
 	#store the data

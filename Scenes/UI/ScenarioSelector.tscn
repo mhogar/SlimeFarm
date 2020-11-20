@@ -59,7 +59,7 @@ margin_right = 1024.0
 margin_bottom = 95.0
 label = "Energy Consumption Modifier"
 min_value = 1.0
-max_value = 5.0
+max_value = 10.0
 step = 0.1
 
 [node name="Scenario1InfoDialog" type="AcceptDialog" parent="."]
@@ -88,7 +88,7 @@ margin_top = 100.0
 margin_right = 1024.0
 margin_bottom = 226.0
 window_title = "Scenario 3"
-dialog_text = "In this scenario, all slimes have the same vision radius. Movement will consume energy which can only be replenished by consuming food. The amount of energy lost is directly proporitional to the distance moved, so slimes with higher speed will consume energy faster. If a slime runs out of energy, it will be removed from the current iteration and will not be able to forage for any more food.
+dialog_text = "In this scenario, all slimes have the same vision radius. Movement will consume energy which can only be replenished by consuming food. The amount of energy lost is  proporitional to the slime's speed. If a slime runs out of energy, it will be removed from the current iteration and will not be able to forage for any more food. Slime's that last longer in the iteration will have a higher chance of being picked for breeding.
 
 The results of this simulation infere an upper limit for a slime's speed where being faster becomes more harmful than benefical."
 dialog_autowrap = true

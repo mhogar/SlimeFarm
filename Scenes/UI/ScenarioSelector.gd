@@ -61,10 +61,11 @@ func _on_DropDown_item_selected(index):
 	emit_signal("scenario_changed")
 
 
-func _on_InfoButton_pressed():	
-	if DropDown.selected == Config.SCENARIO_2:
-		Scenario2InfoDialog.popup_centered(info_dialog_size)
-	elif DropDown.selected == Config.SCENARIO_3:
-		Scenario3InfoDialog.popup_centered(info_dialog_size)
-	else: # SCENARIO_1
-		Scenario1InfoDialog.popup_centered(info_dialog_size)
+func _on_InfoButton_pressed():
+	match (DropDown.selected):
+		Config.SCENARIO_2:
+			Scenario2InfoDialog.popup_centered(info_dialog_size)
+		Config.SCENARIO_3:
+			Scenario3InfoDialog.popup_centered(info_dialog_size)
+		_: # SCENARIO_1
+			Scenario1InfoDialog.popup_centered(info_dialog_size)

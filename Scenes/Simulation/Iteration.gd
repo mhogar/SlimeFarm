@@ -36,6 +36,7 @@ func setup_slimes():
 		
 		# add to the scene tree
 		Slimes.add_child(slime)
+		slime.reset()
 		
 	place_actors(slimes)
 
@@ -89,7 +90,7 @@ func reset():
 
 func end_iteration():	
 	calc_stats()
-	remove_and_reset_slimes()
+	remove_slimes()
 	emit_signal("finished")
 
 	
@@ -124,7 +125,6 @@ func calc_gene_range(index : int) -> int:
 	return max_val - min_val
 	
 	
-func remove_and_reset_slimes():
-	for slime in slimes:
-		slime.reset()
+func remove_slimes():
+	for slime in Slimes.get_children():
 		Slimes.remove_child(slime)

@@ -10,25 +10,26 @@ func generate():
 	for i in range(Config.population_size):
 		var slime : Slime = scene.instance()
 		
-		if Config.scenario == Config.SCENARIO_2:
-			# give random value to speed gene
-			var gene := randi() % (Slime.MAX_GENE_VALUE + 1)
-			slime.genes.append(gene)
-			
-			# calc vision radius based on speed
-			slime.genes.append(Slime.MAX_GENE_VALUE - gene)
-			
-		elif Config.scenario == Config.SCENARIO_3:
-			# give random value to speed gene
-			slime.genes.append(randi() % (Slime.MAX_GENE_VALUE + 1))
-			
-			# assign fixed value to vision radius
-			slime.genes.append(Config.scenario3_vision_radius)
-			
-		else: # SCENARIO_1
-			# give random value to both genes
-			slime.genes.append(randi() % (Slime.MAX_GENE_VALUE + 1))
-			slime.genes.append(randi() % (Slime.MAX_GENE_VALUE + 1))
+		match (Config.scenario):
+			Config.SCENARIO_2:
+				# give random value to speed gene
+				var gene := randi() % (Slime.MAX_GENE_VALUE + 1)
+				slime.genes.append(gene)
+				
+				# calc vision radius based on speed
+				slime.genes.append(Slime.MAX_GENE_VALUE - gene)
+				
+			Config.SCENARIO_3:
+				# give random value to speed gene
+				slime.genes.append(randi() % (Slime.MAX_GENE_VALUE + 1))
+				
+				# assign fixed value to vision radius
+				slime.genes.append(Config.scenario3_vision_radius)
+				
+			_: # SCENARIO_1
+				# give random value to both genes
+				slime.genes.append(randi() % (Slime.MAX_GENE_VALUE + 1))
+				slime.genes.append(randi() % (Slime.MAX_GENE_VALUE + 1))
 		
 		# add slime to list
 		slimes.append(slime)
@@ -65,54 +66,63 @@ func breed_slimes():
 
 
 func select_parent_slime(slimes : Array) -> Slime:
-	# calc the total number of food collected by the slimes
-	var total_food_collected := 0
+	# calc the total
+	var total := 0.0
 	for slime in slimes:
-		total_food_collected += slime.food_collected
+		if Config.scenario == Config.SCENARIO_3:
+			total += slime.time_in_iteration
+		else:
+			total += slime.food_collected
 	
-	# if no food was collected, then choose a slime at random
-	if total_food_collected == 0:
+	# if the total is 0, then choose a slime at random
+	if total == 0.0:
 		return slimes[randi() % slimes.size()]
 	
 	# generate the random value
-	var r := randf() * total_food_collected
+	print(randf())
+	var r := randf() * total
 	
-	# select the slime with slimes who collected more food being more likely to be chosen
-	var total := 0
+	# select the slime with slimes who contributed more to the total being more likely to be chosen
+	var sum := 0
 	for slime in slimes:
-		total += slime.food_collected
-		if total >= r:
+		if Config.scenario == Config.SCENARIO_3:
+			sum += slime.time_in_iteration
+		else:
+			sum += slime.food_collected
+			
+		if sum >= r:
 			return slime
 	
 	# this should in theory never be reached, but return the last slime just to be safe
 	return slimes.back()
-	
+
 	
 func breed(slime1 : Slime, slime2: Slime) -> Slime:
 	var new_slime : Slime = load("res://Scenes/Actors/Slime.tscn").instance()
 	
-	if Config.scenario == Config.SCENARIO_2:
-		# apply crossover to speed gene
-		var gene := cross_over_genes(slime1.genes[Slime.SPEED_GENE_INDEX], slime2.genes[Slime.VISION_RADIUS_GENE_INDEX])
-		new_slime.genes.append(gene)
-		
-		# calc vision radius
-		new_slime.genes.append(Slime.MAX_GENE_VALUE - gene)
-		
-	elif Config.scenario == Config.SCENARIO_3:
-		# apply crossover to speed gene
-		var gene := cross_over_genes(slime1.genes[Slime.SPEED_GENE_INDEX], slime2.genes[Slime.VISION_RADIUS_GENE_INDEX])
-		new_slime.genes.append(gene)
-		
-		# set vision radius to fixed value
-		new_slime.genes.append(Config.scenario3_vision_radius)
-			
-	else: # SCENARIO_1
-		# apply crossover to each gene
-		for i in range(slime1.genes.size()):
-			var gene := cross_over_genes(slime1.genes[i], slime2.genes[i])
+	match (Config.scenario):
+		Config.SCENARIO_2:
+			# apply crossover to speed gene
+			var gene := cross_over_genes(slime1.genes[Slime.SPEED_GENE_INDEX], slime2.genes[Slime.VISION_RADIUS_GENE_INDEX])
 			new_slime.genes.append(gene)
-	
+			
+			# calc vision radius
+			new_slime.genes.append(Slime.MAX_GENE_VALUE - gene)
+			
+		Config.SCENARIO_3:
+			# apply crossover to speed gene
+			var gene := cross_over_genes(slime1.genes[Slime.SPEED_GENE_INDEX], slime2.genes[Slime.VISION_RADIUS_GENE_INDEX])
+			new_slime.genes.append(gene)
+			
+			# set vision radius to fixed value
+			new_slime.genes.append(Config.scenario3_vision_radius)
+			
+		_: # SCENARIO_1
+			# apply crossover to each gene
+			for i in range(slime1.genes.size()):
+				var gene := cross_over_genes(slime1.genes[i], slime2.genes[i])
+				new_slime.genes.append(gene)
+		
 	return new_slime
 
 
