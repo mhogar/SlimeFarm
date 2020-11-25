@@ -39,10 +39,17 @@ func breed_slimes():
 	var pop_size := slimes.size()
 	var slimes_copy := slimes.duplicate()
 	
+	var first_slime := true
 	var num_slimes := 0
+	
 	while num_slimes < pop_size:
 		# select first parent
-		var parent1 := select_parent_slime(slimes_copy)
+		var parent1 : Slime
+		if first_slime:
+			parent1 = select_best_candiate(slimes_copy)
+			first_slime = false
+		else:
+			parent1 = select_parent_slime(slimes_copy)
 		slimes_copy.erase(parent1)
 		num_slimes += 1
 		
@@ -63,6 +70,29 @@ func breed_slimes():
 	# remove any slimes that did not breed from the list
 	for slime in slimes_copy:
 		slimes.erase(slime)
+
+
+func select_best_candiate(slimes: Array) -> Slime:
+	var best_fit_slimes := []
+	var max_val := 0.0
+	
+	# find the slimes with the largest fitness values
+	for slime in slimes:
+		var val : float
+		if Config.scenario == Config.SCENARIO_3:
+			val = slime.time_in_iteration
+		else:
+			val = slime.food_collected
+		
+		if val == max_val:
+			best_fit_slimes.append(slime)
+		elif val > max_val:
+			max_val = val
+			best_fit_slimes.clear()
+			best_fit_slimes.append(slime)
+	
+	# return a random slime from the best fit list
+	return best_fit_slimes[randi() % best_fit_slimes.size()]
 
 
 func select_parent_slime(slimes : Array) -> Slime:
