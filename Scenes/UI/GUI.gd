@@ -22,6 +22,7 @@ onready var PopSizeSelector := $ConfigGUI/Panel/HBoxContainer/VBoxContainer/Sele
 onready var NumFoodSelector := $ConfigGUI/Panel/HBoxContainer/VBoxContainer/SelectorContainer/NumFoodSelector
 onready var MutProbSelector := $ConfigGUI/Panel/HBoxContainer/VBoxContainer/SelectorContainer/MutProbSelector
 onready var ScenarioSelector := $ConfigGUI/Panel/HBoxContainer/VBoxContainer/SelectorContainer/ScenarioSelector
+onready var IterationConfig := $ConfigGUI/Panel/HBoxContainer/VBoxContainer/SelectorContainer/InterationConfig
 
 var toggled := true
 
@@ -38,10 +39,15 @@ func update_config():
 	Config.num_food = NumFoodSelector.get_value()
 	Config.mutation_probability = MutProbSelector.get_value()
 	Config.csv_dir = ChooseDirLineEdit.text
+	
 	Config.scenario = ScenarioSelector.get_selected_scenario()
 	Config.scenario3_vision_radius = ScenarioSelector.Scenario3VisionRadiusValueSelector.get_value()
 	Config.scenario3_max_energy = ScenarioSelector.Scenario3MaxEnergySelector.get_value()
 	Config.scenario3_energy_consumption_modifier = ScenarioSelector.Scenario3EnergyConsumptionModifierSelector.get_value()
+	
+	Config.iteration_type = IterationConfig.get_selected_iteration_type()
+	Config.iteration_type_finite_iteration_length = IterationConfig.FiniteIterationLengthSelector.get_value()
+	Config.iteration_type_finite_num_simulations = IterationConfig.FiniteNumSimulationSelector.get_value()
 
 
 func load_from_config():
@@ -51,10 +57,15 @@ func load_from_config():
 	NumFoodSelector.set_value(Config.num_food)
 	MutProbSelector.set_value(Config.mutation_probability)
 	ChooseDirLineEdit.text = Config.csv_dir
+	
 	ScenarioSelector.set_selected_scenario(Config.scenario)
 	ScenarioSelector.Scenario3VisionRadiusValueSelector.set_value(Config.scenario3_vision_radius)
 	ScenarioSelector.Scenario3MaxEnergySelector.set_value(Config.scenario3_max_energy)
 	ScenarioSelector.Scenario3EnergyConsumptionModifierSelector.set_value(Config.scenario3_energy_consumption_modifier)
+	
+	IterationConfig.set_selected_iteration_type(Config.iteration_type)
+	IterationConfig.FiniteIterationLengthSelector.set_value(Config.iteration_type_finite_iteration_length)
+	IterationConfig.FiniteNumSimulationSelector.set_value(Config.iteration_type_finite_num_simulations)
 
 
 func hide():

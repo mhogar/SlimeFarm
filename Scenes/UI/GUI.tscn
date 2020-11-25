@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scenes/UI/GUI.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/UI/ConfigValueSelector.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://GFX/arrow_right.png" type="Texture" id=4]
 [ext_resource path="res://GFX/arrow_left.png" type="Texture" id=5]
 [ext_resource path="res://Scenes/UI/ScenarioSelector.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/UI/InterationConfig.tscn" type="PackedScene" id=7]
 
 [sub_resource type="Animation" id=1]
 resource_name = "hide"
@@ -179,6 +180,13 @@ anchor_bottom = 0.0
 margin_top = 175.0
 margin_right = 333.0
 margin_bottom = 300.0
+
+[node name="InterationConfig" parent="ConfigGUI/Panel/HBoxContainer/VBoxContainer/SelectorContainer" instance=ExtResource( 7 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 310.0
+margin_right = 333.0
+margin_bottom = 388.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="ConfigGUI/Panel/HBoxContainer/VBoxContainer"]
 margin_top = 506.0
