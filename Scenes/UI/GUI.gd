@@ -10,7 +10,8 @@ onready var FileDialog := $FileDialog
 onready var ChooseDirLineEdit := $ConfigGUI/Panel/HBoxContainer/VBoxContainer/HBoxContainer/ChooseDirLineEdit
 onready var ChooseDirButton := $ConfigGUI/Panel/HBoxContainer/VBoxContainer/HBoxContainer/ChooseDirButton
 
-onready var IterationLabel := $ControlGUI/IterationLabel
+onready var IterationLabel := $ControlGUI/VBoxContainer/IterationLabel
+onready var TrialLabel := $ControlGUI/VBoxContainer/TrialLabel
 
 onready var RefreshButton := $ConfigGUI/Panel/HBoxContainer/VBoxContainer/RefreshButton
 onready var SimulationToggleButton := $ConfigGUI/Panel/HBoxContainer/VBoxContainer/SimulationToggleButton
@@ -30,6 +31,7 @@ var toggled := true
 func _ready():
 	load_from_config()
 	update_iteration_counter(0)
+	update_trial_counter(0)
 
 
 func update_config():
@@ -104,6 +106,10 @@ func update_iteration_counter(iteration : int):
 	IterationLabel.text = "Iteration: %d" % iteration
 
 
+func update_trial_counter(trial : int):
+	TrialLabel.text = "Trial: %d" % trial
+
+
 func start_simulation():
 	hide()
 	disable_editing()
@@ -115,6 +121,7 @@ func start_simulation():
 func end_simulation():
 	SimulationToggleButton.pressed = false
 	update_iteration_counter(0)
+	update_trial_counter(0)
 	SimulationToggleButton.text = "Start Simulation"
 	enable_editing()
 	show()

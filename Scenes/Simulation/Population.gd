@@ -1,6 +1,14 @@
 extends Node
 
+class_name Population
+
 var slimes := []
+
+
+func create_copy() -> Population:
+	var copy : Population = duplicate()
+	copy.slimes = slimes.duplicate()
+	return copy
 
 
 func generate():

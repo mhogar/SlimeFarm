@@ -9,8 +9,11 @@ onready var Population := $Population
 const max_time_scale := 8.0
 const min_time_scale := 1.0
 
+var population_copy : Population
+
 var simulation_running : bool
 var iteration : int
+var trial : int
 
 var csv_filepath : String
 var csv_file : File
@@ -54,17 +57,19 @@ func refresh():
 	Environment.rebuild()
 	Camera.center()
 	Population.generate()
-	Iteration.create_new(Population.slimes)
+	
+	population_copy = Population.create_copy()
+	Iteration.create_new(population_copy.slimes)
 
 
 func start_simulation():
 	Engine.set_time_scale(min_time_scale)
 	create_csv()
 	
-	# start the first iteration
-	iteration = 1
-	GUI.update_iteration_counter(iteration)
-	play_simulation()
+	# start the first trial
+	trial = 1
+	GUI.update_trial_counter(trial)
+	start_trial()
 
 
 func end_simulation():
@@ -73,6 +78,25 @@ func end_simulation():
 	GUI.end_simulation()
 	refresh()
 	
+
+func start_trial():
+	# start the first iteration
+	iteration = 1
+	GUI.update_iteration_counter(iteration)
+	play_simulation()
+	
+	
+func end_trial():
+	trial += 1
+	GUI.update_trial_counter(trial)
+	
+	if trial > Config.iteration_type_finite_num_trials:
+		end_simulation()
+	else:
+		population_copy = Population.create_copy()
+		Iteration.create_new(population_copy.slimes)
+		start_trial()
+
 
 func create_csv():
 	var csv_dir := Config.csv_dir
@@ -102,7 +126,7 @@ func create_csv():
 	
 	# close the file
 	csv_file.close()
-	
+
 	
 func export_stats():
 	var data := PoolStringArray([iteration])
@@ -121,10 +145,10 @@ func _on_Iteration_finished():
 	GUI.update_iteration_counter(iteration)
 	
 	if Config.iteration_type == Config.ITERATION_TYPE_FINITE and iteration > Config.iteration_type_finite_iteration_length:
-		end_simulation()
+		end_trial()
 	else:
-		Population.breed_slimes()
-		Iteration.create_new(Population.slimes)
+		population_copy.breed_slimes()
+		Iteration.create_new(population_copy.slimes)
 
 
 func _on_SimulationConfigUI_simulation_start():
