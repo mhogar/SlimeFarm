@@ -113,7 +113,7 @@ func create_csv():
 	
 	# update the config header and values based on the scenario
 	if Config.scenario == Config.SCENARIO_3:
-		config_header += ",Vision Radius,Max Energy,Energy Consumption Modifer"
+		config_header += ",Vision Radius,Max Energy,Energy Consumption Modifier"
 		config_values.append(Config.scenario3_vision_radius)
 		config_values.append(Config.scenario3_max_energy)
 		config_values.append(Config.scenario3_energy_consumption_modifier)
@@ -122,14 +122,14 @@ func create_csv():
 	csv_file.store_line(config_header)
 	csv_file.store_csv_line(PoolStringArray(config_values))
 	csv_file.store_line("")
-	csv_file.store_line("Iteration,Time (s),Avg. Speed,Min Speed,Max Speed,Avg. Vision Radius,Min Vision Radius,Max Vision Radius")
+	csv_file.store_line("Trial,Iteration,Time (s),Avg. Speed,Min Speed,Max Speed,Avg. Vision Radius,Min Vision Radius,Max Vision Radius")
 	
 	# close the file
 	csv_file.close()
 
 	
 func export_stats():
-	var data := PoolStringArray([iteration])
+	var data := PoolStringArray([trial, iteration])
 	data.append_array(PoolStringArray(Iteration.stats))
 	
 	csv_file.open(csv_filepath, File.READ_WRITE)
