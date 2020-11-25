@@ -25,21 +25,21 @@ margin_top = 24.0
 margin_right = 1024.0
 margin_bottom = 78.0
 
-[node name="NumSimulationsValueSelector" parent="Finite" instance=ExtResource( 2 )]
+[node name="IterationLengthValueSelector" parent="Finite" instance=ExtResource( 2 )]
 margin_left = 0.0
 margin_right = 1024.0
-label = "Number of Simulations"
-min_value = 1.0
-max_value = 100.0
+label = "Iteration Length"
+min_value = 5.0
+max_value = 500.0
 step = 1.0
 
-[node name="IterationLengthValueSelector" parent="Finite" instance=ExtResource( 2 )]
+[node name="NumTrialsValueSelector" parent="Finite" instance=ExtResource( 2 )]
 margin_left = 0.0
 margin_top = 29.0
 margin_right = 1024.0
 margin_bottom = 54.0
-label = "Iteration Length"
-min_value = 10.0
-max_value = 500.0
+label = "Number of Trials"
+min_value = 1.0
+max_value = 50.0
 step = 1.0
 [connection signal="item_selected" from="HBoxContainer/DropDown" to="." method="_on_DropDown_item_selected"]

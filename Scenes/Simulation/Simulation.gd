@@ -69,6 +69,8 @@ func start_simulation():
 
 func end_simulation():
 	pause_simulation()
+	Engine.set_time_scale(min_time_scale)
+	GUI.end_simulation()
 	refresh()
 	
 
@@ -118,8 +120,11 @@ func _on_Iteration_finished():
 	iteration += 1
 	GUI.update_iteration_counter(iteration)
 	
-	Population.breed_slimes()
-	Iteration.create_new(Population.slimes)
+	if Config.iteration_type == Config.ITERATION_TYPE_FINITE and iteration > Config.iteration_type_finite_iteration_length:
+		end_simulation()
+	else:
+		Population.breed_slimes()
+		Iteration.create_new(Population.slimes)
 
 
 func _on_SimulationConfigUI_simulation_start():

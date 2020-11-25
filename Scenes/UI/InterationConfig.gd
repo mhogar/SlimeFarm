@@ -3,7 +3,7 @@ extends VBoxContainer
 onready var DropDown := $HBoxContainer/DropDown
 
 onready var Finite := $Finite
-onready var FiniteNumSimulationSelector := $Finite/NumSimulationsValueSelector
+onready var NumTrialsValueSelector := $Finite/NumTrialsValueSelector
 onready var FiniteIterationLengthSelector := $Finite/IterationLengthValueSelector
 
 
@@ -34,13 +34,13 @@ func iteration_type_selection_changed(type : int):
 
 func disable_editing():
 	DropDown.disabled = true
-	FiniteNumSimulationSelector.disable_editing()
+	NumTrialsValueSelector.disable_editing()
 	FiniteIterationLengthSelector.disable_editing()
 	
 	
 func enable_editing():
 	DropDown.disabled = false
-	FiniteNumSimulationSelector.enable_editing()
+	NumTrialsValueSelector.enable_editing()
 	FiniteIterationLengthSelector.enable_editing()
 
 

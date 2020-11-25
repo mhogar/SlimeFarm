@@ -47,7 +47,7 @@ func update_config():
 	
 	Config.iteration_type = IterationConfig.get_selected_iteration_type()
 	Config.iteration_type_finite_iteration_length = IterationConfig.FiniteIterationLengthSelector.get_value()
-	Config.iteration_type_finite_num_simulations = IterationConfig.FiniteNumSimulationSelector.get_value()
+	Config.iteration_type_finite_num_trials = IterationConfig.NumTrialsValueSelector.get_value()
 
 
 func load_from_config():
@@ -65,15 +65,21 @@ func load_from_config():
 	
 	IterationConfig.set_selected_iteration_type(Config.iteration_type)
 	IterationConfig.FiniteIterationLengthSelector.set_value(Config.iteration_type_finite_iteration_length)
-	IterationConfig.FiniteNumSimulationSelector.set_value(Config.iteration_type_finite_num_simulations)
+	IterationConfig.NumTrialsValueSelector.set_value(Config.iteration_type_finite_num_trials)
 
 
 func hide():
+	if !toggled:
+		return
+	
 	toggled = false
 	AnimationPlayer.play("hide")
 	
 	
 func show():
+	if toggled:
+		return
+	
 	toggled = true
 	AnimationPlayer.play("show")
 
@@ -100,17 +106,18 @@ func update_iteration_counter(iteration : int):
 
 func start_simulation():
 	hide()
-	SimulationToggleButton.text = "End Simulation"
 	disable_editing()
+	SimulationToggleButton.pressed = true
+	SimulationToggleButton.text = "End Simulation"
 	load_from_config()
-	emit_signal("simulation_start")
 
 
 func end_simulation():
+	SimulationToggleButton.pressed = false
 	update_iteration_counter(0)
 	SimulationToggleButton.text = "Start Simulation"
 	enable_editing()
-	emit_signal("simulation_end")
+	show()
 
 
 func refresh():
@@ -121,8 +128,10 @@ func refresh():
 func _on_SimulationToggleButton_toggled(button_pressed):
 	if button_pressed:
 		start_simulation()
+		emit_signal("simulation_start")
 	else:
 		end_simulation()
+		emit_signal("simulation_end")
 		
 
 func _on_ToggleButton_pressed():
