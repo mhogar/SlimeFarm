@@ -79,7 +79,6 @@ func select_parent_slime(slimes : Array) -> Slime:
 		return slimes[randi() % slimes.size()]
 	
 	# generate the random value
-	print(randf())
 	var r := randf() * total
 	
 	# select the slime with slimes who contributed more to the total being more likely to be chosen

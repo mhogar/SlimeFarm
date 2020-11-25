@@ -95,34 +95,34 @@ func end_iteration():
 
 	
 func calc_stats():
-	stats = []
-	stats.append(timer)
-	stats.append(calc_gene_avg(Slime.SPEED_GENE_INDEX))
-	stats.append(calc_gene_avg(Slime.VISION_RADIUS_GENE_INDEX))
-	stats.append(calc_gene_range(Slime.SPEED_GENE_INDEX))
-	stats.append(calc_gene_range(Slime.VISION_RADIUS_GENE_INDEX))
-
-
-func calc_gene_avg(index : int) -> float:
-	var total := 0
-	for slime in slimes:
-		total += slime.genes[index]
+	stats = [timer]
 	
-	return float(total) / slimes.size()
+	# calc speed gene stats
+	var speed_stats := calc_gene_stats(Slime.SPEED_GENE_INDEX)
+	for stat in speed_stats:
+		stats.append(stat)
 	
+	# calc vision radius gene stats
+	var vision_radius_stats := calc_gene_stats(Slime.VISION_RADIUS_GENE_INDEX)
+	for stat in vision_radius_stats:
+		stats.append(stat)
 
-func calc_gene_range(index : int) -> int:
+
+func calc_gene_stats(index : int) -> Array:
 	var min_val := Slime.MAX_GENE_VALUE
 	var max_val := 0
+	var total := 0
 	
 	for slime in slimes:
 		var val : int = slime.genes[index]
+		total += val
+		
 		if val < min_val:
 			min_val = val
 		elif val > max_val:
 			max_val = val
 	
-	return max_val - min_val
+	return [float(total) / slimes.size(), min_val, max_val];
 	
 	
 func remove_slimes():

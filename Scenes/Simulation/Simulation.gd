@@ -92,11 +92,11 @@ func create_csv():
 		config_values.append(Config.scenario3_max_energy)
 		config_values.append(Config.scenario3_energy_consumption_modifier)
 	
-	#store the data
+	# store the data
 	csv_file.store_line(config_header)
 	csv_file.store_csv_line(PoolStringArray(config_values))
 	csv_file.store_line("")
-	csv_file.store_line("Iteration,Time (s),Avg. Speed,Avg. Vision Radius,Speed Range,Vision Radius Range")
+	csv_file.store_line("Iteration,Time (s),Avg. Speed,Min Speed,Max Speed,Avg. Vision Radius,Min Vision Radius,Max Vision Radius")
 	
 	# close the file
 	csv_file.close()
