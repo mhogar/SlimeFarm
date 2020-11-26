@@ -65,11 +65,10 @@ func _draw():
 func reset():
 	time_in_iteration = 0.0
 	food_collected = 0
-	if Config.scenario == Config.SCENARIO_3:
-		init_energy_indicator()
+	reset_energy_indicator()
 
 
-func init_energy_indicator():
+func reset_energy_indicator():
 	if Config.scenario == Config.SCENARIO_3:
 		EnergyIndicator.max_value = Config.scenario3_max_energy
 		EnergyIndicator.value = EnergyIndicator.max_value
