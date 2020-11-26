@@ -8,27 +8,6 @@ var pan_start : Vector2
 
 
 func _process(_delta):
-	handle_zoom()
-	handle_pan()
-	
-
-func center():
-	position.x = Config.calc_env_width() / 2.0
-	position.y = Config.calc_env_height() / 2.0
-	
-	
-func handle_zoom():
-	if Input.is_action_just_released("camera_zoom_in"):
-		zoom -= zoom_step
-		if zoom < min_zoom:
-			zoom = min_zoom
-	elif Input.is_action_just_released("camera_zoom_out"):
-		zoom += zoom_step
-		if zoom > max_zoom:
-			zoom = max_zoom
-			
-
-func handle_pan():
 	if Input.is_action_just_pressed("camera_pan"):
 		pan_start = get_viewport().get_mouse_position()
 	
@@ -49,3 +28,19 @@ func handle_pan():
 		elif position.y > env_height:
 			position.y = env_height
 		
+	
+func _unhandled_input(event):
+	if event.is_action_released("camera_zoom_in"):
+		zoom -= zoom_step
+		if zoom < min_zoom:
+			zoom = min_zoom
+	elif event.is_action_released("camera_zoom_out"):
+		zoom += zoom_step
+		if zoom > max_zoom:
+			zoom = max_zoom
+	
+
+func center():
+	position.x = Config.calc_env_width() / 2.0
+	position.y = Config.calc_env_height() / 2.0
+	

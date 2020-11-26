@@ -6,8 +6,8 @@ signal simulation_end
 onready var AnimationPlayer := $AnimationPlayer
 onready var IterationLabel := $ControlGUI/VBoxContainer/IterationLabel
 onready var TrialLabel := $ControlGUI/VBoxContainer/TrialLabel
-onready var SimulationToggleButton := $ConfigGUI/Panel/HBoxContainer/VBoxContainer/SimulationToggleButton
-onready var SectionsContainer := $ConfigGUI/Panel/HBoxContainer/VBoxContainer/SectionsContainer
+onready var SimulationToggleButton := $ConfigGUI/Panel/HBoxContainer/ScrollContainer/VBoxContainer/SimulationToggleButton
+onready var SectionsContainer := $ConfigGUI/Panel/HBoxContainer/ScrollContainer/VBoxContainer/SectionsContainer
 
 var toggled := true
 

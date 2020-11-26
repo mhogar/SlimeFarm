@@ -51,6 +51,7 @@ margin_left = 10.0
 margin_top = 10.0
 margin_right = 151.0
 margin_bottom = 45.0
+mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -58,6 +59,7 @@ __meta__ = {
 [node name="VBoxContainer" type="VBoxContainer" parent="ControlGUI"]
 margin_right = 40.0
 margin_bottom = 40.0
+mouse_filter = 2
 custom_constants/separation = 5
 __meta__ = {
 "_edit_use_anchors_": false
@@ -86,6 +88,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -394.0
 margin_right = 1.0
+mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -93,6 +96,7 @@ __meta__ = {
 [node name="Panel" type="NinePatchRect" parent="ConfigGUI"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 0
 texture = ExtResource( 3 )
 patch_margin_left = 10
 patch_margin_top = 10
@@ -116,69 +120,74 @@ __meta__ = {
 
 [node name="ToggleButton" type="TextureButton" parent="ConfigGUI/Panel/HBoxContainer"]
 margin_right = 32.0
-margin_bottom = 630.0
+margin_bottom = 580.0
 size_flags_horizontal = 0
 toggle_mode = true
 texture_normal = ExtResource( 4 )
 texture_pressed = ExtResource( 5 )
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ConfigGUI/Panel/HBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="ConfigGUI/Panel/HBoxContainer"]
 margin_left = 42.0
 margin_right = 375.0
-margin_bottom = 630.0
+margin_bottom = 580.0
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ConfigGUI/Panel/HBoxContainer/ScrollContainer"]
+margin_right = 321.0
+margin_bottom = 672.0
 size_flags_horizontal = 3
 custom_constants/separation = 20
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="SectionsContainer" type="VBoxContainer" parent="ConfigGUI/Panel/HBoxContainer/VBoxContainer"]
-margin_right = 333.0
-margin_bottom = 590.0
+[node name="SectionsContainer" type="VBoxContainer" parent="ConfigGUI/Panel/HBoxContainer/ScrollContainer/VBoxContainer"]
+margin_right = 321.0
+margin_bottom = 632.0
 size_flags_vertical = 3
 custom_constants/separation = 10
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="EnvironmentSection" parent="ConfigGUI/Panel/HBoxContainer/VBoxContainer/SectionsContainer" instance=ExtResource( 8 )]
+[node name="EnvironmentSection" parent="ConfigGUI/Panel/HBoxContainer/ScrollContainer/VBoxContainer/SectionsContainer" instance=ExtResource( 8 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 333.0
-margin_bottom = 160.0
+margin_right = 321.0
+margin_bottom = 172.0
 
-[node name="GeneticAlgorithmSection" parent="ConfigGUI/Panel/HBoxContainer/VBoxContainer/SectionsContainer" instance=ExtResource( 9 )]
+[node name="GeneticAlgorithmSection" parent="ConfigGUI/Panel/HBoxContainer/ScrollContainer/VBoxContainer/SectionsContainer" instance=ExtResource( 9 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 170.0
-margin_right = 333.0
-margin_bottom = 219.0
+margin_top = 182.0
+margin_right = 321.0
+margin_bottom = 237.0
 
-[node name="ScenarioSection" parent="ConfigGUI/Panel/HBoxContainer/VBoxContainer/SectionsContainer" instance=ExtResource( 10 )]
+[node name="ScenarioSection" parent="ConfigGUI/Panel/HBoxContainer/ScrollContainer/VBoxContainer/SectionsContainer" instance=ExtResource( 10 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 229.0
-margin_right = 333.0
-margin_bottom = 402.0
+margin_top = 247.0
+margin_right = 321.0
+margin_bottom = 432.0
 
-[node name="SimulationModeSection" parent="ConfigGUI/Panel/HBoxContainer/VBoxContainer/SectionsContainer" instance=ExtResource( 2 )]
+[node name="SimulationModeSection" parent="ConfigGUI/Panel/HBoxContainer/ScrollContainer/VBoxContainer/SectionsContainer" instance=ExtResource( 2 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 412.0
-margin_right = 333.0
-margin_bottom = 514.0
+margin_top = 442.0
+margin_right = 321.0
+margin_bottom = 550.0
 
-[node name="MiscSection" parent="ConfigGUI/Panel/HBoxContainer/VBoxContainer/SectionsContainer" instance=ExtResource( 6 )]
+[node name="MiscSection" parent="ConfigGUI/Panel/HBoxContainer/ScrollContainer/VBoxContainer/SectionsContainer" instance=ExtResource( 6 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 524.0
-margin_right = 333.0
-margin_bottom = 590.0
+margin_top = 560.0
+margin_right = 321.0
+margin_bottom = 632.0
 
-[node name="SimulationToggleButton" type="Button" parent="ConfigGUI/Panel/HBoxContainer/VBoxContainer"]
-margin_top = 610.0
-margin_right = 333.0
-margin_bottom = 630.0
+[node name="SimulationToggleButton" type="Button" parent="ConfigGUI/Panel/HBoxContainer/ScrollContainer/VBoxContainer"]
+margin_top = 652.0
+margin_right = 321.0
+margin_bottom = 672.0
 toggle_mode = true
 text = "Start Simulation"
 
@@ -186,4 +195,4 @@ text = "Start Simulation"
 anims/hide = SubResource( 1 )
 anims/show = SubResource( 2 )
 [connection signal="pressed" from="ConfigGUI/Panel/HBoxContainer/ToggleButton" to="." method="_on_ToggleButton_pressed"]
-[connection signal="toggled" from="ConfigGUI/Panel/HBoxContainer/VBoxContainer/SimulationToggleButton" to="." method="_on_SimulationToggleButton_toggled"]
+[connection signal="toggled" from="ConfigGUI/Panel/HBoxContainer/ScrollContainer/VBoxContainer/SimulationToggleButton" to="." method="_on_SimulationToggleButton_toggled"]
