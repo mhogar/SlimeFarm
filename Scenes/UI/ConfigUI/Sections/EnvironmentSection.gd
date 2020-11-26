@@ -4,7 +4,7 @@ onready var TilesXSelector := $Body/Selectors/TilesXSelector
 onready var TilesYSelector := $Body/Selectors/TilesYSelector
 onready var PopSizeSelector := $Body/Selectors/PopSizeSelector
 onready var NumFoodSelector := $Body/Selectors/NumFoodSelector
-onready var UpdateButton := $Body/UpdateButton
+onready var UpdateButton := $Body/CenterContainer/UpdateButton
 
 
 func load_from_config():

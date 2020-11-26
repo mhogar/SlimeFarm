@@ -5,6 +5,7 @@
 [node name="CollapsibleSection" type="VBoxContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+custom_constants/separation = 10
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -29,9 +30,9 @@ margin_bottom = 17.0
 text = "Sample Text"
 
 [node name="Body" type="VBoxContainer" parent="."]
-margin_top = 24.0
+margin_top = 30.0
 margin_right = 1024.0
-margin_bottom = 24.0
+margin_bottom = 30.0
 
 [node name="Selectors" type="VBoxContainer" parent="Body"]
 margin_right = 1024.0

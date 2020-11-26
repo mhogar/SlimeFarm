@@ -10,7 +10,7 @@ margin_right = 89.0
 text = "Scenario"
 
 [node name="Body" parent="." index="1"]
-margin_bottom = 173.0
+margin_bottom = 179.0
 
 [node name="Selectors" parent="Body" index="0"]
 margin_bottom = 149.0

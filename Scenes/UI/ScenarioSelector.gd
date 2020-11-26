@@ -7,7 +7,7 @@ onready var Scenario3Selectors := $Scenario3/Selectors
 onready var Scenario3VisionRadiusValueSelector := $Scenario3/Selectors/VisionRadiusValueSelector
 onready var Scenario3MaxEnergySelector := $Scenario3/Selectors/MaxEnergySelector
 onready var Scenario3EnergyConsumptionModifierSelector := $Scenario3/Selectors/EnergyConsumptionModifierSelector
-onready var Scenario3UpdateButton := $Scenario3/UpdateButton
+onready var Scenario3UpdateButton := $Scenario3/CenterContainer/UpdateButton
 
 onready var Scenario1InfoDialog := $Scenario1InfoDialog
 onready var Scenario2InfoDialog := $Scenario2InfoDialog

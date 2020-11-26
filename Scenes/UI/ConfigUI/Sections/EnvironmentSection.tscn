@@ -12,7 +12,8 @@ margin_right = 116.0
 text = "Environment"
 
 [node name="Body" parent="." index="1"]
-margin_bottom = 160.0
+margin_bottom = 172.0
+custom_constants/separation = 10
 
 [node name="Selectors" parent="Body" index="0"]
 margin_bottom = 112.0
@@ -59,9 +60,16 @@ min_value = 1.0
 max_value = 300.0
 step = 1.0
 
-[node name="UpdateButton" type="Button" parent="Body" index="1"]
-margin_top = 116.0
+[node name="CenterContainer" type="CenterContainer" parent="Body" index="1"]
+margin_top = 122.0
 margin_right = 1024.0
-margin_bottom = 136.0
+margin_bottom = 142.0
+
+[node name="UpdateButton" type="Button" parent="Body/CenterContainer" index="0"]
+margin_left = 412.0
+margin_right = 612.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 200, 0 )
+size_flags_horizontal = 0
 text = "Update"
-[connection signal="pressed" from="Body/UpdateButton" to="." method="_on_UpdateButton_pressed"]
+[connection signal="pressed" from="Body/CenterContainer/UpdateButton" to="." method="_on_UpdateButton_pressed"]
