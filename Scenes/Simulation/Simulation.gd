@@ -6,7 +6,7 @@ onready var Camera := $Camera
 onready var Iteration := $Iteration
 onready var Population := $Population
 
-const max_time_scale := 8.0
+const max_time_scale := 16.0
 const min_time_scale := 1.0
 
 var population_copy : Population
