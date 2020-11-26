@@ -1,0 +1,40 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scenes/UI/OutputDirSelector.gd" type="Script" id=1]
+
+[node name="OutputDirSelector" type="HBoxContainer"]
+margin_right = 1024.0
+margin_bottom = 24.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ChooseDirLineEdit" type="LineEdit" parent="."]
+margin_right = 996.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 0, 20 )
+size_flags_horizontal = 3
+editable = false
+
+[node name="ChooseDirButton" type="Button" parent="."]
+margin_left = 1000.0
+margin_right = 1024.0
+margin_bottom = 24.0
+text = "..."
+
+[node name="FileDialog" type="FileDialog" parent="."]
+margin_left = 610.0
+margin_right = 1024.0
+margin_bottom = 131.5
+rect_min_size = Vector2( 250, 87.5 )
+window_title = "Open a Directory"
+mode = 2
+access = 2
+current_dir = "/home/ryan/Documents/Godot/SlimeFarm"
+current_path = "/home/ryan/Documents/Godot/SlimeFarm/"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="ChooseDirButton" to="." method="_on_ChooseDirButton_pressed"]
+[connection signal="dir_selected" from="FileDialog" to="." method="_on_FileDialog_dir_selected"]

@@ -28,6 +28,11 @@ func create_new(slimes : Array):
 	create_food()
 
 
+func before_start():
+	for slime in slimes:
+		slime.reset()
+
+
 func setup_slimes():
 	for slime in slimes:
 		# choose random starting face direction
@@ -36,7 +41,6 @@ func setup_slimes():
 		
 		# add to the scene tree
 		Slimes.add_child(slime)
-		slime.reset()
 		
 	place_actors(slimes)
 

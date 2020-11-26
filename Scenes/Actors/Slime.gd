@@ -37,8 +37,6 @@ var time_in_iteration : float
 
 
 func _ready():
-	reset()
-	init_energy_indicator()
 	velocity = init_face_dir
 	VisionCircleCollision.shape.radius = convert_gene(min_vision_radius, max_vision_radius, VISION_RADIUS_GENE_INDEX)
 	
@@ -67,22 +65,17 @@ func _draw():
 func reset():
 	time_in_iteration = 0.0
 	food_collected = 0
-	
 	if Config.scenario == Config.SCENARIO_3:
-		update_energy_indicator(EnergyIndicator.max_value)
+		init_energy_indicator()
 
 
 func init_energy_indicator():
 	if Config.scenario == Config.SCENARIO_3:
 		EnergyIndicator.max_value = Config.scenario3_max_energy
 		EnergyIndicator.value = EnergyIndicator.max_value
-		configure_energy_step()
+		EnergyIndicator.step = (genes[SPEED_GENE_INDEX] / float(MAX_GENE_VALUE)) * (Config.scenario3_energy_consumption_modifier - 1) + 1
 	else:
 		EnergyIndicator.hide()
-
-
-func configure_energy_step():
-	EnergyIndicator.step = (genes[SPEED_GENE_INDEX] / float(MAX_GENE_VALUE)) * (Config.scenario3_energy_consumption_modifier - 1) + 1
 
 
 func convert_gene(min_value : int, max_value : int, gene_index : int) -> float:
@@ -90,17 +83,24 @@ func convert_gene(min_value : int, max_value : int, gene_index : int) -> float:
 
 
 func calc_colours():
-	var speed_gene : int = genes[SPEED_GENE_INDEX]
-	var vision_radius_gene : int = genes[VISION_RADIUS_GENE_INDEX]
+	calc_speed_colour()
+	calc_vision_circle_colour()
 	
+
+func calc_speed_colour():
+	var speed_gene : int = genes[SPEED_GENE_INDEX]
 	body_colour = Color.from_hsv(speed_gene/360.0, 0.74, 0.74)
 	highlight_colour = Color.from_hsv(speed_gene/360.0, 0.65, 0.89)
-	vision_circle_colour = Color.from_hsv(vision_radius_gene/360.0, 0.65, 0.89)
 	
 	Sprite.material.set_shader_param("body_color", body_colour)
 	Sprite.material.set_shader_param("highlight_color", highlight_colour)
 	Particles.process_material.color = body_colour
 	
+
+func calc_vision_circle_colour():
+	var vision_radius_gene : int = genes[VISION_RADIUS_GENE_INDEX]
+	vision_circle_colour = Color.from_hsv(vision_radius_gene/360.0, 0.65, 0.89)
+
 
 func pathfind_to_food(speed : float, delta : float) -> bool:
 	var dir := find_closest_food()

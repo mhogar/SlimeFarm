@@ -7,7 +7,9 @@
 [ext_resource path="res://Scenes/Simulation/Population.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/UI/GUI.tscn" type="PackedScene" id=6]
 
-[node name="Simulation" type="Node2D"]
+[node name="Simulation" type="Node2D" groups=[
+"config",
+]]
 pause_mode = 2
 script = ExtResource( 1 )
 
@@ -21,7 +23,6 @@ current = true
 [node name="Iteration" parent="." instance=ExtResource( 4 )]
 
 [node name="Population" parent="." instance=ExtResource( 5 )]
-[connection signal="refresh" from="GUI" to="." method="_on_SimulationConfigUI_refresh"]
 [connection signal="simulation_end" from="GUI" to="." method="_on_SimulationConfigUI_simulation_end"]
 [connection signal="simulation_start" from="GUI" to="." method="_on_SimulationConfigUI_simulation_start"]
 [connection signal="finished" from="Iteration" to="." method="_on_Iteration_finished"]

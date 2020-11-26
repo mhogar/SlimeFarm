@@ -1,19 +1,17 @@
 extends VBoxContainer
 
-signal scenario_changed
-
 onready var DropDown := $HBoxContainer/DropDown
 
 onready var Scenario3 := $Scenario3
-onready var Scenario3VisionRadiusValueSelector := $Scenario3/VisionRadiusValueSelector
-onready var Scenario3MaxEnergySelector := $Scenario3/MaxEnergySelector
-onready var Scenario3EnergyConsumptionModifierSelector := $Scenario3/EnergyConsumptionModifierSelector
+onready var Scenario3Selectors := $Scenario3/Selectors
+onready var Scenario3VisionRadiusValueSelector := $Scenario3/Selectors/VisionRadiusValueSelector
+onready var Scenario3MaxEnergySelector := $Scenario3/Selectors/MaxEnergySelector
+onready var Scenario3EnergyConsumptionModifierSelector := $Scenario3/Selectors/EnergyConsumptionModifierSelector
+onready var Scenario3UpdateButton := $Scenario3/UpdateButton
 
 onready var Scenario1InfoDialog := $Scenario1InfoDialog
 onready var Scenario2InfoDialog := $Scenario2InfoDialog
 onready var Scenario3InfoDialog := $Scenario3InfoDialog
-
-const info_dialog_size := Vector2(500, 300)
 
 
 func _ready():
@@ -21,19 +19,35 @@ func _ready():
 	DropDown.add_item("Scenario 2")
 	DropDown.add_item("Scenario 3")
 	
-	scenario_selection_changed(DropDown.selected)
+	change_visible_scenario(DropDown.selected)
 
 
-func get_selected_scenario() -> int:
-	return DropDown.selected
+func load_from_config():
+	DropDown.selected = Config.scenario
+	Scenario3VisionRadiusValueSelector.set_value(Config.scenario3_vision_radius)
+	Scenario3MaxEnergySelector.set_value(Config.scenario3_max_energy)
+	Scenario3EnergyConsumptionModifierSelector.set_value(Config.scenario3_energy_consumption_modifier)
+	
+	change_visible_scenario(DropDown.selected)
+	
+
+func disable_editing():
+	DropDown.disabled = true
+	
+	Scenario3UpdateButton.disabled = true
+	for child in Scenario3Selectors.get_children():
+		child.disable_editing()
+	
+	
+func enable_editing():
+	DropDown.disabled = false
+	
+	Scenario3UpdateButton.disabled = false
+	for child in Scenario3Selectors.get_children():
+		child.enable_editing()
 
 
-func set_selected_scenario(scenario : int):
-	DropDown.select(scenario)
-	scenario_selection_changed(DropDown.selected)
-
-
-func scenario_selection_changed(scenario : int):
+func change_visible_scenario(scenario : int):
 	# hide all selectors
 	Scenario3.hide()
 	
@@ -42,30 +56,34 @@ func scenario_selection_changed(scenario : int):
 		Scenario3.show()
 
 
-func disable_editing():
-	DropDown.disabled = true
-	Scenario3VisionRadiusValueSelector.disable_editing()
-	Scenario3MaxEnergySelector.disable_editing()
-	Scenario3EnergyConsumptionModifierSelector.disable_editing()
-	
-	
-func enable_editing():
-	DropDown.disabled = false
-	Scenario3VisionRadiusValueSelector.enable_editing()
-	Scenario3MaxEnergySelector.enable_editing()
-	Scenario3EnergyConsumptionModifierSelector.enable_editing()
+func scenario_changed():
+	Config.scenario = DropDown.selected
+	Config.scenario3_vision_radius = Scenario3VisionRadiusValueSelector.get_value()
+	get_tree().call_group("config", "scenario_config_changed")
 
 
 func _on_DropDown_item_selected(index):
-	scenario_selection_changed(index)
-	emit_signal("scenario_changed")
+	change_visible_scenario(index)
+	scenario_changed()
+	
+
+func _on_Scenario3UpdateButton_pressed():
+	scenario_changed()
 
 
 func _on_InfoButton_pressed():
 	match (DropDown.selected):
 		Config.SCENARIO_2:
-			Scenario2InfoDialog.popup_centered(info_dialog_size)
+			Scenario2InfoDialog.popup_centered(Config.DIALOG_POPUP_SIZE)
 		Config.SCENARIO_3:
-			Scenario3InfoDialog.popup_centered(info_dialog_size)
+			Scenario3InfoDialog.popup_centered(Config.DIALOG_POPUP_SIZE)
 		_: # SCENARIO_1
-			Scenario1InfoDialog.popup_centered(info_dialog_size)
+			Scenario1InfoDialog.popup_centered(Config.DIALOG_POPUP_SIZE)
+
+
+func _on_MaxEnergySelector_value_changed(value):
+	Config.scenario3_max_energy = value
+	
+	
+func _on_Scenario3EnergyConsumptionModifierSelector_value_changed(value):
+	Config.scenario3_energy_consumption_modifier = value

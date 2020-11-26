@@ -43,3 +43,5 @@ min_value = 1.0
 max_value = 50.0
 step = 1.0
 [connection signal="item_selected" from="HBoxContainer/DropDown" to="." method="_on_DropDown_item_selected"]
+[connection signal="value_changed" from="Finite/IterationLengthValueSelector" to="." method="_on_FiniteIterationLengthValueSelector_value_changed"]
+[connection signal="value_changed" from="Finite/NumTrialsValueSelector" to="." method="_on_FiniteNumTrialsValueSelector_value_changed"]

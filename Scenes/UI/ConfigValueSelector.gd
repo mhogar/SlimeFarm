@@ -1,5 +1,7 @@
 extends HBoxContainer
 
+signal value_changed
+
 onready var Label := $Label
 onready var Slider := $HSlider
 onready var SpinBox := $SpinBox
@@ -10,6 +12,8 @@ export(String, MULTILINE) var hint : String
 export var min_value : float
 export var max_value : float
 export var step : float
+
+var loaded := false
 
 
 func _ready():
@@ -45,9 +49,18 @@ func enable_editing():
 	SpinBox.editable = true
 	
 
+# config group
+func config_loaded():
+	loaded = true
+
+
 func _on_HSlider_value_changed(value):
 	SpinBox.value = value
+	if loaded:
+		emit_signal("value_changed", value)
 
 
 func _on_SpinBox_value_changed(value):
 	Slider.value = value
+	if loaded:
+		emit_signal("value_changed", value)

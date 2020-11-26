@@ -24,7 +24,7 @@ func _ready():
 	randomize()
 	
 	pause_simulation()
-	refresh()
+	refresh_all()
 
 
 func _process(_delta):
@@ -53,11 +53,18 @@ func pause_simulation():
 	get_tree().paused = true
 
 
-func refresh():
+func refresh_all():
+	refresh_environment()
+	refresh_population()
+
+
+func refresh_environment():
 	Environment.rebuild()
 	Camera.center()
+
+
+func refresh_population():
 	Population.generate()
-	
 	population_copy = Population.create_copy()
 	Iteration.create_new(population_copy.slimes)
 
@@ -76,13 +83,15 @@ func end_simulation():
 	pause_simulation()
 	Engine.set_time_scale(min_time_scale)
 	GUI.end_simulation()
-	refresh()
+	refresh_all()
 	
 
 func start_trial():
 	# start the first iteration
 	iteration = 1
 	GUI.update_iteration_counter(iteration)
+	
+	Iteration.before_start()
 	play_simulation()
 	
 	
@@ -137,6 +146,16 @@ func export_stats():
 	csv_file.store_csv_line(data)
 	csv_file.close()
 
+
+# config group
+func environment_config_changed():
+	refresh_all()
+	
+
+# config group
+func scenario_config_changed():
+	refresh_population()
+
 	
 func _on_Iteration_finished():
 	export_stats()
@@ -149,6 +168,7 @@ func _on_Iteration_finished():
 	else:
 		population_copy.breed_slimes()
 		Iteration.create_new(population_copy.slimes)
+		Iteration.before_start()
 
 
 func _on_SimulationConfigUI_simulation_start():
@@ -157,7 +177,3 @@ func _on_SimulationConfigUI_simulation_start():
 
 func _on_SimulationConfigUI_simulation_end():
 	end_simulation()
-
-
-func _on_SimulationConfigUI_refresh():
-	refresh()

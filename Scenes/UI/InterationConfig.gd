@@ -3,46 +3,54 @@ extends VBoxContainer
 onready var DropDown := $HBoxContainer/DropDown
 
 onready var Finite := $Finite
-onready var NumTrialsValueSelector := $Finite/NumTrialsValueSelector
 onready var FiniteIterationLengthSelector := $Finite/IterationLengthValueSelector
+onready var FiniteNumTrialsValueSelector := $Finite/NumTrialsValueSelector
 
 
 func _ready():
 	DropDown.add_item("Infinite")
 	DropDown.add_item("Finite")
 	
-	iteration_type_selection_changed(DropDown.selected)
+	change_visible_simulation_mode(DropDown.selected)
 
 
-func get_selected_iteration_type() -> int:
-	return DropDown.selected
+func load_from_config():
+	DropDown.selected = Config.iteration_type
+	FiniteIterationLengthSelector.set_value(Config.iteration_type_finite_iteration_length)
+	FiniteNumTrialsValueSelector.set_value(Config.iteration_type_finite_num_trials)
 
-
-func set_selected_iteration_type(type : int):
-	DropDown.select(type)
-	iteration_type_selection_changed(DropDown.selected)
-
-
-func iteration_type_selection_changed(type : int):
-	# hide all selectors
-	Finite.hide()
-	
-	# show selectors specific to the selected type
-	if type == Config.ITERATION_TYPE_FINITE:
-		Finite.show()
+	change_visible_simulation_mode(DropDown.selected)
 
 
 func disable_editing():
 	DropDown.disabled = true
-	NumTrialsValueSelector.disable_editing()
-	FiniteIterationLengthSelector.disable_editing()
+	for child in Finite.get_children():
+		child.disable_editing()
 	
 	
 func enable_editing():
 	DropDown.disabled = false
-	NumTrialsValueSelector.enable_editing()
-	FiniteIterationLengthSelector.enable_editing()
+	for child in Finite.get_children():
+		child.enable_editing()
 
 
-func _on_DropDown_item_selected(id):
-	iteration_type_selection_changed(id)
+func change_visible_simulation_mode(mode : int):
+	# hide all selectors
+	Finite.hide()
+	
+	# show selectors specific to the selected mode
+	if mode == Config.ITERATION_TYPE_FINITE:
+		Finite.show()
+
+
+func _on_DropDown_item_selected(index):
+	change_visible_simulation_mode(index)
+	Config.iteration_type = DropDown.selected
+
+
+func _on_FiniteIterationLengthValueSelector_value_changed(value):
+	Config.iteration_type_finite_iteration_length = value
+
+
+func _on_FiniteNumTrialsValueSelector_value_changed(value):
+	Config.iteration_type_finite_num_trials = value
