@@ -12,7 +12,7 @@ margin_right = 143.0
 text = "Simulation Mode"
 
 [node name="Body" parent="." index="1"]
-margin_bottom = 102.0
+margin_bottom = 108.0
 
 [node name="Selectors" parent="Body" index="0"]
 margin_bottom = 78.0

@@ -4,7 +4,9 @@ enum {SCENARIO_1, SCENARIO_2, SCENARIO_3}
 enum {ITERATION_TYPE_INFINITE, ITERATION_TYPE_FINITE}
 
 const TILE_SIZE : int = 32
-const DIALOG_POPUP_SIZE := Vector2(500, 300)
+const DIALOG_POPUP_SIZE_S := Vector2(300, 100)
+const DIALOG_POPUP_SIZE_M := Vector2(500, 300)
+const DIALOG_POPUP_SIZE_L := Vector2(800, 600)
 
 var csv_dir : String = ""
 
@@ -21,8 +23,8 @@ var scenario3_max_energy : int = 500
 var scenario3_energy_consumption_modifier : float = 2.0
 
 var iteration_type : int = ITERATION_TYPE_INFINITE
+var iteration_type_finite_trial_length : int = 5
 var iteration_type_finite_num_trials : int = 1
-var iteration_type_finite_iteration_length : int = 5
 
 
 func _ready():
@@ -43,8 +45,7 @@ func calc_env_height() -> int:
 
 func load_config():
 	var config := ConfigFile.new()
-	var err := config.load("user://settings.cfg")
-	if err != OK:
+	if config.load("user://settings.cfg") != OK:
 		return
 		
 	num_tiles_x = config.get_value("environment", "num_tiles_x", num_tiles_x)
@@ -60,10 +61,10 @@ func load_config():
 	scenario3_energy_consumption_modifier = config.get_value("scenario3", "energy_consumption_modifier", scenario3_energy_consumption_modifier)
 	
 	iteration_type = config.get_value("iteration_type", "type", iteration_type)
+	iteration_type_finite_trial_length = config.get_value("iteration_type_finite", "trial_length", iteration_type_finite_trial_length)
 	iteration_type_finite_num_trials = config.get_value("iteration_type_finite", "num_trials", iteration_type_finite_num_trials)
-	iteration_type_finite_iteration_length = config.get_value("iteration_type_finite", "iteration_length", iteration_type_finite_iteration_length)
 	
-	csv_dir = config.get_value("general", "csv_dir", csv_dir)
+	csv_dir = config.get_value("misc", "csv_dir", csv_dir)
 	
 	
 func save_config():
@@ -82,9 +83,9 @@ func save_config():
 	config.set_value("scenario3", "energy_consumption_modifier", scenario3_energy_consumption_modifier)
 	
 	config.set_value("iteration_type", "type", iteration_type)
+	config.set_value("iteration_type_finite", "trial_length", iteration_type_finite_trial_length)
 	config.set_value("iteration_type_finite", "num_trials", iteration_type_finite_num_trials)
-	config.set_value("iteration_type_finite", "iteration_length", iteration_type_finite_iteration_length)
 	
-	config.set_value("general", "csv_dir", csv_dir)
+	config.set_value("misc", "csv_dir", csv_dir)
 	
 	config.save("user://settings.cfg")

@@ -10,7 +10,7 @@ margin_right = 65.0
 text = "Misc"
 
 [node name="Body" parent="." index="1"]
-margin_bottom = 66.0
+margin_bottom = 72.0
 
 [node name="Selectors" parent="Body" index="0"]
 margin_bottom = 42.0

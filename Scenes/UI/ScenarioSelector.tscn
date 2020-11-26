@@ -23,7 +23,7 @@ margin_bottom = 20.0
 rect_min_size = Vector2( 230, 0 )
 size_flags_horizontal = 3
 
-[node name="InfoButton" type="Button" parent="HBoxContainer"]
+[node name="HelpButton" type="Button" parent="HBoxContainer"]
 margin_left = 1006.0
 margin_right = 1024.0
 margin_bottom = 20.0
@@ -44,6 +44,7 @@ custom_constants/separation = 10
 margin_left = 0.0
 margin_right = 1024.0
 label = "Vision Radius Value"
+hint = "The vision radius each slime will have."
 max_value = 255.0
 step = 1.0
 
@@ -53,6 +54,7 @@ margin_top = 35.0
 margin_right = 1024.0
 margin_bottom = 60.0
 label = "Max Energy"
+hint = "The maximum amount of energy a slime will have."
 min_value = 300.0
 max_value = 1000.0
 step = 1.0
@@ -63,6 +65,7 @@ margin_top = 70.0
 margin_right = 1024.0
 margin_bottom = 95.0
 label = "Energy Consumption Modifier"
+hint = "Controls how much faster a slime with maximum speed will lose energy compared to a slime with the minimum speed."
 min_value = 1.0
 max_value = 10.0
 step = 0.1
@@ -77,9 +80,9 @@ margin_left = 412.0
 margin_right = 612.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 200, 0 )
-text = "Update"
+text = "Apply"
 
-[node name="Scenario1InfoDialog" type="AcceptDialog" parent="."]
+[node name="Scenario1HelpDialog" type="AcceptDialog" parent="."]
 margin_top = 100.0
 margin_right = 1024.0
 margin_bottom = 158.0
@@ -90,7 +93,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Scenario2InfoDialog" type="AcceptDialog" parent="."]
+[node name="Scenario2HelpDialog" type="AcceptDialog" parent="."]
 margin_top = 100.0
 margin_right = 1024.0
 margin_bottom = 209.0
@@ -100,7 +103,7 @@ dialog_text = "In this scenario, a slime's speed is inversely proportional to it
 The results of this simulation infere which gene is more benefical to foraging."
 dialog_autowrap = true
 
-[node name="Scenario3InfoDialog" type="AcceptDialog" parent="."]
+[node name="Scenario3HelpDialog" type="AcceptDialog" parent="."]
 margin_top = 100.0
 margin_right = 1024.0
 margin_bottom = 226.0
@@ -110,7 +113,7 @@ dialog_text = "In this scenario, all slimes have the same vision radius. Movemen
 The results of this simulation infere an upper limit for a slime's speed where being faster becomes more harmful than benefical."
 dialog_autowrap = true
 [connection signal="item_selected" from="HBoxContainer/DropDown" to="." method="_on_DropDown_item_selected"]
-[connection signal="pressed" from="HBoxContainer/InfoButton" to="." method="_on_InfoButton_pressed"]
+[connection signal="pressed" from="HBoxContainer/HelpButton" to="." method="_on_HelpButton_pressed"]
 [connection signal="value_changed" from="Scenario3/Selectors/MaxEnergySelector" to="." method="_on_MaxEnergySelector_value_changed"]
 [connection signal="value_changed" from="Scenario3/Selectors/EnergyConsumptionModifierSelector" to="." method="_on_Scenario3EnergyConsumptionModifierSelector_value_changed"]
 [connection signal="pressed" from="Scenario3/CenterContainer/UpdateButton" to="." method="_on_Scenario3UpdateButton_pressed"]

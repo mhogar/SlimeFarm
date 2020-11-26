@@ -11,17 +11,23 @@ __meta__ = {
 }
 
 [node name="ChooseDirLineEdit" type="LineEdit" parent="."]
-margin_right = 996.0
+margin_right = 974.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 0, 20 )
 size_flags_horizontal = 3
 editable = false
 
 [node name="ChooseDirButton" type="Button" parent="."]
-margin_left = 1000.0
-margin_right = 1024.0
+margin_left = 978.0
+margin_right = 1002.0
 margin_bottom = 24.0
 text = "..."
+
+[node name="HelpButton" type="Button" parent="."]
+margin_left = 1006.0
+margin_right = 1024.0
+margin_bottom = 24.0
+text = "?"
 
 [node name="FileDialog" type="FileDialog" parent="."]
 margin_left = 610.0
@@ -36,5 +42,13 @@ current_path = "/home/ryan/Documents/Godot/SlimeFarm/"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="HelpDialog" type="AcceptDialog" parent="."]
+margin_right = 83.0
+margin_bottom = 58.0
+window_title = "Output Directory"
+dialog_text = "The directory to output the stats CSV to."
+dialog_autowrap = true
 [connection signal="pressed" from="ChooseDirButton" to="." method="_on_ChooseDirButton_pressed"]
+[connection signal="pressed" from="HelpButton" to="." method="_on_HelpButton_pressed"]
 [connection signal="dir_selected" from="FileDialog" to="." method="_on_FileDialog_dir_selected"]

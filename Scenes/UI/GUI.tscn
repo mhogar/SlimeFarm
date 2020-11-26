@@ -23,7 +23,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.2 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 0, 0 ), Vector2( 350, 0 ) ]
+"values": [ Vector2( 0, 0 ), Vector2( 375, 0 ) ]
 }
 
 [sub_resource type="Animation" id=2]
@@ -39,7 +39,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.2 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 350, 0 ), Vector2( 0, 0 ) ]
+"values": [ Vector2( 375, 0 ), Vector2( 0, 0 ) ]
 }
 
 [node name="GUI" type="CanvasLayer"]
@@ -86,7 +86,7 @@ __meta__ = {
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -394.0
+margin_left = -419.0
 margin_right = 1.0
 mouse_filter = 2
 __meta__ = {
@@ -128,12 +128,12 @@ texture_pressed = ExtResource( 5 )
 
 [node name="ScrollContainer" type="ScrollContainer" parent="ConfigGUI/Panel/HBoxContainer"]
 margin_left = 42.0
-margin_right = 375.0
+margin_right = 400.0
 margin_bottom = 580.0
 size_flags_horizontal = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ConfigGUI/Panel/HBoxContainer/ScrollContainer"]
-margin_right = 321.0
+margin_right = 346.0
 margin_bottom = 672.0
 size_flags_horizontal = 3
 custom_constants/separation = 20
@@ -142,7 +142,7 @@ __meta__ = {
 }
 
 [node name="SectionsContainer" type="VBoxContainer" parent="ConfigGUI/Panel/HBoxContainer/ScrollContainer/VBoxContainer"]
-margin_right = 321.0
+margin_right = 346.0
 margin_bottom = 632.0
 size_flags_vertical = 3
 custom_constants/separation = 10
@@ -153,40 +153,40 @@ __meta__ = {
 [node name="EnvironmentSection" parent="ConfigGUI/Panel/HBoxContainer/ScrollContainer/VBoxContainer/SectionsContainer" instance=ExtResource( 8 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 321.0
+margin_right = 346.0
 margin_bottom = 172.0
 
 [node name="GeneticAlgorithmSection" parent="ConfigGUI/Panel/HBoxContainer/ScrollContainer/VBoxContainer/SectionsContainer" instance=ExtResource( 9 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 182.0
-margin_right = 321.0
+margin_right = 346.0
 margin_bottom = 237.0
 
 [node name="ScenarioSection" parent="ConfigGUI/Panel/HBoxContainer/ScrollContainer/VBoxContainer/SectionsContainer" instance=ExtResource( 10 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 247.0
-margin_right = 321.0
+margin_right = 346.0
 margin_bottom = 432.0
 
 [node name="SimulationModeSection" parent="ConfigGUI/Panel/HBoxContainer/ScrollContainer/VBoxContainer/SectionsContainer" instance=ExtResource( 2 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 442.0
-margin_right = 321.0
+margin_right = 346.0
 margin_bottom = 550.0
 
 [node name="MiscSection" parent="ConfigGUI/Panel/HBoxContainer/ScrollContainer/VBoxContainer/SectionsContainer" instance=ExtResource( 6 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 560.0
-margin_right = 321.0
+margin_right = 346.0
 margin_bottom = 632.0
 
 [node name="SimulationToggleButton" type="Button" parent="ConfigGUI/Panel/HBoxContainer/ScrollContainer/VBoxContainer"]
 margin_top = 652.0
-margin_right = 321.0
+margin_right = 346.0
 margin_bottom = 672.0
 toggle_mode = true
 text = "Start Simulation"

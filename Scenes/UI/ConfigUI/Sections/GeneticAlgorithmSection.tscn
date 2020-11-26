@@ -12,7 +12,7 @@ margin_right = 152.0
 text = "Genetic Algorithm"
 
 [node name="Body" parent="." index="1"]
-margin_bottom = 49.0
+margin_bottom = 55.0
 
 [node name="Selectors" parent="Body" index="0"]
 margin_bottom = 25.0
@@ -21,7 +21,7 @@ margin_bottom = 25.0
 margin_left = 0.0
 margin_right = 1024.0
 label = "Mutation Probability"
-hint = "The probability that a gene mutation will occur during breeding"
+hint = "The probability that a gene mutation will occur during breeding."
 max_value = 1.0
 step = 0.01
 [connection signal="value_changed" from="Body/Selectors/MutProbSelector" to="." method="_on_MutProbSelector_value_changed"]

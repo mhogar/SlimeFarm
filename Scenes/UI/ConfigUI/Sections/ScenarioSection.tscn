@@ -10,13 +10,13 @@ margin_right = 89.0
 text = "Scenario"
 
 [node name="Body" parent="." index="1"]
-margin_bottom = 179.0
+margin_bottom = 185.0
 
 [node name="Selectors" parent="Body" index="0"]
-margin_bottom = 149.0
+margin_bottom = 155.0
 
 [node name="ScenarioSelector" parent="Body/Selectors" index="0" instance=ExtResource( 2 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 1024.0
-margin_bottom = 149.0
+margin_bottom = 155.0

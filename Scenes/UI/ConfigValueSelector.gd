@@ -5,6 +5,7 @@ signal value_changed
 onready var Label := $Label
 onready var Slider := $HSlider
 onready var SpinBox := $SpinBox
+onready var HelpDialog := $HelpDialog
 
 export(String, MULTILINE) var label : String
 export(String, MULTILINE) var hint : String
@@ -17,7 +18,8 @@ var loaded := false
 
 
 func _ready():
-	hint_tooltip = hint
+	HelpDialog.window_title = label
+	HelpDialog.dialog_text = hint
 	
 	Label.text = label
 	
@@ -64,3 +66,7 @@ func _on_SpinBox_value_changed(value):
 	Slider.value = value
 	if loaded:
 		emit_signal("value_changed", value)
+
+
+func _on_HelpButton_pressed():
+	HelpDialog.popup_centered(Config.DIALOG_POPUP_SIZE_S)

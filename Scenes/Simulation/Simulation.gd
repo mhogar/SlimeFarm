@@ -163,7 +163,7 @@ func _on_Iteration_finished():
 	iteration += 1
 	GUI.update_iteration_counter(iteration)
 	
-	if Config.iteration_type == Config.ITERATION_TYPE_FINITE and iteration > Config.iteration_type_finite_iteration_length:
+	if Config.iteration_type == Config.ITERATION_TYPE_FINITE and iteration > Config.iteration_type_finite_trial_length:
 		end_trial()
 	else:
 		population_copy.breed_slimes()

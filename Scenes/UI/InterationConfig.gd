@@ -1,10 +1,10 @@
 extends VBoxContainer
 
 onready var DropDown := $HBoxContainer/DropDown
-
 onready var Finite := $Finite
-onready var FiniteIterationLengthSelector := $Finite/IterationLengthValueSelector
+onready var FiniteTrialLengthValueSelector := $Finite/TrialLengthValueSelector
 onready var FiniteNumTrialsValueSelector := $Finite/NumTrialsValueSelector
+onready var HelpDialog := $HelpDialog
 
 
 func _ready():
@@ -16,7 +16,7 @@ func _ready():
 
 func load_from_config():
 	DropDown.selected = Config.iteration_type
-	FiniteIterationLengthSelector.set_value(Config.iteration_type_finite_iteration_length)
+	FiniteTrialLengthValueSelector.set_value(Config.iteration_type_finite_trial_length)
 	FiniteNumTrialsValueSelector.set_value(Config.iteration_type_finite_num_trials)
 
 	change_visible_simulation_mode(DropDown.selected)
@@ -48,9 +48,13 @@ func _on_DropDown_item_selected(index):
 	Config.iteration_type = DropDown.selected
 
 
-func _on_FiniteIterationLengthValueSelector_value_changed(value):
-	Config.iteration_type_finite_iteration_length = value
+func _on_FiniteTrialLengthValueSelector_value_changed(value):
+	Config.iteration_type_finite_trial_length = value
 
 
 func _on_FiniteNumTrialsValueSelector_value_changed(value):
 	Config.iteration_type_finite_num_trials = value
+
+
+func _on_HelpButton_pressed():
+	HelpDialog.popup_centered(Config.DIALOG_POPUP_SIZE_M)

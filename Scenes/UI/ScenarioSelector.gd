@@ -9,9 +9,9 @@ onready var Scenario3MaxEnergySelector := $Scenario3/Selectors/MaxEnergySelector
 onready var Scenario3EnergyConsumptionModifierSelector := $Scenario3/Selectors/EnergyConsumptionModifierSelector
 onready var Scenario3UpdateButton := $Scenario3/CenterContainer/UpdateButton
 
-onready var Scenario1InfoDialog := $Scenario1InfoDialog
-onready var Scenario2InfoDialog := $Scenario2InfoDialog
-onready var Scenario3InfoDialog := $Scenario3InfoDialog
+onready var Scenario1HelpDialog := $Scenario1HelpDialog
+onready var Scenario2HelpDialog := $Scenario2HelpDialog
+onready var Scenario3HelpDialog := $Scenario3HelpDialog
 
 
 func _ready():
@@ -71,14 +71,14 @@ func _on_Scenario3UpdateButton_pressed():
 	scenario_changed()
 
 
-func _on_InfoButton_pressed():
+func _on_HelpButton_pressed():
 	match (DropDown.selected):
 		Config.SCENARIO_2:
-			Scenario2InfoDialog.popup_centered(Config.DIALOG_POPUP_SIZE)
+			Scenario2HelpDialog.popup_centered(Config.DIALOG_POPUP_SIZE_M)
 		Config.SCENARIO_3:
-			Scenario3InfoDialog.popup_centered(Config.DIALOG_POPUP_SIZE)
+			Scenario3HelpDialog.popup_centered(Config.DIALOG_POPUP_SIZE_M)
 		_: # SCENARIO_1
-			Scenario1InfoDialog.popup_centered(Config.DIALOG_POPUP_SIZE)
+			Scenario1HelpDialog.popup_centered(Config.DIALOG_POPUP_SIZE_M)
 
 
 func _on_MaxEnergySelector_value_changed(value):

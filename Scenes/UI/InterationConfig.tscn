@@ -3,7 +3,7 @@
 [ext_resource path="res://Scenes/UI/InterationConfig.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/UI/ConfigValueSelector.tscn" type="PackedScene" id=2]
 
-[node name="InterationConfig" type="VBoxContainer"]
+[node name="SimulationModeSelector" type="VBoxContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
@@ -16,19 +16,26 @@ margin_right = 1024.0
 margin_bottom = 20.0
 
 [node name="DropDown" type="OptionButton" parent="HBoxContainer"]
-margin_right = 1024.0
+margin_right = 1002.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
+
+[node name="HelpButton" type="Button" parent="HBoxContainer"]
+margin_left = 1006.0
+margin_right = 1024.0
+margin_bottom = 20.0
+text = "?"
 
 [node name="Finite" type="VBoxContainer" parent="."]
 margin_top = 24.0
 margin_right = 1024.0
 margin_bottom = 78.0
 
-[node name="IterationLengthValueSelector" parent="Finite" instance=ExtResource( 2 )]
+[node name="TrialLengthValueSelector" parent="Finite" instance=ExtResource( 2 )]
 margin_left = 0.0
 margin_right = 1024.0
-label = "Iteration Length"
+label = "Trial Length"
+hint = "The number of iterations in each trial."
 min_value = 5.0
 max_value = 500.0
 step = 1.0
@@ -39,9 +46,20 @@ margin_top = 29.0
 margin_right = 1024.0
 margin_bottom = 54.0
 label = "Number of Trials"
+hint = "The number of trials to run."
 min_value = 1.0
 max_value = 50.0
 step = 1.0
+
+[node name="HelpDialog" type="AcceptDialog" parent="."]
+margin_right = 83.0
+margin_bottom = 58.0
+window_title = "Simulation Mode"
+dialog_text = "In Infinite mode, the simulation will continue on the same trial until manually ended.
+
+In Finite mode, there is a fixed number iterations per trial, and a fixed number of trials. Each trial that runs will used to same initial configuration."
+dialog_autowrap = true
 [connection signal="item_selected" from="HBoxContainer/DropDown" to="." method="_on_DropDown_item_selected"]
-[connection signal="value_changed" from="Finite/IterationLengthValueSelector" to="." method="_on_FiniteIterationLengthValueSelector_value_changed"]
+[connection signal="pressed" from="HBoxContainer/HelpButton" to="." method="_on_HelpButton_pressed"]
+[connection signal="value_changed" from="Finite/TrialLengthValueSelector" to="." method="_on_FiniteTrialLengthValueSelector_value_changed"]
 [connection signal="value_changed" from="Finite/NumTrialsValueSelector" to="." method="_on_FiniteNumTrialsValueSelector_value_changed"]
