@@ -1,13 +1,13 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Scenes/UI/ScenarioSelector.gd" type="Script" id=1]
-[ext_resource path="res://Scenes/UI/ConfigValueSelector.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/UI/Selectors/ConfigValueSelector.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/UI/Selectors/ScenarioSelector.gd" type="Script" id=2]
 
 [node name="ScenarioSelector" type="VBoxContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_constants/separation = 10
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -40,7 +40,7 @@ margin_right = 1024.0
 margin_bottom = 95.0
 custom_constants/separation = 10
 
-[node name="VisionRadiusValueSelector" parent="Scenario3/Selectors" instance=ExtResource( 2 )]
+[node name="VisionRadiusValueSelector" parent="Scenario3/Selectors" instance=ExtResource( 1 )]
 margin_left = 0.0
 margin_right = 1024.0
 label = "Vision Radius Value"
@@ -48,7 +48,7 @@ hint = "The vision radius each slime will have."
 max_value = 255.0
 step = 1.0
 
-[node name="MaxEnergySelector" parent="Scenario3/Selectors" instance=ExtResource( 2 )]
+[node name="MaxEnergySelector" parent="Scenario3/Selectors" instance=ExtResource( 1 )]
 margin_left = 0.0
 margin_top = 35.0
 margin_right = 1024.0
@@ -59,7 +59,7 @@ min_value = 300.0
 max_value = 1000.0
 step = 1.0
 
-[node name="EnergyConsumptionModifierSelector" parent="Scenario3/Selectors" instance=ExtResource( 2 )]
+[node name="EnergyConsumptionModifierSelector" parent="Scenario3/Selectors" instance=ExtResource( 1 )]
 margin_left = 0.0
 margin_top = 70.0
 margin_right = 1024.0

@@ -1,8 +1,11 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Scenes/UI/ConfigUI/Sections/CollapsibleSection.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Scenes/UI/InterationConfig.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Scenes/UI/ConfigUI/Sections/SimulationModeSection.gd" type="Script" id=3]
+[ext_resource path="res://Scenes/UI/Sections/CollapsibleSection.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/UI/Selectors/SimulationModeSelector.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/UI/Sections/SimulationModeSection.gd" type="Script" id=3]
+
+
+
 
 [node name="SimulationModeSection" instance=ExtResource( 1 )]
 script = ExtResource( 3 )

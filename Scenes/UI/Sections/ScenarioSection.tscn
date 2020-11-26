@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Scenes/UI/ConfigUI/Sections/CollapsibleSection.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Scenes/UI/ScenarioSelector.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/UI/Sections/CollapsibleSection.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/UI/Selectors/ScenarioSelector.tscn" type="PackedScene" id=2]
 
 [node name="ScenarioSection" instance=ExtResource( 1 )]
 

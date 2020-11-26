@@ -1,4 +1,4 @@
-extends "res://Scenes/UI/ConfigUI/Sections/CollapsibleSection.gd"
+extends "res://Scenes/UI/Sections/CollapsibleSection.gd"
 
 onready var MutProbSelector := $Body/Selectors/MutProbSelector
 
