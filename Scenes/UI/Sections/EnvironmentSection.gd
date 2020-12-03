@@ -8,6 +8,7 @@ onready var UpdateButton := $Body/CenterContainer/UpdateButton
 
 
 func load_from_config():
+	.load_from_config()
 	TilesXSelector.set_value(Config.num_tiles_x)
 	TilesYSelector.set_value(Config.num_tiles_y)
 	PopSizeSelector.set_value(Config.population_size)

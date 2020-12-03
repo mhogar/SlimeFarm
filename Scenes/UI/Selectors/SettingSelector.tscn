@@ -1,0 +1,33 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scenes/UI/Selectors/SettingSelector.gd" type="Script" id=1]
+
+[node name="SettingSelector" type="HBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = -580.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DropDown" type="OptionButton" parent="."]
+margin_right = 1002.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 230, 0 )
+size_flags_horizontal = 3
+
+[node name="HelpButton" type="Button" parent="."]
+margin_left = 1006.0
+margin_right = 1024.0
+margin_bottom = 20.0
+text = "?"
+
+[node name="HelpDialog" type="AcceptDialog" parent="."]
+margin_right = 83.0
+margin_bottom = 58.0
+window_title = "Setting"
+dialog_text = "Changes the floor tiles used. This change is purely aesthetic."
+dialog_autowrap = true
+[connection signal="item_selected" from="DropDown" to="." method="_on_DropDown_item_selected"]
+[connection signal="pressed" from="HelpButton" to="." method="_on_HelpButton_pressed"]

@@ -25,6 +25,7 @@ func _ready():
 	
 	pause_simulation()
 	refresh_all()
+	Camera.center()
 
 
 func _process(_delta):
@@ -60,7 +61,6 @@ func refresh_all():
 
 func refresh_environment():
 	Environment.rebuild()
-	Camera.center()
 
 
 func refresh_population():
@@ -155,6 +155,11 @@ func environment_config_changed():
 # config group
 func scenario_config_changed():
 	refresh_population()
+	
+
+# config group
+func env_setting_changed():
+	refresh_environment()
 
 	
 func _on_Iteration_finished():

@@ -2,7 +2,6 @@
 
 [ext_resource path="res://Scenes/UI/Selectors/ConfigValueSelector.gd" type="Script" id=1]
 
-
 [node name="ConfigValueSelector" type="HBoxContainer" groups=[
 "config",
 ]]

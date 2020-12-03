@@ -1,5 +1,6 @@
 extends Node
 
+enum {SETTING_MEADOW, SETTING_DESERT}
 enum {SCENARIO_1, SCENARIO_2, SCENARIO_3}
 enum {ITERATION_TYPE_INFINITE, ITERATION_TYPE_FINITE}
 
@@ -11,7 +12,7 @@ const DIALOG_POPUP_SIZE_L := Vector2(800, 600)
 
 var csv_dir : String = ""
 
-var setting : int = 0
+var env_setting : int = SETTING_MEADOW
 
 var num_tiles_x : int = 20
 var num_tiles_y : int = 20
@@ -51,6 +52,7 @@ func load_config():
 	if config.load("user://settings.cfg") != OK:
 		return
 		
+	env_setting = config.get_value("environment", "env_setting", env_setting)
 	num_tiles_x = config.get_value("environment", "num_tiles_x", num_tiles_x)
 	num_tiles_y = config.get_value("environment", "num_tiles_y", num_tiles_y)
 	population_size = config.get_value("environment", "population_size", population_size)
@@ -73,6 +75,7 @@ func load_config():
 func save_config():
 	var config := ConfigFile.new()
 	
+	config.set_value("environment", "env_setting", env_setting)
 	config.set_value("environment", "num_tiles_x", num_tiles_x)
 	config.set_value("environment", "num_tiles_y", num_tiles_y)
 	config.set_value("environment", "population_size", population_size)
