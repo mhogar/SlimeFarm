@@ -120,13 +120,14 @@ func select_parent_slime(slimes : Array) -> Slime:
 	var r := randf() * total
 	
 	# select the slime with slimes who contributed more to the total being more likely to be chosen
-	var sum := 0
+	var sum := 0.0
 	for slime in slimes:
 		if Config.scenario == Config.SCENARIO_3:
 			sum += slime.time_in_iteration
 		else:
 			sum += slime.food_collected
 			
+		print(sum)
 		if sum >= r:
 			return slime
 	

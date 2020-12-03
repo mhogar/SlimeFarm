@@ -3,12 +3,15 @@ extends Node
 enum {SCENARIO_1, SCENARIO_2, SCENARIO_3}
 enum {ITERATION_TYPE_INFINITE, ITERATION_TYPE_FINITE}
 
-const TILE_SIZE : int = 32
+const TILE_SIZE : int = 64
+const TILES_PER_SETTING : int = 4
 const DIALOG_POPUP_SIZE_S := Vector2(300, 100)
 const DIALOG_POPUP_SIZE_M := Vector2(500, 300)
 const DIALOG_POPUP_SIZE_L := Vector2(800, 600)
 
 var csv_dir : String = ""
+
+var setting : int = 0
 
 var num_tiles_x : int = 20
 var num_tiles_y : int = 20

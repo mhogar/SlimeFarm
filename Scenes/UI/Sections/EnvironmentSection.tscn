@@ -4,8 +4,6 @@
 [ext_resource path="res://Scenes/UI/Selectors/ConfigValueSelector.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/UI/Sections/EnvironmentSection.gd" type="Script" id=4]
 
-
-
 [node name="EnvironmentSection" instance=ExtResource( 1 )]
 script = ExtResource( 4 )
 
@@ -26,7 +24,7 @@ margin_right = 1024.0
 label = "Tiles X"
 hint = "The number of tiles in the width of the environment."
 min_value = 10.0
-max_value = 100.0
+max_value = 50.0
 step = 1.0
 
 [node name="TilesYSelector" parent="Body/Selectors" index="1" instance=ExtResource( 3 )]
@@ -37,7 +35,7 @@ margin_bottom = 54.0
 label = "Tiles Y"
 hint = "The number of tiles in the height of the environment."
 min_value = 10.0
-max_value = 100.0
+max_value = 50.0
 step = 1.0
 
 [node name="PopSizeSelector" parent="Body/Selectors" index="2" instance=ExtResource( 3 )]
