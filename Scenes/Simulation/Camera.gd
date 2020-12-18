@@ -8,10 +8,10 @@ var pan_start : Vector2
 
 
 func _process(_delta):
-	if Input.is_action_just_pressed("camera_pan"):
+	if Input.is_action_just_pressed("camera_pan_1"):
 		pan_start = get_viewport().get_mouse_position()
 	
-	if Input.is_action_pressed("camera_pan"):
+	if Input.is_action_pressed("camera_pan_1") and Input.is_action_pressed("camera_pan_2"):
 		var mouse_pos := get_viewport().get_mouse_position()
 		position += pan_start - mouse_pos
 		pan_start = mouse_pos
