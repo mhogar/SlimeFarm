@@ -90,3 +90,7 @@ func _on_ToggleButton_pressed():
 		hide()
 	else:
 		show()
+
+
+func _on_UserManualButton_pressed():
+	OS.shell_open("https://github.com/mhogar/SlimeFarm/wiki/User-Manual")

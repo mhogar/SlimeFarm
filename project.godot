@@ -32,7 +32,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="SlimeFarm"
+config/name="Slime Farm: An Evolution Simulator"
 run/main_scene="res://Scenes/Simulation/Simulation.tscn"
 config/icon="res://icon.png"
 
