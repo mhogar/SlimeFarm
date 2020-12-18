@@ -14,8 +14,8 @@ var csv_dir : String = ""
 
 var env_setting : int = SETTING_MEADOW
 
-var num_tiles_x : int = 20
-var num_tiles_y : int = 20
+var num_tiles_x : int = 10
+var num_tiles_y : int = 10
 var population_size : int = 6
 var num_food : int = 10
 
