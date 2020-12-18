@@ -127,7 +127,6 @@ func select_parent_slime(slimes : Array) -> Slime:
 		else:
 			sum += slime.food_collected
 			
-		print(sum)
 		if sum >= r:
 			return slime
 	
